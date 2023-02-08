@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="card-body">
-        <canvas id="general_trades_chart" style="scale: 1.7; margin-top: 4em"></canvas>
+        <canvas id="general_trades_chart"></canvas>
       </div>
     </div>
   </div>
