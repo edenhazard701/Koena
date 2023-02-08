@@ -9,7 +9,7 @@ class Summary_model extends CI_Model {
 
         $query = $this->db->query($sql);
 
-		return $query->result(); 
+        return $query->result(); 
     }
 
     public function getTakenSymbols($account_id, $plan_id)
@@ -23,6 +23,21 @@ class Summary_model extends CI_Model {
 
     public function getJournalTableAll($account_id, $start_date, $end_date){
         $sql = "";
+        // print_r($start_date);
+        // die(0);
+        if(!is_null($start_date)){
+            $sql = "SELECT td.*, tj.* FROM closedtrades td INNER JOIN tradejournal tj ON td.OrderNumber=tj.Ticket WHERE td.Acc_Id=".$account_id." ORDER BY tj.updateddate DESC";            
+        }else{
+            $sql = "SELECT td.*, tj.* FROM closedtrades td INNER JOIN tradejournal tj ON td.OrderNumber=tj.Ticket WHERE td.Acc_Id=".$account_id."";
+        }
+
+        $query = $this->db->query($sql);
+
+        return $query->result(); 
+    }
+
+    public function getJournalTableAllFilter($account_id, $start_date, $end_date){
+        $sql = "";
         if(!is_null($start_date)){
             $sql = "SELECT td.*, tj.* FROM closedtrades td INNER JOIN tradejournal tj ON td.OrderNumber=tj.Ticket WHERE td.Acc_Id=".$account_id." AND DATE(td.CloseTime) BETWEEN '".$start_date."' AND '".$end_date."' GROUP BY td.OrderNumber ORDER BY td.CloseTime DESC";            
         }else{
@@ -34,6 +49,23 @@ class Summary_model extends CI_Model {
         return $query->result(); 
     }
 
+    public function getJournalGroupedTickets($group_id)
+        {
+            $sql = "SELECT td.*, tj.* FROM closedtrades td INNER JOIN tradejournal tj ON td.OrderNumber=tj.Ticket WHERE td.Acc_Id=".$_SESSION['account_id']." AND td.journal_group_id=".$group_id."";
+            $query = $this->db->query($sql);
+
+            $acct = $query->result();
+
+            $grouped_ticket = array();
+            if(!empty($acct)){
+                foreach($acct as $singleacct){
+                    array_push($grouped_ticket, $singleacct->OrderNumber);
+                }
+            }
+            $grouped_ticket_str = implode(',', $grouped_ticket);
+            return $grouped_ticket_str;
+        }
+    
     public function getJournalTableGroup($account_id){
         $sql = "";
         $sql = "SELECT td.*, tj.* FROM closedtrades td INNER JOIN tradejournal tj ON td.OrderNumber=tj.Ticket WHERE td.Acc_Id=".$account_id." GROUP BY td.journal_group_id ORDER BY td.CloseTime";
@@ -121,14 +153,21 @@ class Summary_model extends CI_Model {
         return $res;
     }
 
+    public function getAccountDetailsModal($ticket_id) {
+        $acct = $this->_ticketJournal($ticket_id);
+        return $acct;
+    }
+
     public function getAccountSummaryJournal($account_id, $start_date, $end_date, $symbols) {
         $sql = '';
         if(isset($start_date) && !empty($start_date)){
-            $sql = "SELECT * FROM closedtrades ct WHERE ct.Acc_Id=".$account_id."  AND DATE(ct.CloseTime) BETWEEN '".$start_date."' AND '".$end_date."' ORDER BY ct.CloseTime DESC";
+            $sql = "SELECT * FROM closedtrades ct WHERE ct.Acc_Id=".$account_id." ORDER BY ct.CloseTime DESC";
         }elseif (isset($symbols) && $symbols == "") {
-            $sql = "SELECT * FROM closedtrades ct WHERE ct.Acc_Id=".$account_id." AND (3>1 OR ct.symbol IN (SELECT symbol FROM symbols)) ORDER BY ct.CloseTime DESC";
+            $sql = "SELECT * FROM closedtrades ct WHERE ct.Acc_Id=".$account_id." AND (".$_SESSION['plan_id'].">1 OR ct.symbol IN (SELECT symbol FROM symbols)) ORDER BY ct.CloseTime DESC";
+            die(0);
         } else {
             $sql = "SELECT * FROM closedtrades ct WHERE ct.Acc_Id=".$account_id." AND FIND_IN_SET(сt.Symbol,".$symbols.") ORDER BY ct.CloseTime DESC";
+            die(0);
         }
 
         $query = $this->db->query($sql);
@@ -150,7 +189,7 @@ class Summary_model extends CI_Model {
             $acct = $query->result(); 
             
         }elseif (isset($symbols) && $symbols == "") {
-            $sql = "SELECT * FROM closedtrades ct WHERE ct.Acc_Id=".$account_id." AND (3>1 OR ct.symbol IN (SELECT symbol FROM symbols)) ORDER BY ct.CloseTime DESC";
+            $sql = "SELECT * FROM closedtrades ct WHERE ct.Acc_Id=".$account_id." AND (".$_SESSION['plan_id'].">1 OR ct.symbol IN (SELECT symbol FROM symbols)) ORDER BY ct.CloseTime DESC";
             $query = $this->db->query($sql);
             $acct = $query->result();
         } else {
@@ -289,9 +328,25 @@ class Summary_model extends CI_Model {
         return array('status' => "success", "message" => "".$timeframe." for ticket(s) <big>[".$ticket_id."]</big> Changed successfully!"   );
     }
 
+    public function deleteSSTimeframe1($timeframe, $ticket_id) {       
+        if (isset($timeframe)) {
+            
+            // Insert image content into database 
+            $query = $this->db->query("UPDATE closedtrades SET `SS".$timeframe."`='' WHERE `OrderNumber` IN ('".implode("','", str_getcsv($ticket_id))."')");
+
+            $num = $this->db->affected_rows();
+        } else {
+            // $this->exitScript('error', 'An error while deleting file.');
+            return array('status' => "error", "message" => "An error while deleting file.");
+        }
+
+        return array('status' => "success", "message" => "".$timeframe." for ticket(s) <big>[".$ticket_id."]</big> Changed successfully!"   );
+    }
+
     // Reload Timeframe Image
-    public function SSTimeFrameReload($field, $ticket_id) {       
-        $query = $this->db->query("SELECT SS".$field." FROM closedtrades WHERE OrderNumber = ".$ticket_id."");
+    public function SSTimeFrameReload($field, $ticket_id) {    
+        $field1 = substr($field, 0, 10);   
+        $query = $this->db->query("SELECT SS".$field1." FROM closedtrades WHERE OrderNumber = ".$ticket_id."");
 
         $acct = $query->result();  
         return $acct;
@@ -307,6 +362,8 @@ class Summary_model extends CI_Model {
 
     // Change Timeframe Image
     public function changeSSTimeframe($data) {
+        $timeframe = $data['timeframe'];
+        $timeframe = substr($timeframe, 0, 10);
         if (isset($_FILES["image"])) {
             $thumb = resizer($_FILES['image']['tmp_name'], 1920, 1080, true);
             ob_start();
@@ -315,7 +372,7 @@ class Summary_model extends CI_Model {
             $imgContent = addslashes($imageData = "data:image/jpg;charset=utf8;base64,".base64_encode($image)); 
             
             // Insert image content into database 
-            $this->db->query("UPDATE closedtrades SET `SS".$data['timeframe']."`='$imgContent' WHERE `OrderNumber` IN ('".implode("','", str_getcsv($data['ticket_id']))."')");
+            $this->db->query("UPDATE closedtrades SET `SS".$timeframe."`='$imgContent' WHERE `OrderNumber` IN ('".implode("','", str_getcsv($data['ticket_id']))."')");
         } else {
             return array('status' => 'error', 'message' => 'ERROR');
         }
@@ -422,33 +479,88 @@ class Summary_model extends CI_Model {
 
     }
 
+    // Get Last Insert Id Method
+    public function getLastInsertId()
+    {
+        return $this->db->lastInsertId();
+    }
+
     public function _isertJournalGroup($ticket_id, $account_id)  {
+
         try {
             $date = date('Y-m-d h:i:s');
-            $query = $this->db->query("INSERT INTO tradejournal_group (ticket_ids, account_id, created_date) VALUES ('".$ticket_id."', '".$ticket_id."', '".$date."')");
-            $res = $query->result();
-            $last_insertedid = $this->getLastInsertId();
+            $sql = "INSERT INTO tradejournal_group (ticket_ids, account_id, created_date) VALUES ('".$ticket_id."', '".$account_id."', '".$date."')";
+            $query = $this->db->query($sql);
+ 
+            // $res = $query->result();
+            $last_insertedid = $this->db->insert_id();
             
             foreach(str_getcsv($ticket_id) as $ticket)  {
-                $query = $this->db->query('UPDATE closedtrades SET journal_group_id=:journal_group_id  WHERE OrderNumber = ".$ticket_id." AND Acc_Id = ".$account_id."');
+                $query = $this->db->query('UPDATE closedtrades SET journal_group_id=".$last_insertedid."  WHERE OrderNumber = ".$ticket_id." AND Acc_Id = ".$account_id."');
             }
 
             foreach(str_getcsv($ticket_id) as $ticket)  {
-               
-                //echo "SELECT * FROM `user_reason` WHERE `reason` = 'StrategyUsed' AND `valuess` = '".$StrategyUsed."' AND `account_id` = $account_id ORDER BY `id` DESC"; //exit();
-                $query = $this->db->query("SELECT * FROM `tradejournal` WHERE `Acc_Id` = ".$account_id." AND `Ticket` =".ticket_id." ORDER BY `id` DESC");
+
+                $query = $this->db->query("SELECT * FROM `tradejournal` WHERE `Acc_Id` = ".$account_id." AND `Ticket` ='".$ticket_id."'  ");
 
                 $res = $query->result();
                 //echo "fdsafds".$res; exit();
                 if (!$res) {
                     $date = date('Y-m-d h:i:s');
-                    $query = $this->db->query("INSERT INTO tradejournal (Acc_Id, Ticket updateddate) VALUES ('".$account_id."', '".$ticket."', '".$date."')");
-                    $res = $query->result();
+                    $query = $this->db->query("INSERT INTO tradejournal (Acc_Id, Ticket, updateddate) VALUES ('".$account_id."', '".$ticket."', '".$date."')");
                 }
             }
         } catch (Exception $e) {
         // if (!$res) $this->exitScript('error', 'An error while INSERT Journal row. Please Try again later!');
         }
 
+    }
+
+    public function addNewReason($data) {
+
+        $query = $this->db->query('INSERT INTO user_reason (reason, valuess, user_id, account_id) VALUES ("'.$data['reasonType'].'", "'.$data['reasonValue'].'", '.$data['user_id'].', '.$_SESSION['account_id'].')');
+
+        $num = $this->db->affected_rows($query);
+
+        if ($num < 1) return array('status' => 'error', 'message' => 'An error occured while creating this user. Please Try again later!');
+
+        $data = array(
+            'reasonType'  => $data['reasonType'],
+            'reasonValue'  => $data['reasonValue'],
+        );
+
+        return $data;
+    }
+
+    public function accountDetailsModalInsertUpdate($data) {
+
+        if ($data['tickets']) {
+            if($data['strategyUsed']){
+                if(count(str_getcsv($data['tickets'])) >1){
+                    $this->_isertJournalGroup($data['tickets'], $data['account_id']);
+                }
+                
+                foreach(str_getcsv($data['tickets']) as $ticket_id)  {
+                    
+                    if ($data['has']!='1') {
+                        $this->_isertJournal($ticket_id, $data['account_id']);
+                        }
+                    $sql = "UPDATE tradejournal SET Email='".$data['user_email']."', ReasonForOutcome='".$data['reasonForOutcome']."',HowICanImprove=";
+                    $sql .= '"'.$data['howICanImprove'].'"';
+                    $sql .= ", StrategyUsed='".$data['strategyUsed']."', ReasonForEntry='".$data['reasonForEntry']."' WHERE Ticket = '".$data['tickets']."' AND Acc_Id = '".$data['account_id']."'";
+                    $query = $this->db->query($sql);
+
+                    $num = $this->db->affected_rows($query);
+
+                    if ($num < 1) 
+                        return array('status' => 'error', 'message' => 'An error occured while UPDATE  TimeFrames. Please Try again later!');
+                }
+            }else{
+                return array('status' => 'error', 'message' => 'Please select the Strategy Used');
+            }
+        } else {
+            return array('status' => 'error', 'message' => 'Not tickets in data! Try again later!');
+        }
+        return array('status' => 'success', 'message' => 'Save successfully!');
     }
 }
