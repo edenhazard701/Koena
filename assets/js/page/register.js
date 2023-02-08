@@ -6,18 +6,18 @@ $("#registerForm").submit(function (e) {
   $.ajax({
     url: BASE_URL + "register/registerUser",
     method: "POST",
+    dataType: 'json',
     data: $(this).serialize(),
     success: function (response) {
-      response = JSON.parse(response);
       if (response["status"] == "success") {
+        notifyme.showNotification(response["status"], response["message"]);
         $(".register-form-wrap").hide();
         $(".resend-email-verification").attr("data-email", $("#email").val());
         $("#change-email-id").attr("data-change-email", $("#email").val());
         $(".verification-success-confirmation").show();
         $(".verification-success-email").html($("#email").val());
       } else {
-        console.log("error");
-        // notifyme.showNotification(response["status"], response["message"]);
+        notifyme.showNotification(response["status"], response["message"]);
       }
     },
   });
@@ -45,40 +45,74 @@ function signupValidation() {
   var ConfirmPassword = $("#confirm-password").val();
 
   if (UserName.trim() == "") {
-
+    $("#username-info")
+      .html("Username required.")
+      .css("color", "#f06565")
+      .show();
+    $("#username").addClass("error-field");
     valid = false;
-  } else if (UserName.match(/\s/g)) {
-
+  }else if(UserName.match(/\s/g)){
+    $("#username-info")
+      .html("Username should be without space.")
+      .css("color", "#f06565")
+      .show();
+    $("#username").addClass("error-field");
     valid = false;
   }
 
   if (email == "") {
-
+    $("#email-info").html("Email required").css("color", "#f06565").show();
+    $("#email").addClass("error-field");
     valid = false;
   } else if (email.trim() == "") {
-
+    $("#email-info")
+      .html("Invalid email address.")
+      .css("color", "#f06565")
+      .show();
+    $("#email").addClass("error-field");
     valid = false;
   } else if (!emailRegex.test(email)) {
-
+    $("#email-info")
+      .html("Invalid email address.")
+      .css("color", "#f06565")
+      .show();
+    $("#email").addClass("error-field");
     valid = false;
   }
   if (Password.trim() == "") {
-
+    $("#signup-password-info")
+      .html("Password required.")
+      .css("color", "#f06565")
+      .show();
+    $("#password").addClass("error-field");
     valid = false;
-  } else if (!passwordRegex.test(Password)) {
-  
+  }else if (!passwordRegex.test(Password)) {
+    $("#signup-password-info")
+      .html("Password should consist of at least one Upperletter, one lowerletter, a number and a special character.")
+      .css("color", "#f06565")
+      .show();
+    $("#password").addClass("error-field");
     valid = false;
   }
   if (ConfirmPassword.trim() == "") {
- 
+    $("#confirm-password-info")
+      .html("Password required.")
+      .css("color", "#f06565")
+      .show();
+    $("#confirm-password").addClass("error-field");
     valid = false;
   }
   if (Password != ConfirmPassword) {
-  
+    $("#confirm-password-info")
+      .html("Both passwords must be same.")
+      .css("color", "#f06565")
+      .show();
     valid = false;
   }
- 
-
+  if (valid == false) {
+    $(".error-field").first().focus();
+    valid = false;
+  }
   return valid;
 }
 
@@ -201,9 +235,9 @@ $("body").on("click", "#change-emailID", function (e) {
     success: function (response) {
       response = JSON.parse(response);
       if (response["status"] == "success") {
-        //notifyme.showNotification(response["status"], response["message"]);
+        notifyme.showNotification(response["status"], response["message"]);
       } else {
-        //notifyme.showNotification(response["status"], response["message"]);
+        notifyme.showNotification(response["status"], response["message"]);
       }
     },
   });
@@ -216,7 +250,7 @@ $("body").on("click", "#see_password", function () {
   $("#see_password").hide();
 });
 
-$("body").on("click", "#show_password", function () {
+$("body").on("click", "#hide_password", function () {
   $("#password").attr("type", "password");
   $("#confirm-password").attr("type", "password");
   $("#see_password").show();

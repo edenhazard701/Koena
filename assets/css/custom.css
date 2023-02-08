@@ -113,14 +113,34 @@
   -webkit-font-smoothing: antialiased;
 }
 
+.ava-icon i {
+  font-size: 4em;
+  cursor: pointer;
+  text-shadow: 0 0 8px rgb(0 0 0 / 50%);
+}
+
+.ava-icon {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  opacity: .2;
+  transition-duration: 600ms;
+}
+
 .side-bar-logo{
-    background: url('../../assets/img/logo.jpg');
-    background-size: contain;
-    background-repeat: repeat-y;
-    padding-left: 120px;
-    padding-top: 3px;
-    margin: 5px;
-    margin-bottom: 0px;
+  background: url('../../assets/img/logo.jpg');
+  background-size: contain;
+  background-repeat: repeat-y;
+  padding-left: 120px;
+  padding-top: 3px;
+  margin: 5px;
+  margin-bottom: 0px;
 }
 
 .textbox-wrapper{
@@ -229,7 +249,20 @@
   padding-top: 16px;
 }
 
+.btn-save {
+  width: 100%;
+  font-size: 40rem;
+  font-weight: bolder;
+}
 
+.input-group .fa-eye {
+  font-size:18px; 
+  padding: 10px
+}
+
+.form-group .error {
+  padding-left: 50px;
+}
 /* .table thead th {
   border-bottom: 0rem solid #EEEEEE;
   text-transform: capitalize;

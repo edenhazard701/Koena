@@ -248,7 +248,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-success"  style="float:right">Save</button>
+                                  <button type="submit" class="btn btn-primary btn-lg btn-save">Save</button>
                                 </div>
                             </div>
                         </form>

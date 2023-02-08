@@ -81,7 +81,7 @@
                                           <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                                             Login
                                           </button>
-                                           <a href="<?php echo base_url('register')?>">Register</a>
+                                           <a href="<?php echo base_url('register')?>" class="btn btn-primary btn-lg btn-block" >Register</a>
                                         </div>
                                       </form>
                                     </div>

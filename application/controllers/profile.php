@@ -24,7 +24,7 @@ class Profile extends MY_Controller {
 		$this->load_view('profile/account-listing_view.php',$params);
 	}
 
-    public function getUserAccountList() {
+  public function getUserAccountList() {
 		$account = $this->Profile_model->getUserAccountList();
 		
 		echo json_encode(array('status' => "success", "data" => $account));

@@ -17,6 +17,7 @@
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css')?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css')?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/components.css')?>">
   <!-- Start GA -->
   <script>var BASE_URL = '<?php echo base_url()?>'</script>
@@ -415,8 +416,8 @@
                                                         </span>
                                                     </div>
                                                     <input class="form-control input-box-330" type="text" name="username" id="username" placeholder="Username">
-                                                    <p class="required error" id="username-info"></p>
                                                 </div>
+                                                <p class="required error" id="username-info"></p>
                                             </div>
                                             <div class="form-group has-default md-form-group">
                                                 <div class="input-group">
@@ -425,9 +426,9 @@
                                                             <i class="far fa-envelope"></i>
                                                         </span>
                                                     </div>
-                                                    <input class="form-control input-box-330" type="email" name="email" id="email" placeholder="Email">
-                                                    <p class="required error" id="email-info"></p>
+                                                    <input class="form-control input-box-330" type="email" name="email" id="email" value="" placeholder="Email">
                                                 </div>
+                                                <p class="required error" id="email-info"></p>
                                             </div>
                                             <div class="form-group has-default md-form-group">
                                                 <div class="input-group">
@@ -437,10 +438,14 @@
                                                         </span>
                                                     </div>
                                                     <input class="form-control input-box-330" type="password" name="password" id="password" placeholder="Password">
-                                                    <a href="javascript:void(0);" id="see_password"><i class="far fa-eye"></i></a>
-                                                    <a href="javascript:void(0);" id="hide_password" style="display:none;"><i class="material-icons"></i></a>
-                                                    <p class="required error" id="signup-password-info"></p>
+                                                    <a href="javascript:void(0);" id="see_password">
+                                                        <i class="far fa-eye"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" id="hide_password" style="display:none;">
+                                                        <i class="far fa-eye"></i>
+                                                    </a>
                                                 </div>
+                                                <p class="required error" id="signup-password-info"></p>
                                             </div>
                                             <div class="form-group has-default md-form-group">
                                                 <div class="input-group">
@@ -450,8 +455,8 @@
                                                         </span>
                                                     </div>
                                                     <input class="form-control input-box-330" type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password">
-                                                    <p class="required error" id="confirm-password-info"></p>
                                                 </div>
+                                                <p class="required error" id="confirm-password-info"></p>
                                             </div>
                                             <div class="form-group has-default md-form-group">
                                                 <div class="input-group">
@@ -497,12 +502,13 @@
   <script src="<?php echo base_url('assets/js/page/register.js')?>"></script>
   <script src="<?php echo base_url('assets/modules/popper.js')?>"></script>
   <script src="<?php echo base_url('assets/modules/tooltip.js')?>"></script>
-  <script src="<?php echo base_url('assets/modules/bootstrap/js/bootstrap.min.js')?>"></script>
+  <script src="<?php echo base_url('assets/js/plugins/notify.js')?>"></script>
   <script src="<?php echo base_url('assets/modules/nicescroll/jquery.nicescroll.min.js')?>"></script>
   <script src="<?php echo base_url('assets/modules/moment.min.js')?>"></script>
   <script src="<?php echo base_url('assets/js/stisla.js')?>"></script>
   <script src="<?php echo base_url('assets/js/scripts.js')?>"></script>
   <script src="<?php echo base_url('assets/js/custom.js')?>"></script>
+  <script src="<?php echo base_url('assets/js/notifyme.js')?>"></script>
 </body>
 
 </html>

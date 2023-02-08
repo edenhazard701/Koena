@@ -4,24 +4,22 @@
         class Register_model extends CI_Model {
                 
         // Login User
-    public function registerUser($data)
+    public function registerUser($username, $email, $password)
     {
         $active_code=md5(uniqid(rand(5, 15), true));
         $link = 'http://154.44.150.137/koena-new/register?key='.$active_code;
         
-        $email = $data['email'];
-        $username = $data['username'];
-        $password = $data['password'];
         $query = $this->db->query("SELECT * FROM user WHERE username = '".$username."' AND status = 1");
         $checkUser = $query->result();
-        if ($checkUser) return "There is already a user with this username.";
+        
+        if (!empty($checkUser)) return 1;
 
         $query = $this->db->query("SELECT * FROM user WHERE email = '".$email."' AND status = 1");
-         $checkEmail = $query->result();
+        $checkEmail = $query->result();
 
-        if ($checkEmail) return "There is already a user with this email address.";
+        if (!empty($checkEmail)) return 2;
 
-        $password = password_hash($data['password'], PASSWORD_DEFAULT);
+        $password = password_hash($password, PASSWORD_DEFAULT);
         
         $query = $this->db->query("INSERT INTO user (username, email, password, status, user_type_id, emailConfirmToken, isEmailConfirmed) VALUES ('".$username."', '".$email."', '".$password."',  0, 2,  '".$active_code."', 0)");
         
@@ -40,9 +38,9 @@ Thanks' ;
         $this->email->subject($strSubject);
         $this->email->message($message);
         if($this->email->send())
-            return 1;
+            return 3;
         else
-            return 0;
+            return 4;
     }
     public function resendVerificationEmail($params){   
         $active_code=md5(uniqid(rand(5, 15), true));

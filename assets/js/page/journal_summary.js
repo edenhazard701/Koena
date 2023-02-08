@@ -101,7 +101,10 @@ function getTakenSymbols() {
           "#fe0000"
         ];
 
-        var ctx = document.getElementById("general_trades_chart").getContext('2d');
+        var ctxEl = document.getElementById("general_trades_chart");
+        var ctx =  ctxEl.getContext('2d');
+        ctxEl.height = 250;
+        
         new Chart(ctx, {
           type: 'pie',
           data: {

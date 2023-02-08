@@ -80,7 +80,6 @@ function reloadTimeZone(sessionGMT) {
       
       if (response["status"] == "success") {
         var data = response["data"];
-        console.log(data);
         var data1 = data.filter((d) => d.id == 1)[0];
         var data2 = data.filter((d) => d.id == 2)[0];
         var data3 = data.filter((d) => d.id == 3)[0];

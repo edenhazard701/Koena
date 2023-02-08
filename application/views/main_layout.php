@@ -121,12 +121,12 @@
                         <div class="col-2">
                           <img
                           alt="image"
-                          width="100%"
-                          height="100%"
+                          width="100px"
+                          height="auto"
                           src="<?php echo $_SESSION['avatar']?>"
                           class="rounded-circle author-box-picture"
                           />
-                        <div class='ava-icon' onclick="$('#upload-ava').click();"><i class="material-icons">photo_camera</i></div>
+                        <div class='ava-icon' onclick="$('#upload-ava').click();"><i class="material-icons">photo</i></div>
                         </div>
                         <div class="col-5" style="display:inline; margin:auto 10px auto 10px">
 

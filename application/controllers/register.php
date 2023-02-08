@@ -14,13 +14,27 @@ class Register extends CI_Controller {
 
 	public function registerUser()
     {
-    	$params = isset($_POST)?$_POST:NULL;
+        $params = $this->input->post();
+        
+        $email = isset($params['email'])?$params['email']:'';
+        $password = isset($params['password'])?$params['password']:'';
+        $username = isset($params['username'])?$params['username']:'';
+        
+        $res = $this->Register_model->registerUser($username, $email, $password);
 
-        $res = $this->Register_model->registerUser($params);
-        if( $res){
-        	echo json_encode(array('status' => "success", "message" => 'You have registered successfully!'));	
-        }else{
-        	echo json_encode(array('status' => "error", "message" => 'Email send successfully to verify email. Please check your email.'));	
+        switch($res) {
+            case '1':
+                echo json_encode(array('status' => "error", "message" => "There is already a user with this username."));
+                break;
+            case '2':
+                echo json_encode(array('status' => "error", "message" => "There is already a user with this email address."));
+                break;
+            case '3':
+                echo json_encode(array('status' => "success", "message" => 'Email send successfully to verify email. Please check your email.'));	
+                break;
+            case '4':
+                echo json_encode(array('status' => "success", "message" => "You have registered successfully!"));
+                break;
         }
     }
 

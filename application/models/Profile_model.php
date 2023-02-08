@@ -62,6 +62,11 @@ class Profile_model extends CI_Model {
         return $acct;
     }
 
+    public function getPlans() {
+        $query = $this->db->query("select * from user_plan");
+        return $query->result();
+	}
+
     public function delectAccount($account_id){
 
         // Cleaning `closedtrades` table with Acc_Id field
