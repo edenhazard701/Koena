@@ -229,6 +229,11 @@
   padding-top: 16px;
 }
 
+.card-header-title {
+  width:  30%;
+  text-align: center;
+}
+
 
 /* .table thead th {
   border-bottom: 0rem solid #EEEEEE;
@@ -242,3 +247,12 @@
   text-align: center !important;
   position: relative;
 } */
+
+.chart-filter, .chart-filter-pie{
+  width:  120px;
+  margin-top:  5px;
+}
+.btn-calendar{
+  width:  245px;
+  margin-top:  5px;
+}

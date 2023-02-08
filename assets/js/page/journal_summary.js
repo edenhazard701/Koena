@@ -102,8 +102,12 @@ function getTakenSymbols() {
         ];
 
         var ctx = document.getElementById("general_trades_chart").getContext('2d');
+
         new Chart(ctx, {
-          type: 'pie',
+          type: 'doughnut',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: 1.6,
           data: {
             datasets: [{
               data: yValues,
@@ -115,9 +119,7 @@ function getTakenSymbols() {
             responsive: true,
             legend: {
               position: 'bottom',
-              labels:{
-                fontSize: 20
-              }
+              display: false,
             },
           }
         });        

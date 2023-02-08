@@ -39,6 +39,7 @@
   <script src="<?php echo base_url('assets/js/stisla.js')?>"></script>
   <script src="<?php echo base_url('assets/js/scripts.js')?>"></script>
   <script>
+    var _profileGMT = "<?php echo $_SESSION['GMT']?>";
     var BASE_URL = "<?php echo base_url()?>";
     var _account_id = "<?php echo $_SESSION['account_id']?>";
     var _plan_id = "<?php echo $_SESSION['plan_id']?>";
@@ -72,194 +73,6 @@
   </script>
 </head>
 <body>
-  <div id="modalPaymentMethod" class="modal fade"  tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document" >
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Select Payment Options</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="extraM_detail">
-                <div class="table-responsive table-sales">
-                <div class="already-plan-message">
-                </div>
-                    <table class="table">
-                        <!-- <thead>
-                    <tr>
-                        <th class="text-white font-weight-bold text-center" scope="col">Stripe</th>
-                <th class="text-white font-weight-bold text-center" scope="col">Payment Options</th>
-                </tr>
-                </thead> -->
-                        <tbody>
-                            <tr>
-                                <td class="text-white text-center" scope="row">
-                                    <div id="paypal-button-container" style="background:white;padding:10px;"></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-  <div class="modal fade" tabindex="-1" role="dialog" id="exampleModalCenter">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <form id="modalUsernameForm" method="post">
-        <div class="modal-header">
-          <h5 class="modal-title" id=""></h5>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-              <div class="col-12">
-                <div class="card">
-                  <div class="row" style="padding:30px">
-                      <div class="col-12" style="display:flex">
-                        <div class="col-2">
-                          <img
-                          alt="image"
-                          width="100%"
-                          height="100%"
-                          src="<?php echo $_SESSION['avatar']?>"
-                          class="rounded-circle author-box-picture"
-                          />
-                        <div class='ava-icon' onclick="$('#upload-ava').click();"><i class="material-icons">photo_camera</i></div>
-                        </div>
-                        <div class="col-5" style="display:inline; margin:auto 10px auto 10px">
-
-                        </div>
-                        <div class="col-6">
-                          <p style="font-size:16px; font-weight:bold; display: block; margin: 5px"><?=$_SESSION['email']?></p>
-                          <p style="font-size:14px; display: block; margin: 5px"><?=$_SESSION['username']?></p>
-                          <p style="font-size:14px; display: block; margin: 5px"><?=$_SESSION['email']?></p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row" style="padding:20px">
-                      <p>Choose Username</p>
-                          <input type="text" class="form-control input-default " placeholder="Username" value="<?=$_SESSION['username']?>" name="username" id="username"> </div>
-                      <div style="padding:20px">
-                        <p>Date of Birth</p>
-                        <div class="row">
-                            <div class="col-sm-5">
-                                <select class="default-select  form-control wide">
-                                    <option>Day</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                    <option>11</option>
-                                    <option>12</option>
-                                    <option>13</option>
-                                    <option>14</option>
-                                    <option>15</option>
-                                    <option>16</option>
-                                    <option>17</option>
-                                    <option>18</option>
-                                    <option>19</option>
-                                    <option>20</option>
-                                    <option>21</option>
-                                    <option>22</option>
-                                    <option>23</option>
-                                    <option>24</option>
-                                    <option>25</option>
-                                    <option>26</option>
-                                    <option>27</option>
-                                    <option>28</option>
-                                    <option>29</option>
-                                    <option>30</option>
-                                    <option>31</option>
-                                </select>
-                            </div>
-                            <div class="col mt-4 mt-sm-0">
-                              <select class="default-select  form-control wide">
-                                  <option>Month</option>
-                                  <option>January</option>
-                                  <option>February</option>
-                                  <option>March</option>
-                                  <option>April</option>
-                                  <option>May</option>
-                                  <option>June</option>
-                                  <option>July</option>
-                                  <option>August</option>
-                                  <option>September</option>
-                                  <option>October</option>
-                                  <option>November</option>
-                                  <option>December</option>
-                              </select>
-                            </div>
-                            <div class="col mt-3 mt-sm-0">
-                                <select class="default-select  form-control wide">
-                                    <option>Year</option>
-                                    <option value="2018">2022</option>
-                                    <option value="2018">2021</option>
-                                    <option value="2018">2020</option>
-                                    <option value="2018">2019</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2015">2015</option>
-                                    <option value="2014">2014</option>
-                                    <option value="2013">2013</option>
-                                    <option value="2012">2012</option>
-                                    <option value="2011">2011</option>
-                                    <option value="2010">2010</option>
-                                    <option value="2009">2009</option>
-                                    <option value="2008">2008</option>
-                                    <option value="2007">2007</option>
-                                    <option value="2006">2006</option>
-                                    <option value="2005">2005</option>
-                                    <option value="2004">2004</option>
-                                    <option value="2003">2003</option>
-                                    <option value="2002">2002</option>
-                                    <option value="2001">2001</option>
-                                    <option value="2000">2000</option>
-                                    <option value="1999">1999</option>
-                                    <option value="1998">1998</option>
-                                    <option value="1997">1997</option>
-                                    <option value="1996">1996</option>
-                                    <option value="1995">1995</option>
-                                    <option value="1994">1994</option>
-                                    <option value="1993">1993</option>
-                                    <option value="1992">1992</option>
-                                    <option value="1991">1991</option>
-                                    <option value="1990">1990</option>
-                                    <option value="1989">1989</option>
-                                    <option value="1988">1988</option>
-                                    <option value="1987">1987</option>
-                                    <option value="1986">1986</option>
-                                    <option value="1985">1985</option>
-                                    <option value="1984">1984</option>
-                                    <option value="1983">1983</option>
-                                    <option value="1982">1982</option>
-                                </select>
-                            </div>
-                        </div>
-                      </div>
-
-
-                </div>  
-              </div>
-            </div>
-      
-        </div>
-        <div class="modal-footer">   
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-      </form>  
-    </div>   
-  </div>
-</div> 
   <div class="modal fade" tabindex="-1" role="dialog" id="cal_modal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -919,8 +732,9 @@
             <li data-selection="general" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('dashboard/general') ?>"><i class="ion-ios-paper"></i>General Dashboard</a></div></li>
             <li data-selection="journal" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('summary/journal') ?>"><i class="ion-social-buffer"></i>Joural Summary</a></div></li>
             <li data-selection="account" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('summary/account') ?>"><i class="ion-social-chrome"></i>Account Summary</a></div></li>
-            <li data-selection="session" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('timezone') ?>"><i class="ion-transgender"></i>Session</a></div></li>
+            <li data-selection="profile" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('timezone') ?>"><i class="ion-transgender"></i>Session</a></div></li>
             <li data-selection="profile" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('profile') ?>"><i class="ion-transgender"></i>Profile</a></div></li>
+            <li data-selection="plan" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('profile/plan') ?>"><i class="ion-calendar"></i>Plan</a></div></li>
           </ul>
        </aside>
        <script>
