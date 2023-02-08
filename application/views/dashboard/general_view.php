@@ -1,64 +1,47 @@
+
 <div class="row">
   <div class="col-lg-12 col-md-12 col-sm-16">
     <div class="card" style="text-align: center;">
       <div class="card-header" style="justify-content: space-between;">
-        <p><h4>Time of Upload</h4>(server time)<h3 id="timeOfUpload"></h3><h4>Time of Last Trade</h4>(server time)<h3 id="timeOfLastTrade"></h3></p>
+        <h4>Time of Upload</h4>(server time)<h3 id="timeOfUpload"></h3><h4>Time of Last Trade</h4>(server time)<h3 id="timeOfLastTrade"></h3>
       </div>
     </div>
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-4 col-md-4 col-sm-16">
-    <div class="card" style="text-align: center;">
-      <div class="card-header">
-        <div class="card-stats">
-          <div class="card-stats-items" style="display: flex; justify-content: space-between;">
-            <div class="card-stats-item">
-              <div class="card-stats-item-count">Balance</div>
-              <div class="card-stats-item-label" ><b id="spanCurrentBalance"></b></div>
-            </div>
-            <div class="card-stats-item">
-              <div class="card-stats-item-count">Equity</div>
-              <div class="card-stats-item-label"><b id="spanCurrentEquity"></b></div>
-            </div>
-          </div>
-        </div>
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="card">
+      <div class="card-header" style="display: inline-flex; justify-content: space-between;">
+        <div class="card-header-title"><h4>Balance</h4></div>
+        <div class="card-header-title"><h4>Equity</h4></div>
+      </div>
+      <div class="card-body" style="display: inline-flex; justify-content: space-between;">
+        <div class="card-header-title"><p id="spanCurrentBalance"></p></div>
+        <div class="card-header-title"><p id="spanCurrentEquity"></p></div>
       </div>
     </div>
   </div>
-  <div class="col-lg-4 col-md-4 col-sm-16">
+  <div class="col-12 col-md-6 col-lg-4">
     <div class="card">
-      <div class="card-header">
-        <div class="card-stats">
-          <div class="card-stats-items" style="display: flex; justify-content: space-between;">
-            <div class="card-stats-item">
-              <div class="card-stats-item-count">Deposit</div>
-              <div class="card-stats-item-label"><b id="spanDeposit"></b></div>
-            </div>
-            <div class="card-stats-item">
-              <div class="card-stats-item-count">Withdrawal</div>
-              <div class="card-stats-item-label"><b id="spanWithdrawal"></b></div>
-            </div>
-          </div>
-        </div>
+      <div class="card-header" style="display: inline-flex; justify-content: space-between;">
+        <div class="card-header-title"><h4>Deposit</h4></div>
+        <div class="card-header-title"><h4>Withdrawal</h4></div>
+      </div>
+      <div class="card-body" style="display: inline-flex; justify-content: space-between;">
+        <div class="card-header-title"><p id="spanDeposit"></p></div>
+        <div class="card-header-title"><p id="spanWithdrawal"></p></div>
       </div>
     </div>
   </div>
-  <div class="col-lg-4 col-md-4 col-sm-16">
+  <div class="col-12 col-md-6 col-lg-4">
     <div class="card">
-      <div class="card-header">
-        <div class="card-stats">
-          <div class="card-stats-items" style="display: flex; justify-content: space-between;">
-            <div class="card-stats-item">
-              <div class="card-stats-item-count">Profit/Loss</div>
-              <div class="card-stats-item-label"><b id="spanCurrentPL"></b></div>
-            </div>
-            <div class="card-stats-item">
-              <div class="card-stats-item-count" style="display: flex; width: 100%">PLPercentage</div>
-              <div class="card-stats-item-label"><b id="spanCurrentPLPerc"></b></div>
-            </div>
-          </div>
-        </div>
+      <div class="card-header" style="display: inline-flex; justify-content: space-between;">
+        <div class="card-header-title"><h4>Profit/Loss</h4></div>
+        <div class="card-header-title"><h4>PLPercentage</h4></div>
+      </div>
+      <div class="card-body" style="display: inline-flex; justify-content: space-between; text-align: center;">
+        <div class="card-header-title"><p id="spanCurrentPL"></p></div>
+        <div class="card-header-title"><p id="spanCurrentPLPerc"></p></div>
       </div>
     </div>
   </div>
@@ -91,22 +74,23 @@
       </div>
       <hr />
       <div class="card-footer">
-        <button class="btn btn-primary btn-lg" rel='1' style="margin-left: 4px;" onclick='getSymbolsChart_filter(1);'>
-          All
-        </button>
-        <button class="btn btn-primary btn-lg" rel='2' style="margin-left: 4px;" onclick='getSymbolsChart_filter(2);'>
-          Today
-        </button>
-        <button class="btn btn-primary btn-lg" rel='3' style="margin-left: 4px;" onclick='getSymbolsChart_filter(3);'>
-          This Week
-        </button>
-        <button class="btn btn-primary btn-lg" rel='4' style="margin-left: 4px;" onclick='getSymbolsChart_filter(4);'>
-          This Month
-        </button>
-        <input type="text" onchange="getSymbolsChart_filter(5)" class="btn btn-primary btn-lg form-control daterange" rel='5' style="margin-left: 4px; width: 16rem;" id="period">
-        <!-- <button class="btn btn-primary btn-lg" rel='0' style="margin-left: 4px;">
-          Pairs
-        </button> -->
+        <div class="row">
+          <div class="col-12">
+            <button class="btn btn-primary btn-lg chart-filter" rel='1'>
+              All
+            </button>
+            <button class="btn btn-primary btn-lg chart-filter" rel='2'>
+              Today
+            </button>
+            <button class="btn btn-primary btn-lg chart-filter" rel='3'>
+              This Week
+            </button>
+            <button class="btn btn-primary btn-lg chart-filter" rel='4'>
+              This Month
+            </button>
+            <input type="text" class="btn btn-primary btn-lg form-control daterange chart-filter btn-calendar" rel='5' id="period">
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -116,8 +100,8 @@
         <h4 class="win_rate_chart"></h4>
       </div>
       <div class="card-body">
-        <canvas id="general_win_rate_pie_chart"></canvas>
-        <div>
+        <canvas id="general_win_rate_pie_chart" style="scale: 1.2"></canvas>
+        <div style="margin-top: 5rem">
           <div class="win-rate-chart">
             <p>Account Name</p>
             <p><b id="spanAccountName"></b></p>
@@ -156,7 +140,7 @@
         <h3><i class="ion-social-chrome"></i>&nbsp;Insights</h3>
       </div>
       <div class="card-body">
-        <div class="table-responsive" style="overflow: inherit;">
+        <div class="table-responsive" style="overflow: auto;">
           <table class="table table-bordered table-striped verticle-middle table-responsive-sm" id="general_insight_list">
             <thead>                                 
               <th class="sect_td">Average Hold Time</th>
@@ -194,35 +178,36 @@
             <canvas id="general_losses_chart"></canvas>
           </div>
 
-	      <div class="col-12 col-md-6 col-lg-2" style="text-align: center;">
-	      </div>
-	      <div class="col-12 col-md-6 col-lg-4" style="text-align: center;"><h3 class="buy_win_rate_chart"></h3>
-	        <canvas id="general_buy_win_rate_chart"></canvas>
-	      </div>
-	      <div class="col-12 col-md-6 col-lg-4" style="text-align: center;"><h3 class="sell_win_rate_chart"></h3>
-	        <canvas id="general_sell_win_rate_chart"></canvas>
-	      </div>
-	      <div class="col-12 col-md-6 col-lg-2">
-	      </div>
-      	</div>
+        <div class="col-12 col-md-6 col-lg-2" style="text-align: center;">
+        </div>
+        <div class="col-12 col-md-6 col-lg-4" style="text-align: center;"><h3 class="buy_win_rate_chart"></h3>
+          <canvas id="general_buy_win_rate_chart"></canvas>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4" style="text-align: center;"><h3 class="sell_win_rate_chart"></h3>
+          <canvas id="general_sell_win_rate_chart"></canvas>
+        </div>
+        <div class="col-12 col-md-6 col-lg-2">
+        </div>
+        </div>
       <hr />
       <div class="card-footer">
-        <button class="btn btn-primary btn-lg" rel='1' style="margin-left: 4px;" onclick='getTotalTradeSummary_filter(1);'>
-          All
-        </button>
-        <button class="btn btn-primary btn-lg" rel='2' style="margin-left: 4px;" onclick='getTotalTradeSummary_filter(2);'>
-          Today
-        </button>
-        <button class="btn btn-primary btn-lg" rel='3' style="margin-left: 4px;" onclick='getTotalTradeSummary_filter(3);'>
-          This Week
-        </button>
-        <button class="btn btn-primary btn-lg" rel='4' style="margin-left: 4px;" onclick='getTotalTradeSummary_filter(4);'>
-          This Month
-        </button>
-        <input type="text" onchange="getTotalTradeSummary_filter(5)" class="btn btn-primary btn-lg form-control daterange" rel='5' style="margin-left: 4px; width: 16rem;" id="period1">
-        <!-- <button class="btn btn-primary btn-lg" rel='0' style="margin-left: 4px;">
-          Pairs
-        </button> -->
+        <div class="row">
+          <div class="col-12">
+            <button class="btn btn-primary btn-lg chart-filter-pie" rel='1'>
+              All
+            </button>
+            <button class="btn btn-primary btn-lg chart-filter-pie" rel='2'>
+              Today
+            </button>
+            <button class="btn btn-primary btn-lg chart-filter-pie" rel='3'>
+              This Week
+            </button>
+            <button class="btn btn-primary btn-lg chart-filter-pie" rel='4'>
+              This Month
+            </button>
+            <input type="text"class="btn btn-primary btn-lg form-control daterange btn-calendar" rel='5' id="period1">
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -240,13 +225,13 @@
             <a class="nav-link" id="amount1" data-toggle="tab" href="#amount" role="tab" aria-controls="amount" aria-selected="false">Amount In cash</a>
         </ul>
       </div>
-      <div class="tab-content" id="myTabContent1">
-        <div class="tab-pane fade" id="percentage" role="tabpanel">
+      <div class="tab-content fade show active" id="myTabContent1">
+        <div class="tab-pane fade show active" id="percentage" role="tabpanel">
           <div class="card-body" >
             <canvas id="general_percentage_chart"></canvas>
           </div>
         </div>
-        <div class="tab-pane fade show active" id="amount" role="tabpanel">
+        <div class="tab-pane" id="amount" role="tabpanel">
           <div class="card-body" >
             <canvas id="general_amount_chart"></canvas>
           </div>

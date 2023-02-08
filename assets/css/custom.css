@@ -254,6 +254,11 @@
   font-size: 40rem;
   font-weight: bolder;
 }
+.card-header-title {
+  width:  30%;
+  text-align: center;
+}
+
 
 .input-group .fa-eye {
   font-size:18px; 
@@ -275,3 +280,12 @@
   text-align: center !important;
   position: relative;
 } */
+
+.chart-filter, .chart-filter-pie{
+  width:  120px;
+  margin-top:  5px;
+}
+.btn-calendar{
+  width:  245px;
+  margin-top:  5px;
+}

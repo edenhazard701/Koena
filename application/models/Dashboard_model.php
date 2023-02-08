@@ -39,8 +39,8 @@ class Dashboard_model extends CI_Model {
     {
         $query = $this->db->query("SELECT ( SELECT COUNT(*) FROM trade_summary Where is_active='1') AS active_accounts, 
             (SELECT COUNT(*) FROM trade_summary Where is_active='0') AS inactive_accounts");
-		
-		return $query->result(); 
+        
+        return $query->result(); 
     }
 
     public function get_active_inactive_client()
@@ -50,30 +50,30 @@ class Dashboard_model extends CI_Model {
         ( 
             SELECT COUNT(DISTINCT user.user_id) FROM user INNER JOIN user_subscription ON user.user_id= user_subscription.user_id WHERE user_subscription.end_date<CURDATE() AND user.user_type_id = 2) AS inactive_clients
         ");
-		
-		return $query->result(); 
+        
+        return $query->result(); 
     }
 
     public function getTableData()
     {
         $query = $this->db->query('CALL spAccountsStatus()');
-	
-		return $query->result(); 
+    
+        return $query->result(); 
     }
 
     public function getPlan()
     {
 
         $query = $this->db->query("SELECT COUNT(user_subscription.plan_id) as pid, user_plan.name as most_purchased_package FROM user_subscription INNER JOIN user_plan ON user_subscription.plan_id=user_plan.id where user_plan.price > 0 GROUP BY user_subscription.plan_id, user_plan.name ORDER BY 1 DESC LIMIT 1");
-		
-		return $query->result(); 
+        
+        return $query->result(); 
     }
 
     public function getPaymentTable()
     {
         $query = $this->db->query("SELECT payment_method , sum(amount) AS amount FROM user_subscription GROUP BY payment_method ORDER BY amount DESC");
-		
-		return $query->result(); 
+        
+        return $query->result(); 
     }
 
     public function getAccounts($user_id){
@@ -144,26 +144,7 @@ class Dashboard_model extends CI_Model {
         return $res['data'];
     }
 
-    public function getSymbolCharts($acct) {
-        $sql = "";
-        $sql = "SELECT `Symbol` as Symbol, SUM(`Profit`) as Profit, COUNT(`Symbol`) as Num, SUM(`Profit`) / COUNT(`Symbol`) as Strength
-            FROM `closedtrades` c
-            WHERE c.Acc_Id=$acct 
-            GROUP BY `Symbol`
-            ORDER BY strength DESC";
-        $query = $this->db->query($sql);
-
-        // if ($data['symbols']) {
-        //     $cond .= " AND `Symbol` IN('". implode("','", str_getcsv($data['symbols'])) ."')";
-        // }
-
-        
-        $res = $query->result();
-
-        return $res;
-    }
-
-    public function getSymbolChartsFilter($acct, $filterType, $period) {
+    public function getSymbolCharts($acct, $filterType, $start_date, $end_date) {
         $cond = '';
         switch ($filterType) {
             case '2' : {
@@ -179,9 +160,7 @@ class Dashboard_model extends CI_Model {
                 break;
             }
             case 5 : {
-                if ($period) {
-                    $start_date = substr($period, 0, 10);
-                    $end_date = substr($period, -10);
+                if ($start_date != '' && $end_date != '') {
                     $cond = "AND DATE(c.CloseTime) BETWEEN '".$start_date."' AND '".$end_date."'";
                 }
                 break;
@@ -202,7 +181,6 @@ class Dashboard_model extends CI_Model {
 
         $res = $query->result();
 
-        // if (!$acct) $this->exitScript("error", "No data found!");
         return $res;
     }
 
@@ -216,16 +194,15 @@ class Dashboard_model extends CI_Model {
         return array('status' => "success", "message" => "Data fetched!", $res);
     }
 
-    public function getTotalTradeSummaryFilter($acct, $filterType, $period) {
-        $start_date = substr($period, 0, 10);
-        $end_date = substr($period, -10);
+    public function getTotalTradeSummaryFilter($acct, $filterType, $start_date, $end_date) {
+
         $sql = "";
-        $sql = "CALL spTradeSummary ($acct, $start_date, $end_date, null, $filterType, 3)";
+        $sql = "CALL spTradeSummary ($acct, '$start_date', '$end_date', null, $filterType, 3)";
         $query = $this->db->query($sql);
         $res = $query->result();
 
         if (!$res) return array('status' => "success", "message" => "No data found!");
-        return array('status' => "success", "message" => "Data fetched!", $res);
+        return $res;
     }
 
     public function getPerformanceGrowth($acct) {

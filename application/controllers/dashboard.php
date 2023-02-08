@@ -105,11 +105,13 @@ class Dashboard extends MY_Controller {
 
 	public function getSymbolCharts() {
 		$acct = isset($_POST['account_id']) ? $_POST['account_id'] : NULL;
-		// $filter_type = isset($_POST['filter_type']) ? $_POST['filter_type'] : NULL;
+		$filter_type = isset($_POST['filter_type']) ? $_POST['filter_type'] : NULL;
+		$start_date = isset($_POST['start_date']) ? $_POST['start_date'] : '';
+		$end_date = isset($_POST['end_date']) ? $_POST['end_date'] : '';
 
-		$result = $this->Dashboard_model->getSymbolCharts($acct);
+		$result = $this->Dashboard_model->getSymbolCharts($acct, $filter_type, $start_date, $end_date);
 
-		echo json_encode($result);
+		echo json_encode(array('status' => "success", "data" => $result));
 	}
 
 	public function getTotalTradeSummary() {
@@ -122,10 +124,10 @@ class Dashboard extends MY_Controller {
 	public function getTotalTradeSummaryFilter() {
 		$acct = isset($_POST['account_id']) ? $_POST['account_id'] : NULL;
 		$filterType = isset($_POST['filter_type']) ? $_POST['filter_type'] : NULL;
-		$period = isset($_POST['period']) ? $_POST['period'] : NULL;
-		// $symbols = isset($_POST['symbols']) ? $_POST['symbols'] : NULL;
+		$start_date = isset($_POST['start_date']) ? $_POST['start_date'] : '';
+		$end_date = isset($_POST['end_date']) ? $_POST['end_date'] : '';
 
-		$result = $this->Dashboard_model->getTotalTradeSummaryFilter($acct, $filterType, $period);
+		$result = $this->Dashboard_model->getTotalTradeSummaryFilter($acct, $filterType, $start_date, $end_date);
 
 		echo json_encode(array('status' => "success", "data" => $result));
 	}
@@ -134,16 +136,6 @@ class Dashboard extends MY_Controller {
 
 		$acct = isset($_POST['account_id']) ? $_POST['account_id'] : NULL;
 		$result = $this->Dashboard_model->getPerformanceGrowth($acct);
-
-		echo json_encode(array('status' => "success", "data" => $result));
-	}
-
-	public function getSymbolChartsFilter() {
-		$filterType = isset($_POST['filter_type']) ? $_POST['filter_type'] : NULL;
-		$period = isset($_POST['period']) ? $_POST['period'] : NULL;
-		$acct = isset($_POST['account_id']) ? $_POST['account_id'] : NULL;
-
-		$result = $this->Dashboard_model->getSymbolChartsFilter($acct, $filterType, $period);
 
 		echo json_encode(array('status' => "success", "data" => $result));
 	}

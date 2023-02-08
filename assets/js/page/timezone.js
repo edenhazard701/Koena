@@ -9,12 +9,12 @@ function reloadTimezoneSession(timezone) {
     data: {
       account_id: _account_id,
       timezone: timezone,
-      baseGMT:3
+      baseGMT: 3
     },
     success: function (response) {
       console.log(response);
       response = JSON.parse(response);
-      // console.log(response);
+      console.log(response);
       
       if (response["status"] == "success") {
         var data = response["data"]['data'];
@@ -67,7 +67,7 @@ function reloadTimeZone(sessionGMT) {
     data: {
       profileGMT: _baseGMT,
       sessionGMT: sessionGMT,
-      baseGMT: 2,
+      baseGMT: 3,
     },
     success: function (response) {
       try {
@@ -91,7 +91,7 @@ function reloadTimeZone(sessionGMT) {
         var MCT_total = +data1.MCT + +data2.MCT + +data3.MCT + +data4.MCT + +data5.MCT + +data6.MCT + +data7.MCT;
         var MTW_total = +data1.MTW + +data2.MTW + +data3.MTW + +data4.MTW + +data5.MTW + +data6.MTW + +data7.MTW;
         var MTL_total = +data1.MTL + +data2.MTL + +data3.MTL + +data4.MTL + +data5.MTL + +data6.MTL + +data7.MTL;
-		    var PROFITTRADE_total = +data1.PROFITTRADE + +data2.PROFITTRADE + +data3.PROFITTRADE + +data4.PROFITTRADE + +data5.PROFITTRADE + +data6.PROFITTRADE + +data7.PROFITTRADE;
+        var PROFITTRADE_total = +data1.PROFITTRADE + +data2.PROFITTRADE + +data3.PROFITTRADE + +data4.PROFITTRADE + +data5.PROFITTRADE + +data6.PROFITTRADE + +data7.PROFITTRADE;
 
         var bpv = Math.max.apply(Math, data.map((o)=> { return o.PROFITTRADE; }));
         var bpid = Number(data.filter((d) => d.PROFITTRADE == bpv)[0].id);
@@ -101,6 +101,7 @@ function reloadTimeZone(sessionGMT) {
           sessionGMT = _baseGMT;
         }
         $("#tableBrokerTimeZone tbody").empty();
+        console.log(data2);
         $("#tableBrokerTimeZone tbody").append(
           `<tr>
                 <td  rowspan="1" colspan="1">Time GMT${sessionGMT}</td>
@@ -165,7 +166,7 @@ function reloadTimeZone(sessionGMT) {
                   <td class='ct'> ${MTL_total}</td>
              </tr>`
         );
-		$("#tableBrokerTimeZone tbody").append(
+    $("#tableBrokerTimeZone tbody").append(
           `<tr>
                   <td>P&L</td>
                   <td class='ct' ${data1.id==bpid?bpclass:''}>${Number(data1.PROFITTRADE).toFixed(2)}</td>
@@ -178,7 +179,7 @@ function reloadTimeZone(sessionGMT) {
                   <td class='ct'> ${Number(PROFITTRADE_total).toFixed(2)}</td>
              </tr>`
         );
-		$("#tableBrokerTimeZone tbody").append(
+    $("#tableBrokerTimeZone tbody").append(
           `<tr>
                   <td>Win Rate</td>
                   <td class='ct' ${data1.id==bpid?bpclass:''}>${Number((data1.MTW/data1.MOT)*100).toFixed(2)}</td>
@@ -210,10 +211,9 @@ function reloadTimeZone(sessionGMT) {
     url: BASE_URL + '/timezone/getBrokersTimeADayData',
     method: "POST",
     data: {
-      account_id: $("#selectAccountIds").val(),
       profileGMT: _baseGMT,
       sessionGMT: sessionGMT,
-      baseGMT: 2,
+      baseGMT: 3,
     },
     success: function (response) {
       console.log(response);

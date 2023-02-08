@@ -27,8 +27,9 @@ class Timezone extends MY_Controller {
 
 		$sessionGMT = isset($_POST['sessionGMT']) ? $_POST['sessionGMT'] : NULL;
 		$baseGMT = isset($_POST['baseGMT']) ? $_POST['baseGMT'] : NULL;
+		$profileGMT = isset($_POST['profileGMT']) ? $_POST['profileGMT'] : NULL;
 
-		$table = $this->Timezone_model->getTableData($sessionGMT, $baseGMT);
+		$table = $this->Timezone_model->getTableData($sessionGMT, $baseGMT, $profileGMT);
 
 		echo json_encode(array('data' => $table, 'status' => 'success' ));
 	}
@@ -36,8 +37,9 @@ class Timezone extends MY_Controller {
 	public function getBrokersTimeADayData() {
 		$sessionGMT = isset($_POST['sessionGMT']) ? $_POST['sessionGMT'] : NULL;
 		$baseGMT = isset($_POST['baseGMT']) ? $_POST['baseGMT'] : NULL;
+		$profileGMT = isset($_POST['profileGMT']) ? $_POST['profileGMT'] : NULL;
 
-		$table = $this->Timezone_model->getBrokersTimeADayData($sessionGMT, $baseGMT);
+		$table = $this->Timezone_model->getBrokersTimeADayData($sessionGMT, $baseGMT, $profileGMT);
 
 		echo json_encode(array('data' => $table, 'status' => 'success' ));
 	}

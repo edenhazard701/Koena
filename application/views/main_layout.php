@@ -39,6 +39,7 @@
   <script src="<?php echo base_url('assets/js/stisla.js')?>"></script>
   <script src="<?php echo base_url('assets/js/scripts.js')?>"></script>
   <script>
+    var _profileGMT = "<?php echo $_SESSION['GMT']?>";
     var BASE_URL = "<?php echo base_url()?>";
     var _account_id = "<?php echo $_SESSION['account_id']?>";
     var _plan_id = "<?php echo $_SESSION['plan_id']?>";
@@ -919,8 +920,9 @@
             <li data-selection="general" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('dashboard/general') ?>"><i class="ion-ios-paper"></i>General Dashboard</a></div></li>
             <li data-selection="journal" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('summary/journal') ?>"><i class="ion-social-buffer"></i>Joural Summary</a></div></li>
             <li data-selection="account" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('summary/account') ?>"><i class="ion-social-chrome"></i>Account Summary</a></div></li>
-            <li data-selection="session" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('timezone') ?>"><i class="ion-transgender"></i>Session</a></div></li>
+            <li data-selection="profile" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('timezone') ?>"><i class="ion-transgender"></i>Session</a></div></li>
             <li data-selection="profile" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('profile') ?>"><i class="ion-transgender"></i>Profile</a></div></li>
+            <li data-selection="plan" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('profile/plan') ?>"><i class="ion-calendar"></i>Plan</a></div></li>
           </ul>
        </aside>
        <script>

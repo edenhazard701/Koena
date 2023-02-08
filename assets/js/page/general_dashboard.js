@@ -1,16 +1,34 @@
 "use strict";
-var strength_chart;
-//Get Symbols Dashboard Filter
-function getSymbolsChart_filter(filterType) {
+var xValues = [];
+var yValues = [];
+var yPLValues = [];
+var barColors = [];
 
+var xValues1 = [];
+var yValues1 = [];
+
+var filter_type = 1;
+var start_date = '';
+var end_date = '';
+var strength_chart = null;
+var profit_chart = null;
+var win_rate_chart = null;
+var buy_sell_chart = null;
+var win_chart = null;
+var loss_chart = null;
+var buy_rate_chart = null;
+var sell_rate_chart = null;
+
+//Get Symbols Dashboard Filter
+function getSymbolsChart_filter() {
   $.ajax({
-    url: "getSymbolChartsFilter",
+    url: BASE_URL + "/dashboard/getSymbolCharts",
     method: "POST",
     data: {
       account_id: _account_id,
-      filter_type: filterType,
-      period: $('#period').val(),
-      //symbols: symbols,
+      filter_type: filter_type,
+      start_date: start_date,
+      end_date: end_date
     },
     success: function (response) {
 
@@ -20,16 +38,15 @@ function getSymbolsChart_filter(filterType) {
       if (response["status"] == "success") {
         data = response["data"];
 
-      var xValues = [];
-      var yValues = [];
-
-      var xPLValues = [];
-      var yPLValues = [];
-      var barColors = [];
+      xValues = [];
+      yValues = [];
+      yPLValues = [];
+      barColors = [];
 
       data.map((d) => {
         xValues.push(d.Symbol);
         yValues.push(d.Strength);
+        yPLValues.push(d.Profit);
         if(d.Strength > 0) {
           barColors.push("#0046bf")
         }
@@ -37,130 +54,17 @@ function getSymbolsChart_filter(filterType) {
           barColors.push("#fe0000");
         }
       });
+      strength_chart.data.labels = xValues;
+      strength_chart.data.datasets[0].data = yValues;
+      strength_chart.data.datasets[0].backgroundColor = barColors;
 
-      data.map((d) => { 
-        xPLValues.push(d.Symbol);
-        yPLValues.push(d.Profit);
-      });
+      strength_chart.update();
 
-    if(strength_chart)
-      strength_chart.destroy();
+      profit_chart.data.labels = xValues;
+      profit_chart.data.datasets[0].data = yPLValues;
+      profit_chart.data.datasets[0].backgroundColor = barColors;
 
-      strength_chart = new Chart("strength_chart", {
-        type: "bar",
-        data: {
-          labels: xValues,
-          datasets: [{
-            backgroundColor: barColors,
-            data: yValues,
-            borderSkipped: false
-          }]
-        },
-        options: {
-          legend: { display: false },
-
-        }
-      });
-      // strength_chart.data.labels = xValues;
-      // strength_chart.data.datasets[0].data = yValues;
-      // console.log(strength_chart.data.datasets[0]);
-      // strength_chart.data.datasets[0].backgroundColor = barColors;
-
-      // strength_chart.update();
-
-      var profit_chart = new Chart("profit_chart", {
-        type: "bar",
-        data: {
-          labels: xPLValues,
-          datasets: [{
-            backgroundColor: barColors,
-            data: yPLValues,
-            borderSkipped: false
-          }]
-        },
-        options: {
-          legend: { display: false },
-
-        }
-      });
-      } else {
-        // notifyme.showNotification(response["status"], response["message"]);
-      }
-    },
-  });
-}
-//Get Symbols Dashboard
-function get_symbol_chart() {
-  var filter_type = 1;
-  $.ajax({
-    url: "getSymbolCharts",
-    method: "POST",
-    data: {
-      account_id: _account_id,
-      filter_type: filter_type,
-      // period: $('#period').val(),
-      //symbols: symbols,
-    },
-    success: function (response) {
-      var data = [];
-      response = JSON.parse(response);
-      console.log(response);
-      if (response["status"] == "success") {
-        data = response['data'];
-        var xValues = [];
-        var yValues = [];
-
-        var xPLValues = [];
-        var yPLValues = [];
-        var barColors = [];
-        data.map((d) => { 
-          xValues.push(d.Symbol);
-          yValues.push(d.Strength);
-          if(d.Strength > 0) {
-            barColors.push("#0046bf")
-          }
-          else {
-            barColors.push("#fe0000");
-          }
-        });
-
-        data.map((d) => { 
-          xPLValues.push(d.Symbol);
-          yPLValues.push(d.Profit);
-        });
-
-
-        var strength_chart = new Chart("strength_chart", {
-          type: "bar",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues,
-              borderSkipped: false
-            }]
-          },
-          options: {
-            legend: { display: false },
-
-          }
-        });
-
-        var profit_chart = new Chart("profit_chart", {
-          type: "bar",
-          data: {
-            labels: xPLValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yPLValues,
-              borderSkipped: false
-            }]
-          },
-          options: {
-            legend: { display: false },
-
-          }
-        });
+      profit_chart.update();
       } else {
         // notifyme.showNotification(response["status"], response["message"]);
       }
@@ -168,355 +72,36 @@ function get_symbol_chart() {
   });
 }
 
-//Get Total Trade Summary Data
-function get_Total_TradeSummary() {
-  
-  $.ajax({
-    url: BASE_URL + "dashboard/getTotalTradeSummary",
-    method: "POST",
-    data: {
-      account_id: _account_id
-      // start_date: startDate,
-      // end_date: endDate,
-      // filter_type: filterType,
-      // symbols: symbols,
-    },
-    success: function (response) {
-      response = JSON.parse(response);
-      if (response["status"] == "success") {
-        var data = response["data"];
-        $("#spanTotalTrades").text(data[0][0].TotalTrades);
-        $("#spanTotalTrade").text(data[0][0].TotalTrades);
-        $("#spanTotalBuyTrades").text(data[0][0].TotalBuyTrades);
-        $("#spanTotalSellTrades").text(data[0][0].TotalSellTrades);
-        $("#spanTotalWins").text(data[0][0].TotalWins);
-        $("#spanTotalWin").text(data[0][0].TotalWins);
-        $("#spanTotalBuyWins").text(data[0][0].TotalBuyWins);
-        $("#spanTotalSellWins").text(data[0][0].TotalSellWins);
-        $("#spanTotalLooses").text(data[0][0].TotalLooses);
-        $("#spanTotalBuyLooses").text(data[0][0].TotalBuyLooses);
-        $("#spanTotalSellLooses").text(data[0][0].TotalSellLooses);
 
-        var xValues = ["Wins", "Losses"];
-        var yValues = [data[0][0].TotalWins,data[0][0].TotalLooses];
-        var barColors = [
-          "#0046bf",
-          "#fe0000",
-          "#2b5797",
-          "#e8c3b9",
-          "#1e7145"
-        ];
-
-        var win_rate_chart = new Chart("general_win_rate_pie_chart", {
-          type: "doughnut",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                  fontSize: 20
-              }
-            }
-          }
-        });
-        $('.win_rate_chart').html("Win Rate "+(Math.round(data[0][0].TotalWins / data[0][0].TotalTrades * 100) )+"% From "+parseInt(data[0][0].TotalTrades))
-        var buysellratio = (data[0][0].TotalSellTrades>0) ? (data[0][0].TotalBuyTrades / data[0][0].TotalSellTrades).toFixed(2) : 0;
-        $('.buy_sell_chart').html("Buy-Sell Ratio "+buysellratio )
-
-        $('.chart24heading').html("Wins "+data[0][0].TotalWins )
-        $('.chart25heading').html("Losses "+data[0][0].TotalLooses )
-        
-        var buywinratio = (data[0][0].TotalBuyTrades>0) ? Math.round(data[0][0].TotalBuyWins / data[0][0].TotalBuyTrades * 100) : 0;
-        $('.buy_win_rate_chart').html("Buy Win-Rate "+buywinratio + '%')
-        
-        var sellwinratio = (data[0][0].TotalSellTrades>0) ? Math.round(data[0][0].TotalSellWins / data[0][0].TotalSellTrades * 100) : 0;
-        $('.sell_win_rate_chart').html("Sell Win-Rate "+sellwinratio+ '%' )
-
-        var xValues = ["Buy "+data[0][0].TotalBuyTrades, "Sell "+data[0][0].TotalSellTrades];
-        var yValues = [data[0][0].TotalBuyTrades, data[0][0].TotalSellTrades];
-        var barColors = [
-          "#0046bf",
-          "#fe0000",
-          "#2b5797",
-          "#e8c3b9",
-          "#1e7145"
-        ];
-
-        var buy_sell_chart = new Chart("general_buy_sell_chart", {
-          type: "doughnut",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                  fontSize: 20
-              }
-            }
-          }
-        });
-
-
-        var xValues = ["Buy "+data[0][0].TotalBuyWins, "Sell "+data[0][0].TotalSellWins];
-        var yValues = [data[0][0].TotalBuyWins, data[0][0].TotalSellWins];
-        var barColors = [
-          "#0046bf",
-          "#fe0000",
-          "#2b5797",
-          "#e8c3b9",
-          "#1e7145"
-        ];
-
-        var win_chart = new Chart("general_wins_chart", {
-          type: "doughnut",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                  fontSize: 20
-              }
-            }
-          }
-        });
-
-
-        var xValues = ["Buy "+data[0][0].TotalBuyLooses, "Sell "+data[0][0].TotalSellLooses];
-        var yValues = [data[0][0].TotalBuyLooses, data[0][0].TotalSellLooses];
-        var barColors = [
-          "#0046bf",
-          "#fe0000",
-          "#2b5797",
-          "#e8c3b9",
-          "#1e7145"
-        ];
-
-        var loss_chart = new Chart("general_losses_chart", {
-          type: "doughnut",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                  fontSize: 20
-              }
-            }
-          }
-        });
-
-        var xValues = ["Win "+data[0][0].TotalBuyWins, "Losses "+data[0][0].TotalBuyLooses];
-        var yValues = [data[0][0].TotalBuyWins, data[0][0].TotalBuyLooses];
-        var barColors = [
-          "#0046bf",
-          "#fe0000",
-          "#2b5797",
-          "#e8c3b9",
-          "#1e7145"
-        ];
-
-        var buy_rate_chart = new Chart("general_buy_win_rate_chart", {
-          type: "doughnut",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                  fontSize: 20
-              }
-            }
-          }
-        });
-
-
-        var xValues = ["Win "+data[0][0].TotalSellWins, "Losses "+data[0][0].TotalSellLooses];
-        var yValues = [data[0][0].TotalSellWins, data[0][0].TotalSellLooses];
-        var barColors = [
-          "#0046bf",
-          "#fe0000",
-          "#2b5797",
-          "#e8c3b9",
-          "#1e7145"
-        ];
-
-        var sell_rate_chart = new Chart("general_sell_win_rate_chart", {
-          type: "doughnut",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                  fontSize: 20
-              }
-            }
-          }
-        });
-        function drawChart() {
-          // Win Rate 
-          var c_WinRate = (data[0][0].TotalTrades>0) ? Math.round(data[0][0].TotalWins / data.TotalTrades * 100) : 0;
-          var WinRatePie = _pie({
-            element : 'totalWinRate',
-            title : 'Win Rate',
-            value : c_WinRate + '% <small>from</small> ' + data.TotalTrades,
-            left : {
-                title : 'Wins',
-                value : data.TotalWins,
-              }, 
-            right : {
-                title : 'Losses',
-                value : data.TotalLooses,
-              }
-            });
-
-          // Buy-Sell Ratio
-          var c_BySellRatioPie = (data[0][0].TotalSellTrades>0) ? (data[0][0].TotalBuyTrades / data[0][0].TotalSellTrades).toFixed(2) : 0;
-          var BySellRatioPie = _pie({
-            element : 'totalBuySellRatio',
-            title : 'Buy-Sell Ratio',
-            value : c_BySellRatioPie,
-            left : {
-                title : 'Buy',
-                value : data[0][0].TotalBuyTrades,
-              }, 
-            right : {
-                title : 'Sell',
-                value : data[0][0].TotalSellTrades,
-              }
-            });
-            
-          // Wins
-          var WinsPie = _pie({
-            element : 'totalWins',
-            title : 'Wins',
-            value : data.TotalWins,
-            left : {
-                title : 'Buy',
-                value : data.TotalBuyWins,
-              }, 
-            right : {
-                title : 'Sell',
-                value : data.TotalSellWins,
-              }
-            });
-            
-          // Losses
-          var LosesPie = _pie({
-            element : 'totalLoses',
-            title : 'Losses',
-            value : data.TotalLooses,
-            left : {
-                title : 'Buy',
-                value : data.TotalBuyLooses,
-              }, 
-            right : {
-                title : 'Sell',
-                value : data.TotalSellLooses,
-              }
-            });
-  
-          // Buy Win-Rate
-          var c_LosesPie = (data.TotalBuyTrades>0) ? Math.round(data.TotalBuyWins / data.TotalBuyTrades * 100) : 0;
-          var LosesPie = _pie({
-            element : 'totalBuyWinRate',
-            title : 'Buy Win-Rate',
-            value :  c_LosesPie + '%',
-            left : {
-                title : 'Wins',
-                value : data.TotalBuyWins,
-              }, 
-            right : {
-                title : 'Losses',
-                value : data.TotalBuyLooses,
-              }
-            });
-
-          // Sell Win-Rate
-          var c_SellWinRate = (data.TotalSellTrades>0) ? Math.round(data.TotalSellWins / data.TotalSellTrades * 100) : 0;
-          var SellWinRate = _pie({
-            element : 'totalSellWinRate',
-            title : 'Sell Win-Rate',
-            value :  c_SellWinRate + '%',
-            left : {
-                title : 'Wins',
-                value : data.TotalSellWins,
-              }, 
-            right : {
-                title : 'Losses',
-                value : data.TotalSellLooses,
-              }
-            });            
-        }
-      } else {
-        notifyme.showNotification(response["status"], response["message"]);
-      }
-    },
-  });
-}
-
-function getTotalTradeSummary_filter(filterType) {
+function getTotalTradeSummary_filter() {
   $.ajax({
     url: BASE_URL + "dashboard/getTotalTradeSummaryFilter",
     method: "POST",
     data: {
-      action: "getTotalTradeSummaryFilter",
       account_id: _account_id,
-      filter_type: filterType,
-      period: $('#period1').val(),
-      // symbols: symbols,
+      filter_type: filter_type,
+      start_date: start_date,
+      end_date: end_date,
     },
     success: function (response) {
       response = JSON.parse(response);
       if (response["status"] == "success") {
         var data = response["data"];
-        $("#spanTotalTrades").text(data[0][0].TotalTrades);
-        $("#spanTotalTrade").text(data[0][0].TotalTrades);
-        $("#spanTotalBuyTrades").text(data[0][0].TotalBuyTrades);
-        $("#spanTotalSellTrades").text(data[0][0].TotalSellTrades);
-        $("#spanTotalWins").text(data[0][0].TotalWins);
-        $("#spanTotalWin").text(data[0][0].TotalWins);
-        $("#spanTotalBuyWins").text(data[0][0].TotalBuyWins);
-        $("#spanTotalSellWins").text(data[0][0].TotalSellWins);
-        $("#spanTotalLooses").text(data[0][0].TotalLooses);
-        $("#spanTotalBuyLooses").text(data[0][0].TotalBuyLooses);
-        $("#spanTotalSellLooses").text(data[0][0].TotalSellLooses);
+        $("#spanTotalTrades").text(data[0].TotalTrades);
+        $("#spanTotalTrade").text(data[0].TotalTrades);
+        $("#spanTotalBuyTrades").text(data[0].TotalBuyTrades);
+        $("#spanTotalSellTrades").text(data[0].TotalSellTrades);
+        $("#spanTotalWins").text(data[0].TotalWins);
+        $("#spanTotalWin").text(data[0].TotalWins);
+        $("#spanTotalBuyWins").text(data[0].TotalBuyWins);
+        $("#spanTotalSellWins").text(data[0].TotalSellWins);
+        $("#spanTotalLooses").text(data[0].TotalLooses);
+        $("#spanTotalBuyLooses").text(data[0].TotalBuyLooses);
+        $("#spanTotalSellLooses").text(data[0].TotalSellLooses);
 
-        var xValues = ["Wins", "Losses"];
-        var yValues = [data[0][0].TotalWins,data[0][0].TotalLooses];
-        var barColors = [
+        xValues = ["Wins", "Losses"];
+        yValues = [data[0].TotalWins,data[0].TotalLooses];
+        barColors = [
           "#0046bf",
           "#fe0000",
           "#2b5797",
@@ -524,279 +109,72 @@ function getTotalTradeSummary_filter(filterType) {
           "#1e7145"
         ];
 
-        var win_rate_chart = new Chart("general_win_rate_pie_chart", {
-          type: "doughnut",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                  fontSize: 20
-              }
-            }
-          }
-        });
-        $('.win_rate_chart').html("Win Rate "+(Math.round(data[0][0].TotalWins / data[0][0].TotalTrades * 100) )+"% From "+parseInt(data[0][0].TotalTrades))
-        var buysellratio = (data[0][0].TotalSellTrades>0) ? (data[0][0].TotalBuyTrades / data[0][0].TotalSellTrades).toFixed(2) : 0;
+        win_rate_chart.data.labels = xValues;
+        win_rate_chart.data.datasets[0].data = yValues;
+        win_rate_chart.data.datasets[0].backgroundColor = barColors;
+
+        win_rate_chart.update();
+
+        $('.win_rate_chart').html("Win Rate "+(Math.round(data[0].TotalWins / data[0].TotalTrades * 100) )+"% From "+parseInt(data[0].TotalTrades))
+        var buysellratio = (data[0].TotalSellTrades>0) ? (data[0].TotalBuyTrades / data[0].TotalSellTrades).toFixed(2) : 0;
         $('.buy_sell_chart').html("Buy-Sell Ratio "+buysellratio )
 
-        $('.chart24heading').html("Wins "+data[0][0].TotalWins )
-        $('.chart25heading').html("Losses "+data[0][0].TotalLooses )
+        $('.chart24heading').html("Wins "+data[0].TotalWins )
+        $('.chart25heading').html("Losses "+data[0].TotalLooses )
         
-        var buywinratio = (data[0][0].TotalBuyTrades>0) ? Math.round(data[0][0].TotalBuyWins / data[0][0].TotalBuyTrades * 100) : 0;
+        var buywinratio = (data[0].TotalBuyTrades>0) ? Math.round(data[0].TotalBuyWins / data[0].TotalBuyTrades * 100) : 0;
         $('.buy_win_rate_chart').html("Buy Win-Rate "+buywinratio + '%')
         
-        var sellwinratio = (data[0][0].TotalSellTrades>0) ? Math.round(data[0][0].TotalSellWins / data[0][0].TotalSellTrades * 100) : 0;
+        var sellwinratio = (data[0].TotalSellTrades>0) ? Math.round(data[0].TotalSellWins / data[0].TotalSellTrades * 100) : 0;
         $('.sell_win_rate_chart').html("Sell Win-Rate "+sellwinratio+ '%' )
 
-        var xValues = ["Buy "+data[0][0].TotalBuyTrades, "Sell "+data[0][0].TotalSellTrades];
-        var yValues = [data[0][0].TotalBuyTrades, data[0][0].TotalSellTrades];
-        var barColors = [
-          "#0046bf",
-          "#fe0000",
-          "#2b5797",
-          "#e8c3b9",
-          "#1e7145"
-        ];
+        xValues = ["Buy "+data[0].TotalBuyTrades, "Sell "+data[0].TotalSellTrades];
+        yValues = [data[0].TotalBuyTrades, data[0].TotalSellTrades];
 
-        var buy_sell_chart = new Chart("general_buy_sell_chart", {
-          type: "doughnut",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                  fontSize: 20
-              }
-            }
-          }
-        });
+        buy_sell_chart.data.labels = xValues;
+        buy_sell_chart.data.datasets[0].data = yValues;
+        buy_sell_chart.data.datasets[0].backgroundColor = barColors;
+
+        buy_sell_chart.update();
 
 
-        var xValues = ["Buy "+data[0][0].TotalBuyWins, "Sell "+data[0][0].TotalSellWins];
-        var yValues = [data[0][0].TotalBuyWins, data[0][0].TotalSellWins];
-        var barColors = [
-          "#0046bf",
-          "#fe0000",
-          "#2b5797",
-          "#e8c3b9",
-          "#1e7145"
-        ];
+        xValues = ["Buy "+data[0].TotalBuyWins, "Sell "+data[0].TotalSellWins];
+        yValues = [data[0].TotalBuyWins, data[0].TotalSellWins];
 
-        var win_chart = new Chart("general_wins_chart", {
-          type: "doughnut",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                  fontSize: 20
-              }
-            }
-          }
-        });
+        win_chart.data.labels = xValues;
+        win_chart.data.datasets[0].data = yValues;
+        win_chart.data.datasets[0].backgroundColor = barColors;
+
+        win_chart.update();
 
 
-        var xValues = ["Buy "+data[0][0].TotalBuyLooses, "Sell "+data[0][0].TotalSellLooses];
-        var yValues = [data[0][0].TotalBuyLooses, data[0][0].TotalSellLooses];
-        var barColors = [
-          "#0046bf",
-          "#fe0000",
-          "#2b5797",
-          "#e8c3b9",
-          "#1e7145"
-        ];
+        xValues = ["Buy "+data[0].TotalBuyLooses, "Sell "+data[0].TotalSellLooses];
+        yValues = [data[0].TotalBuyLooses, data[0].TotalSellLooses];
 
-        var loss_chart = new Chart("general_losses_chart", {
-          type: "doughnut",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                  fontSize: 20
-              }
-            }
-          }
-        });
+        loss_chart.data.labels = xValues;
+        loss_chart.data.datasets[0].data = yValues;
+        loss_chart.data.datasets[0].backgroundColor = barColors;
 
-        var xValues = ["Win "+data[0][0].TotalBuyWins, "Losses "+data[0][0].TotalBuyLooses];
-        var yValues = [data[0][0].TotalBuyWins, data[0][0].TotalBuyLooses];
-        var barColors = [
-          "#0046bf",
-          "#fe0000",
-          "#2b5797",
-          "#e8c3b9",
-          "#1e7145"
-        ];
+        loss_chart.update();
 
-        var buy_rate_chart = new Chart("general_buy_win_rate_chart", {
-          type: "doughnut",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                  fontSize: 20
-              }
-            }
-          }
-        });
+        xValues = ["Win "+data[0].TotalBuyWins, "Losses "+data[0].TotalBuyLooses];
+        yValues = [data[0].TotalBuyWins, data[0].TotalBuyLooses];
 
+        buy_rate_chart.data.labels = xValues;
+        buy_rate_chart.data.datasets[0].data = yValues;
+        buy_rate_chart.data.datasets[0].backgroundColor = barColors;
 
-        var xValues = ["Win "+data[0][0].TotalSellWins, "Losses "+data[0][0].TotalSellLooses];
-        var yValues = [data[0][0].TotalSellWins, data[0][0].TotalSellLooses];
-        var barColors = [
-          "#0046bf",
-          "#fe0000",
-          "#2b5797",
-          "#e8c3b9",
-          "#1e7145"
-        ];
+        buy_rate_chart.update();
 
-        var sell_rate_chart = new Chart("general_sell_win_rate_chart", {
-          type: "doughnut",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {
-              display: true,
-              labels: {
-                  fontSize: 20
-              }
-            }
-          }
-        });
-        function drawChart() {
-          // Win Rate 
-          var c_WinRate = (data[0][0].TotalTrades>0) ? Math.round(data[0][0].TotalWins / data.TotalTrades * 100) : 0;
-          var WinRatePie = _pie({
-            element : 'totalWinRate',
-            title : 'Win Rate',
-            value : c_WinRate + '% <small>from</small> ' + data.TotalTrades,
-            left : {
-                title : 'Wins',
-                value : data.TotalWins,
-              }, 
-            right : {
-                title : 'Losses',
-                value : data.TotalLooses,
-              }
-            });
+        xValues = ["Win "+data[0].TotalSellWins, "Losses "+data[0].TotalSellLooses];
+        yValues = [data[0].TotalSellWins, data[0].TotalSellLooses];
 
-          // Buy-Sell Ratio
-          var c_BySellRatioPie = (data[0][0].TotalSellTrades>0) ? (data[0][0].TotalBuyTrades / data[0][0].TotalSellTrades).toFixed(2) : 0;
-          var BySellRatioPie = _pie({
-            element : 'totalBuySellRatio',
-            title : 'Buy-Sell Ratio',
-            value : c_BySellRatioPie,
-            left : {
-                title : 'Buy',
-                value : data[0][0].TotalBuyTrades,
-              }, 
-            right : {
-                title : 'Sell',
-                value : data[0][0].TotalSellTrades,
-              }
-            });
-            
-          // Wins
-          var WinsPie = _pie({
-            element : 'totalWins',
-            title : 'Wins',
-            value : data.TotalWins,
-            left : {
-                title : 'Buy',
-                value : data.TotalBuyWins,
-              }, 
-            right : {
-                title : 'Sell',
-                value : data.TotalSellWins,
-              }
-            });
-            
-          // Losses
-          var LosesPie = _pie({
-            element : 'totalLoses',
-            title : 'Losses',
-            value : data.TotalLooses,
-            left : {
-                title : 'Buy',
-                value : data.TotalBuyLooses,
-              }, 
-            right : {
-                title : 'Sell',
-                value : data.TotalSellLooses,
-              }
-            });
-  
-          // Buy Win-Rate
-          var c_LosesPie = (data.TotalBuyTrades>0) ? Math.round(data.TotalBuyWins / data.TotalBuyTrades * 100) : 0;
-          var LosesPie = _pie({
-            element : 'totalBuyWinRate',
-            title : 'Buy Win-Rate',
-            value :  c_LosesPie + '%',
-            left : {
-                title : 'Wins',
-                value : data.TotalBuyWins,
-              }, 
-            right : {
-                title : 'Losses',
-                value : data.TotalBuyLooses,
-              }
-            });
+        sell_rate_chart.data.labels = xValues;
+        sell_rate_chart.data.datasets[0].data = yValues;
+        sell_rate_chart.data.datasets[0].backgroundColor = barColors;
 
-          // Sell Win-Rate
-          var c_SellWinRate = (data.TotalSellTrades>0) ? Math.round(data.TotalSellWins / data.TotalSellTrades * 100) : 0;
-          var SellWinRate = _pie({
-            element : 'totalSellWinRate',
-            title : 'Sell Win-Rate',
-            value :  c_SellWinRate + '%',
-            left : {
-                title : 'Wins',
-                value : data.TotalSellWins,
-              }, 
-            right : {
-                title : 'Losses',
-                value : data.TotalSellLooses,
-              }
-            });            
-        }
+        sell_rate_chart.update();
+        
       } else {
         // notifyme.showNotification(response["status"], response["message"]);
       }
@@ -831,7 +209,7 @@ function getPerformanceGrowth() {
           "#1e7145"
         ];
 
-        console.log(data);
+        
         if(data != undefined) {
 
           data.map((d) => {
@@ -867,15 +245,14 @@ function getPerformanceGrowth() {
             datasets: [{
               backgroundColor: barColors,
               data: yValues,
-              // borderSkipped: false
+              borderSkipped: false
             }]
           },
           options: {
-            tooltips: {
-              enabled: true
-            },
-            hover: {
-              animationDuration: 1
+            legend: {
+              labels: {
+                display: false
+              }
             },
             animation: {
               duration: 1,
@@ -1007,11 +384,10 @@ function getAccountSummary() {
         $("#spanAverageLotStraded").text(Number(data[0][0].averagelotstraded).toFixed(2));
         $("#spanTotalCommissionAmount").text(Number(data[0][0].totalcommissionamount).toFixed(2));
         $("#spanTotalSwapAmount").text(Number(data[0][0].totalswapamount).toFixed(2));
-        if(avaTradeTime == undefined) {
-          var avaTradeTime = "00:00:00"; }
-        else{
-          var avaTradeTime = (data[0][0].AvgTradeTime).slice(0, 8);
-        }
+        
+        if(avaTradeTime == undefined){
+            var avaTradeTime = "00.00.00";
+        } else avaTradeTime = (data[0][0].AvgTradeTime).slice(0, 8);
         $("#general_insight_list tbody").append(
           `<tr>
             <td class="sect_td2">${avaTradeTime}</td>
@@ -1042,8 +418,181 @@ $('#reload').click(
 );
 
 $(document).ready(function(){
-  get_symbol_chart();
-  get_Total_TradeSummary();
+  strength_chart = new Chart("strength_chart", {
+    type: "bar",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      legend: { display: false },
+    }
+  });
+
+  profit_chart = new Chart("profit_chart", {
+    type: "bar",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yPLValues,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      legend: { display: false },
+
+    }
+  });
+
+  win_rate_chart = new Chart("general_win_rate_pie_chart", {
+    type: "doughnut",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+      }]
+    },
+    options: {
+      legend: {
+        display: true,
+        labels: {
+            fontSize: 20
+        }
+      }
+    }
+  });
+
+  buy_sell_chart = new Chart("general_buy_sell_chart", {
+    type: "doughnut",
+    data: {
+      labels: xValues1,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues1
+      }]
+    },
+    options: {
+      legend: {
+        display: true,
+        labels: {
+            fontSize: 20
+        }
+      }
+    }
+  });
+
+  win_chart = new Chart("general_wins_chart", {
+    type: "doughnut",
+    data: {
+      labels: xValues1,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues1
+      }]
+    },
+    options: {
+      legend: {
+        display: true,
+        labels: {
+            fontSize: 20
+        }
+      }
+    }
+  });
+
+  loss_chart = new Chart("general_losses_chart", {
+    type: "doughnut",
+    data: {
+      labels: xValues1,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues1
+      }]
+    },
+    options: {
+      legend: {
+        display: true,
+        labels: {
+            fontSize: 20
+        }
+      }
+    }
+  });
+
+
+  buy_rate_chart = new Chart("general_buy_win_rate_chart", {
+    type: "doughnut",
+    data: {
+      labels: xValues1,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues1
+      }]
+    },
+    options: {
+      legend: {
+        display: true,
+        labels: {
+            fontSize: 20
+        }
+      }
+    }
+  });
+
+  sell_rate_chart = new Chart("general_sell_win_rate_chart", {
+    type: "doughnut",
+    data: {
+      labels: xValues1,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues1
+      }]
+    },
+    options: {
+      legend: {
+        display: true,
+        labels: {
+            fontSize: 20
+        }
+      }
+    }
+  });
+
+  $('.chart-filter').click(function(){
+    filter_type = this.getAttribute('rel');
+    if(filter_type != 5)
+      getSymbolsChart_filter();
+  });
+
+  $('.chart-filter-pie').click(function(){
+    filter_type = this.getAttribute('rel');
+    if(filter_type != 5)
+      getTotalTradeSummary_filter();
+  });
+
+  $('#period').change(function(){
+    filter_type = 5;
+    start_date = $("input[name='daterangepicker_start']").val();
+    end_date = $("input[name='daterangepicker_end']").val();
+    getSymbolsChart_filter();
+  });
+
+  $('#period1').change(function(){
+    filter_type = 5;
+    start_date = $("input[name='daterangepicker_start']").val();
+    end_date = $("input[name='daterangepicker_end']").val();
+    getTotalTradeSummary_filter();
+  })
+
+  getSymbolsChart_filter();
   getPerformanceGrowth();
   getAccountSummary();
+  getTotalTradeSummary_filter();
+
 });
