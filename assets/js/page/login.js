@@ -26,20 +26,19 @@ $("#loginForm").submit(function (e) {
   $.ajax({
     url: "login/checkAuth",
     method: "POST",
+    dataType: 'json',
     data: $(this).serialize(),
     success: function (response) {
-       response = JSON.parse(response);
-       console.log('response', response);
-	   if (response["status"] == "success") {
-        if( response["data"].type == 1){
+      if (response["status"] == "success") {
+        if( response["type"] == 1){
           window.location.href = BASE_URL + "dashboard";
         }else{
           window.location.href = BASE_URL + "dashboard/general";
         }
-       
+      
       } else {
-        // notifyme.showNotification(response["status"], response["message"]);
+        notifyme.showNotification(response["status"], response["message"]);
       }
-    },
+      },
   });
 });

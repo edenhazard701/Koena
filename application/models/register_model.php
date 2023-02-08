@@ -25,22 +25,21 @@
         
         $to = $email; //change to ur mail address
         $strSubject="Koena Tech | Email Verification";
-        $message = 'Hi! '.$username.'
-' ; 
-        $message .= 'Thanks for signing up to the Koena Journal.
-' ; 
-        $message .= 'Click on the link to activate your account '.$link.'
-
-Thanks' ;              
+        $message = 'Hi! '.$username.'' ; 
+        $message .= 'Thanks for signing up to the Koena Journal.' ; 
+        $message .= 'Click on the link to activate your account '.$link.'Thanks' ;              
 
         $this->email->from('email@example.com', 'Identification');
         $this->email->to($to);
         $this->email->subject($strSubject);
         $this->email->message($message);
-        if($this->email->send())
+ 
+        try {
+            $this->email->send();
             return 3;
-        else
+        } catch(Exception $e) {
             return 4;
+        }
     }
     public function resendVerificationEmail($params){   
         $active_code=md5(uniqid(rand(5, 15), true));
