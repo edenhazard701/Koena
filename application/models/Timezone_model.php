@@ -63,11 +63,11 @@ class Timezone_model extends CI_Model {
             //echo "SELECT * FROM closedtrades c WHERE c.Acc_Id=:account_id AND (c.symbol IN (SELECT symbol FROM symbols s)) AND ( (DATE_FORMAT(c.OpenTime, '%k') BETWEEN $open AND $close))";
 
             if($break){
-                $query = $this->db->query("SELECT * FROM closedtrades c WHERE c.Acc_Id=".$data['account_id']." AND (".$_SESSION['plan_id'].">1 OR c.symbol IN (SELECT symbol FROM symbols s)) AND ((DATE_FORMAT(c.OpenTime, '%k') BETWEEN '".$open."' AND 23) OR (DATE_FORMAT(c.OpenTime, '%k') BETWEEN 0 AND '".$close."'))");
+                $query = $this->db->query("SELECT * FROM closedtrades c WHERE c.Acc_Id=".$data['account_id']." AND (".$_SESSION['plan_id'].">1 OR c.symbol IN (SELECT symbol FROM symbols s)) AND ((DATE_FORMAT(c.OpenTime, '%k') BETWEEN ".$open." AND 23) OR (DATE_FORMAT(c.OpenTime, '%k') BETWEEN 0 AND ".($close-1)."))");
             }
                 
             else{
-                $query = $this->db->query("SELECT * FROM closedtrades c WHERE c.Acc_Id=".$data['account_id']." AND (".$_SESSION['plan_id'].">1 OR c.symbol IN (SELECT symbol FROM symbols s)) AND ( (DATE_FORMAT(c.OpenTime, '%k') BETWEEN '".$open."' AND '".$close."'))");
+                $query = $this->db->query("SELECT * FROM closedtrades c WHERE c.Acc_Id=".$data['account_id']." AND (".$_SESSION['plan_id'].">1 OR c.symbol IN (SELECT symbol FROM symbols s)) AND ( (DATE_FORMAT(c.OpenTime, '%k') BETWEEN ".$open." AND ".($close-1)."))");
             }
 
             $timezone_sessions = $query->result();

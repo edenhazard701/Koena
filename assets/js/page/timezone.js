@@ -9,7 +9,7 @@ function reloadTimezoneSession(timezone) {
     data: {
       account_id: _account_id,
       timezone: timezone,
-      baseGMT: 3
+      baseGMT: now.getTimezoneOffset() / (-60)
     },
     success: function (response) {
       console.log(response);
@@ -68,7 +68,7 @@ function reloadTimeZone(sessionGMT) {
     data: {
       profileGMT: _baseGMT,
       sessionGMT: sessionGMT,
-      baseGMT: 3,
+      baseGMT: now.getTimezoneOffset() / (-60),
     },
     success: function (response) {
       try {
