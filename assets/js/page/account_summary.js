@@ -456,7 +456,7 @@ function getAccountDetailsModal(ticket_id) {
         $('.timeframe-wrap-hide').hide();
         _rebiuld_photoswipe();
       } else {
-        // notifyme.showNotification(response["status"], response["message"]);
+        notifyme.showNotification(response["status"], response["message"]);
       }
     },
   });
@@ -568,15 +568,14 @@ $("body").on('click','.deleteTimeframe1',function () {
         ticket_id: ticket_id,
       },
       success: function (response) {
-        // console.log(response);
         response = JSON.parse(response);
         if (response["status"] == "success") {
           //$(this).parent('.timeframeId-wrap').first().find('.fancybox').attr("src",'data:image/jpg;charset=utf8;base64');
     $('#container-'+timeframe+' .fancybox').css("display",'none');
     
-          // notifyme.showNotification(response["status"], response["message"]);
+          notifyme.showNotification(response["status"], response["message"]);
         }else{
-          // notifyme.showNotification(response["status"], response["message"]);
+          notifyme.showNotification(response["status"], response["message"]);
         }
       }
     });

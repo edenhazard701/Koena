@@ -2,7 +2,7 @@ reloadTimeZone();
 
 function reloadTimezoneSession(timezone) {
   var sessionGMT = $("#sessionGMT").val();
-
+  let now = new Date();
   $.ajax({
     url: BASE_URL + "timezone/spTimezoneSession",
     method: "POST",
@@ -61,6 +61,7 @@ function reloadTimezoneSession(timezone) {
 
 
 function reloadTimeZone(sessionGMT) {
+  let now = new Date();
   $.ajax({
     url: BASE_URL + '/timezone/getTableData',
     method: "POST",
@@ -76,7 +77,6 @@ function reloadTimeZone(sessionGMT) {
       } catch {
         console.log("err");
       }
-      // console.log(response);
       
       if (response["status"] == "success") {
         var data = response["data"];

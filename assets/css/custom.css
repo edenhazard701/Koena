@@ -305,10 +305,27 @@
 }
 
 .already-plan-message p {
-  color: black;
   font-size: 18px;
 }
 .table-dark {
     color: #fff;
     background-color: #212529 !important;
 }
+
+/* width */
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+

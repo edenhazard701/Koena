@@ -19,7 +19,7 @@ class Profile_model extends CI_Model {
             return array('status' => 'error', 'message' => 'An error while uploading file.');
         }
 
-        $_SESSION['avatar'] = $imageData;
+        $_SESSION['avatar'] =  $imgContent;
         return array('status' => 'success', 'message' => 'Avatar Changed successfully!');
     }
 

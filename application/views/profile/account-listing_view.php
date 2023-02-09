@@ -64,7 +64,11 @@
       </div>
     </div>
   </div>
-  <form id="changeAvatarForm" action="<?php echo base_url('/profile/changeAvatar')?>" method="post">
+  <form 
+    id="changeAvatarForm" 
+    callback="document.location.reload(true);" 
+    action="<?php echo base_url('/profile/changeAvatar')?>" 
+    method="post">
     <input id='upload-ava' type="file" accept=".png, .jpg, .jpeg" name="image" enctype="multipart/form-data" style='display:none;' onchange="$('#changeAvatarForm').submit();">
     <input type="hidden" name="user_id" value="<?=$_SESSION['user_id']?>">
     <!-- <input type="submit" name="submit" value="Upload">  -->
@@ -326,6 +330,4 @@
 
 <script src="<?php echo base_url('assets/js/page/profile.js')?>"></script>
 <script src="<?php echo base_url('assets/js/page/plan.js')?>"></script>
-<script src="<?php echo base_url('assets/js/plugins/notify.js')?>"></script>
-<script src="<?php echo base_url('assets/js/notifyme.js')?>"></script>
 <script src="https://www.paypal.com/sdk/js?client-id=ARsCEDtwbQSGyW6m5uH-0x5Ch_XiLDpb8zeSyn699l20xsytdv7N_iCTVa0HZx1xl262EPYh4xs7oSm6&currency=USD&disable-funding=venmo,credit"></script>

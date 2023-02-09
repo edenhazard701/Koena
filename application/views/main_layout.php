@@ -35,9 +35,13 @@
 
   <script src="<?php echo base_url('assets/modules/fullcalendar/fullcalendar.min.js')?>"></script>
   <script src="<?php echo base_url('assets/modules/nicescroll/jquery.nicescroll.min.js')?>"></script>
+  <script src="<?php echo base_url('assets/js/plugins/notify.js')?>"></script>
+  
   <!-- Page Specific JS File -->
   <script src="<?php echo base_url('assets/js/stisla.js')?>"></script>
   <script src="<?php echo base_url('assets/js/scripts.js')?>"></script>
+  <script src="<?php echo base_url('assets/js/notifyme.js')?>"></script>
+
   <script>
     var _profileGMT = "<?php echo $_SESSION['GMT']?>";
     var BASE_URL = "<?php echo base_url()?>";
@@ -920,9 +924,9 @@
               <?php }
             ?>
             <li data-selection="general" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('dashboard/general') ?>"><i class="ion-ios-paper"></i>General Dashboard</a></div></li>
-            <li data-selection="journal" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('summary/journal') ?>"><i class="ion-social-buffer"></i>Joural Summary</a></div></li>
+            <li data-selection="journal" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('summary/journal') ?>"><i class="ion-social-buffer"></i>Journal Summary</a></div></li>
             <li data-selection="account" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('summary/account') ?>"><i class="ion-social-chrome"></i>Account Summary</a></div></li>
-            <li data-selection="profile" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('timezone') ?>"><i class="ion-transgender"></i>Session</a></div></li>
+            <li data-selection="session" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('timezone') ?>"><i class="ion-transgender"></i>Session</a></div></li>
             <li data-selection="profile" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('profile') ?>"><i class="ion-transgender"></i>Profile</a></div></li>
           </ul>
        </aside>
@@ -954,7 +958,7 @@
       </footer>
     </div>
   </div> 
-<script src="<?php echo base_url('assets/js/page/layout.js')?>"></script>
+  <script src="<?php echo base_url('assets/js/page/layout.js')?>"></script>
   <script src="<?php echo base_url('assets/js/switch.js')?>"></script>
 </body>
 </html>
