@@ -2,14 +2,14 @@ reloadTimeZone();
 
 function reloadTimezoneSession(timezone) {
   var sessionGMT = $("#sessionGMT").val();
-
+  let now = new Date();
   $.ajax({
     url: BASE_URL + "timezone/spTimezoneSession",
     method: "POST",
     data: {
       account_id: _account_id,
       timezone: timezone,
-      baseGMT: 3
+      baseGMT: now.getTimezoneOffset() / (-60)
     },
     success: function (response) {
       console.log(response);
@@ -61,13 +61,14 @@ function reloadTimezoneSession(timezone) {
 
 
 function reloadTimeZone(sessionGMT) {
+  let now = new Date();
   $.ajax({
     url: BASE_URL + '/timezone/getTableData',
     method: "POST",
     data: {
       profileGMT: _baseGMT,
       sessionGMT: sessionGMT,
-      baseGMT: 3,
+      baseGMT: now.getTimezoneOffset() / (-60),
     },
     success: function (response) {
       try {
