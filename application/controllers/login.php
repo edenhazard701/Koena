@@ -16,8 +16,9 @@ class Login extends CI_Controller {
 		$email = isset($_POST['email']) ? $_POST['email'] : NULL;
 		$password = isset($_POST['password']) ? $_POST['password'] : NULL;
 
-		$user = $this->Login_model->loginUser($email, $password);
+		$state = $this->Login_model->loginUser($email, $password);
+		
+		echo json_encode(array('status' => $state['status'], "message" => $state['message'], "type" => !empty($state['type']) ? $state['type'] : '') );
 
-		echo json_encode(array('status' => "success", "data" => $user));
 	}
 }

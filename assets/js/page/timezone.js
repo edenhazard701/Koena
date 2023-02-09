@@ -77,7 +77,6 @@ function reloadTimeZone(sessionGMT) {
       } catch {
         console.log("err");
       }
-      // console.log(response);
       
       if (response["status"] == "success") {
         var data = response["data"];

@@ -15,7 +15,7 @@ class Register extends CI_Controller {
 	public function registerUser()
     {
         $params = $this->input->post();
-        
+
         $email = isset($params['email'])?$params['email']:'';
         $password = isset($params['password'])?$params['password']:'';
         $username = isset($params['username'])?$params['username']:'';
@@ -33,7 +33,7 @@ class Register extends CI_Controller {
                 echo json_encode(array('status' => "success", "message" => 'Email send successfully to verify email. Please check your email.'));	
                 break;
             case '4':
-                echo json_encode(array('status' => "success", "message" => "You have registered successfully!"));
+                echo json_encode(array('status' => "success", "error" => "SMTP Server is not running."));
                 break;
         }
     }

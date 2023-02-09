@@ -10,7 +10,7 @@ function getUserAccounts($selected_account) {
         response = JSON.parse(response);
       }
       catch (event) {
-        // notifyme.showNotification('error', response);
+        notifyme.showNotification('error', response);
       }
       if (response["status"] == "success") {
         var data = response["data"];

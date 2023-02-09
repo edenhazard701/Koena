@@ -8,13 +8,15 @@
     {
         $sql = "SELECT * FROM user WHERE email = '".$email."' OR username ='".$email."'";
         $query = $this->db->query($sql);
-        $user = $query->result()[0];
+        $user = $query->result();
 
-        if (!$user) return array('status' => "error", "message" => "Invalid email or password!");
+        if (empty($user)) return array('status' => "error", "message" => "Invalid email or password!");
+        
+        $user = $user[0];
+
+        if (!password_verify($password, $user->password)) return array('status' => "error", "message" => "Invalid email or password!");
 
         if ($user->status == 0) return array('status' => "error", "message" => "User is not active, Please contact support.");
-
-        if (!crypt($password, $user->password)) return array('status' => "error", "message" => "Invalid email or password!");
 
         $sql = "SELECT *, end_date>=CURDATE() as IsActive FROM user_subscription WHERE user_id = ".$user->user_id." AND end_date>=CURDATE() order by id ASC LIMIT 1";
 

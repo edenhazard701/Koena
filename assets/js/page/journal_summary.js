@@ -157,9 +157,9 @@ $('body').on('click','.deleteTimeframe',function () {
           //$(this).parent('.timeframeId-wrap').first().find('.fancybox').attr("src",'data:image/jpg;charset=utf8;base64');
     $('#container-'+timeframe+' .fancybox').css("display",'none');
     $(this).hide(); 
-          // notifyme.showNotification(response["status"], response["message"]);
+          notifyme.showNotification(response["status"], response["message"]);
         }else{
-          // notifyme.showNotification(response["status"], response["message"]);
+          notifyme.showNotification(response["status"], response["message"]);
         }
       }
     });

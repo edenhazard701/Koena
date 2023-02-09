@@ -64,11 +64,15 @@
       </div>
     </div>
   </div>
- <form id="changeAvatarForm" callback='document.location.reload(true);' action="/profile/changeAvatar">
-            <input id='upload-ava' type="file" accept=".png, .jpg, .jpeg" name="image" enctype="multipart/form-data" style='display:none;' onchange="$('#changeAvatarForm').submit();">
-            <input type="hidden" name="user_id" value="<?=$_SESSION['user_id']?>">
-            <input type="hidden" name="action" value="change-avatar">
-    </form>
+  <form 
+    id="changeAvatarForm" 
+    callback="document.location.reload(true);" 
+    action="<?php echo base_url('/profile/changeAvatar')?>" 
+    method="post">
+    <input id='upload-ava' type="file" accept=".png, .jpg, .jpeg" name="image" enctype="multipart/form-data" style='display:none;' onchange="$('#changeAvatarForm').submit();">
+    <input type="hidden" name="user_id" value="<?=$_SESSION['user_id']?>">
+    <!-- <input type="submit" name="submit" value="Upload">  -->
+  </form>
 
 </div>
 <div class="row">
@@ -248,7 +252,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                  <button type="submit" class="btn btn-primary btn-lg btn-save">Save</button>
+                                  <button type="submit" class="btn btn-warning btn-lg btn-save">Save</button>
                                 </div>
                             </div>
                         </form>
@@ -280,8 +284,11 @@
                     </div>
                   </div>
                   <div class="pricing-cta">
-                    <button class="btn btn-warning" data-toggle="modal"
-          data-target="#modalPaymentMethod" onclick="ChoosePlan(`<?php echo $plan->id . ',' . $_SESSION['plan_id'] . ',' . $plan->price ?>`)">
+                    <button 
+                      class="btn btn-warning" 
+                      data-toggle="modal"
+                      data-target="#modalPaymentMethod" 
+                      onClick="ChoosePlan(<?php echo $plan->id?>, <?php echo $_SESSION['plan_id'] ?>, <?php echo $plan->price ?>)">
                         <?php if ($plan->id == $_SESSION['plan_id']) {?>
                             Current Plan
                         <?php } else {?>

@@ -36,27 +36,27 @@ class Timezone_model extends CI_Model {
 
         if (!$timezone) {
             return array('status' => "success", 'data' => []);
-        }else{
+        } else {
             
-            if($data['baseGMT']==0){
+            if($data['baseGMT']==0) {
                 $open = $timezone[0]->open;
-            }elseif(($data['baseGMT']+$timezone[0]->open) <0){
+            } else if(($data['baseGMT']+$timezone[0]->open) <0) {
                 $open = (24+$data['baseGMT']+$timezone[0]->open);
             }else{
                 $open = ($data['baseGMT']+$timezone[0]->open) % 24;
             }
 
-            if($data['baseGMT']==0){
+            if($data['baseGMT']==0) {
                 $close = $timezone[0]->close+$data['baseGMT'];
-            }elseif(($data['baseGMT']+$timezone[0]->close) <0){
+            } else if(($data['baseGMT']+$timezone[0]->close) <0) {
                 $close = (24+$data['baseGMT']+$timezone[0]->close);
-            }else{
+            } else {
                 $close = ($data['baseGMT']+$timezone[0]->close) % 24;
             }
 
-            if($close<$open){
+            if($close < $open) {
                 $break =1;
-            }else{
+            } else {
                 $break =0;
             }
             

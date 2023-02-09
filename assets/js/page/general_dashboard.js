@@ -66,7 +66,7 @@ function getSymbolsChart_filter() {
 
       profit_chart.update();
       } else {
-        // notifyme.showNotification(response["status"], response["message"]);
+        notifyme.showNotification(response["status"], response["message"]);
       }
     },
   });
@@ -176,7 +176,7 @@ function getTotalTradeSummary_filter() {
         sell_rate_chart.update();
         
       } else {
-        // notifyme.showNotification(response["status"], response["message"]);
+        notifyme.showNotification(response["status"], response["message"]);
       }
     },
   });

@@ -12,7 +12,7 @@ function delete_user(user_id){
       success: function (response) {
         response = JSON.parse(response);
         if (response["status"] == "success") {
-            //notifyme.showNotification(response["status"], response["message"]);
+            notifyme.showNotification(response["status"], response["message"]);
             window.location.reload();
          } else if (response["status"] == "error"){
             notifyme.showNotification(response["status"], response["message"]);

@@ -129,12 +129,13 @@ class Profile extends MY_Controller {
         return $result;
     }
 
-	public function changeAvatar()
-    {
-		$result = $this->Profile_model->changeAvatar($_POST);
-		echo json_encode($result);
-        
-    }
+	public function changeAvatar() {
+		$file = isset($_FILES) ? $_FILES: NULL;
+		$post = isset($_POST) ? $_POST: NULL;
+
+		$res = $this->Profile_model->changeAvatar($file, $post);
+
+  }
 
 
 	//////////////email change bt
