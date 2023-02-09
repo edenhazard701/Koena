@@ -134,7 +134,21 @@
 }
 
 .side-bar-logo{
-  background: url('../../assets/img/logo.jpg');
+  background: url('../../assets/img/logo.png');
+  background-size: contain;
+  background-repeat: repeat-y;
+  padding-left: 120px;
+  padding-top: 3px;
+  margin: 5px;
+  margin-bottom: 0px;
+}
+
+.logo_title {
+  color: #6777ef !important;
+}
+
+.side-bar-logo-black{
+  background: url('../../assets/img/logo1.png');
   background-size: contain;
   background-repeat: repeat-y;
   padding-left: 120px;
@@ -180,7 +194,7 @@
 }
 
 .sect1_td {
-  background: #0046bf !important;
+  background-color: #0046bf !important;
   color: #fff !important;
   white-space: nowrap;
 }
@@ -214,7 +228,7 @@
 }
 
 .table-bordered > :not(caption) > * > * {
-  border-width: 0 1px;
+  /*border-width: 0 1px;*/
 }
 
 .sect_td2 {
@@ -222,7 +236,7 @@
   padding: 10px;
   text-align: center;
   font-size: 20px;
-  color: #000 !important;
+  color: #000 ;
   font-weight: 600;
   background-color: #f2f2f2;
 }
@@ -293,4 +307,8 @@
 .already-plan-message p {
   color: black;
   font-size: 18px;
+}
+.table-dark {
+    color: #fff;
+    background-color: #212529 !important;
 }

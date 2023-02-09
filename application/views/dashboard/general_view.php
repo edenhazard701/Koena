@@ -88,7 +88,7 @@
             <button class="btn btn-primary btn-lg chart-filter" rel='4'>
               This Month
             </button>
-            <input type="text" class="btn btn-primary btn-lg form-control daterange chart-filter btn-calendar" rel='5' id="period">
+            <input type="text" class="btn btn-primary btn-lg daterange chart-filter btn-calendar" rel='5' id="period">
           </div>
         </div>
       </div>
@@ -205,7 +205,7 @@
             <button class="btn btn-primary btn-lg chart-filter-pie" rel='4'>
               This Month
             </button>
-            <input type="text"class="btn btn-primary btn-lg form-control daterange btn-calendar" rel='5' id="period1">
+            <input type="text"class="btn btn-primary btn-lg daterange btn-calendar" rel='5' id="period1">
           </div>
         </div>
       </div>

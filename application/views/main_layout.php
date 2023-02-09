@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css')?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/components.css')?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css')?>">
-  
+
   <script src="<?php echo base_url('assets/modules/jquery.min.js')?>"></script>
   <script src="<?php echo base_url('assets/modules/jquery-ui/jquery-ui.min.js')?>"></script>
   <script src="<?php echo base_url('assets/modules/popper.js')?>"></script>
@@ -859,10 +859,6 @@
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
             <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
           </ul>
-          <div class="search-element">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250" style="width: 250px;">
-            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-          </div>
         </form>
         <ul class="navbar-nav navbar-right">
           <div class="form-inline mr-auto">
@@ -870,7 +866,7 @@
               <?php if($_SESSION["usertype_id"] < 2) { ?>
                 <select class="custom-select" id="accounts">
                   <?php foreach ($accounts as $key => $item): ?>
-                    <option id="sel_user" style="color: black;" value="<?php echo $item->account_id ?>" 
+                    <option id="sel_user" value="<?php echo $item->account_id ?>" 
                       <?php if($item->account_id == $_SESSION['account_id']) {?>
                         selected=""<?php }?>><?php echo $item->account_id?></option>  
                   <?php endforeach ?>
@@ -886,6 +882,12 @@
         </ul>
         <ul class="navbar-nav navbar-right">
           <a id="reload" href="#" class="nav-link notification-toggle nav-link-lg"><i class="ion-ios-refresh-outline"></i></a>
+        </ul>
+        <ul class="navbar-nav navbar-right">
+            <label>
+              <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" id="lightSwitch">
+              <span class="custom-switch-indicator"></span>
+            </label>
         </ul>
         <ul class="navbar-nav navbar-right">          
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
@@ -905,23 +907,23 @@
       </nav>
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
-          <div class="sidebar-brand side-bar-logo">
-            <a href="<?php echo base_url('dashboard')?>">Koena</a>
+          <div class="sidebar-brand side-bar-logo" id="logo">
+            <a href="<?php echo base_url('dashboard')?>" class="logo_title">Koena</a>
           </div>
           <div class="sidebar-brand sidebar-brand-sm">
-            <a href="<?php echo base_url('dashboard')?>">KN</a>
+            <a href="<?php echo base_url('dashboard')?>" class="logo_title">KN</a>
           </div>
           <ul class="sidebar-menu">
             <?php
               if($_SESSION["usertype_id"] < 2) { ?>
-                <li data-selection="admin" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('dashboard/index') ?>"><i class="ion-lock-combination"></i>Admin Dashboard</a></div></li>
+                <li data-selection="admin" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('dashboard/index') ?>"><i class="ion-lock-combination"></i>Admin Dashboard</a></div></li>
               <?php }
             ?>
-            <li data-selection="general" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('dashboard/general') ?>"><i class="ion-ios-paper"></i>General Dashboard</a></div></li>
-            <li data-selection="journal" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('summary/journal') ?>"><i class="ion-social-buffer"></i>Joural Summary</a></div></li>
-            <li data-selection="account" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('summary/account') ?>"><i class="ion-social-chrome"></i>Account Summary</a></div></li>
-            <li data-selection="session" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('timezone') ?>"><i class="ion-transgender"></i>Session</a></div></li>
-            <li data-selection="profile" class="nav-side-bar"><div class="sel-li"><a href="<?php echo base_url('profile') ?>"><i class="ion-transgender"></i>Profile</a></div></li>
+            <li data-selection="general" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('dashboard/general') ?>"><i class="ion-ios-paper"></i>General Dashboard</a></div></li>
+            <li data-selection="journal" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('summary/journal') ?>"><i class="ion-social-buffer"></i>Joural Summary</a></div></li>
+            <li data-selection="account" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('summary/account') ?>"><i class="ion-social-chrome"></i>Account Summary</a></div></li>
+            <li data-selection="profile" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('timezone') ?>"><i class="ion-transgender"></i>Session</a></div></li>
+            <li data-selection="profile" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('profile') ?>"><i class="ion-transgender"></i>Profile</a></div></li>
           </ul>
        </aside>
        <script>
@@ -953,5 +955,6 @@
     </div>
   </div> 
 <script src="<?php echo base_url('assets/js/page/layout.js')?>"></script>
+  <script src="<?php echo base_url('assets/js/switch.js')?>"></script>
 </body>
 </html>

@@ -1723,13 +1723,26 @@ pre code {
 
 .table-dark {
   color: #fff;
-  background-color: #212529;
+  background-color: #212529 !important;
+}
+
+.sect-dark {
+  color: #fff;
+  background-color: #111111 !important;
+}
+
+.sect-dark th,
+.sect-dark td,
+.sect-dark thead th {
+  background: linear-gradient( 60deg, #fbc531, #fbc531a6) !important;
+  color: #000;
 }
 
 .table-dark th,
 .table-dark td,
 .table-dark thead th {
-  border-color: #32383e;
+  background: linear-gradient( 60deg, #fbc531, #fbc531a6) !important;
+  color: #000;
 }
 
 .table-dark.table-bordered {
