@@ -77,7 +77,7 @@
         <div class="row">
           <div class="col-6">Shown as GMT<?php echo $_SESSION['GMT']?></div>
         <div class="col-6" style="text-align:right">
-      <input type="number"/><input type="button" onclick="AddAccount()"  value="+"></input></div>
+      <input type="number" class="form-control-sm" /><button onclick="AddAccount()" class="btn btn-primary"><i class="ion-plus-round"></i></button></div>
       </div>
             <ul class="nav nav-pills" id="myTab3" role="tablist">
                 <li class="nav-item">
