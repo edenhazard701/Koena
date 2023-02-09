@@ -289,3 +289,8 @@
   width:  245px;
   margin-top:  5px;
 }
+
+.already-plan-message p {
+  color: black;
+  font-size: 18px;
+}

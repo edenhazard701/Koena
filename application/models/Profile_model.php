@@ -3,6 +3,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Profile_model extends CI_Model {
 
+    public function changeAvatar($file, $param) {
+
+        $user_id = $param['user_id'];
+        if (isset($file["image"])) {
+            $thumb = resizer($file['image']['tmp_name'], 256, 256, true);
+            ob_start();
+            imagejpeg($thumb);
+            $image = ob_get_clean();
+            $imgContent = addslashes($imageData = "data:image/jpg;charset=utf8;base64,".base64_encode($image)); 
+            
+            // Insert image content into database 
+            $this->db->query("UPDATE user SET avatar='".$imgContent."' WHERE user_id=".$user_id);
+        } else {
+            return array('status' => 'error', 'message' => 'An error while uploading file.');
+        }
+
+        $_SESSION['avatar'] = $imageData;
+        return array('status' => 'success', 'message' => 'Avatar Changed successfully!');
+    }
+
     public function getUserAccountList() {
         $isplanupdate = (isset($_SESSION['is_plan_update']) ? $_SESSION['is_plan_update'] : 0);
         $acct = null;

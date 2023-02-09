@@ -1,3 +1,66 @@
+function ChoosePlan(id, current_plan, amount) {
+  $("#paypal-button-container").html("");
+  if (amount == 0) {
+    UpdateStatus(id, "free", "COMPLETED", "Paypal");
+  } else {
+    paypal
+      .Buttons({
+        // Set up the transaction
+        createOrder: function (data, actions) {
+          return actions.order.create({
+            purchase_units: [
+              {
+                amount: {
+                  value: amount,
+                },
+              },
+            ],
+          });
+        },
+
+        // Finalize the transaction
+        onApprove: function (data, actions) {
+          return actions.order.capture().then(function (orderData) {
+            // // Successful capture! For demo purposes:
+            console.log(
+              "Capture result",
+              orderData,
+              JSON.stringify(orderData, null, 2)
+            );
+
+            var transaction = orderData.purchase_units[0].payments.captures[0];
+            if (transaction.status == "COMPLETED") {
+              UpdateStatus(
+                id,
+                transaction.id,
+                transaction.status,
+                "Paypal",
+                amount
+              );
+            } else {
+              notifyme.showNotification("error", "Payment not completed.");
+            }
+          });
+        },
+      })
+      .render("#paypal-button-container");
+
+    $("#modalPaymentMethod").modal();
+    if (current_plan == 1) {
+      $(".already-plan-message").html(
+        '<p>You have a ' +
+          current_plan +
+          " month currently active. <br/> Would you like to purchase another plan that will begin at the end of your current plan?<p>"
+      );
+    } else if (current_plan == 2 || current_plan == 3) {
+      $(".already-plan-message").html(
+        '<p>You already have an existing plan. Please wait for the plan to complete before purchasing a new one.<p>'
+      );
+      $("#paypal-button-container").hide();
+    }
+  }
+}
+
 $(".bootstrapSwitch .switchBox").click(function () {
   if ($(this).is(":checked")) {
     $(this).attr("checked", true);
@@ -11,6 +74,38 @@ $(".bootstrapSwitch .switchBox").click(function () {
     $(".bootstrapSwitch .checkWrapNO .checkBoxValue").append("Not Active");
   }
 });
+
+function UpdateStatus(id, refno, status, paymentMethod, amount) {
+  const price = amount ? amount : 0;
+  $.ajax({
+    url: BASE_URL + "plan/updatePlanStatus",
+    method: "POST",
+    dataType: "json",
+    data: {
+      paymentMethod: paymentMethod,
+      id: id,
+      status: status,
+      refno: refno,
+      amount: price
+    },
+    dataType: "json",
+    success: function(response) {
+      if (response["status"] == "success") {
+        $('#modalPaymentMethod').modal('hide');
+        notifyme.showNotification(response["status"], response["message"]);
+        setTimeout(function () {
+          window.location.href = BASE_URL + "profile";
+        }, 2000);
+      } else {
+        if (status == "COMPLETED") {
+          notifyme.showNotification('COMPLETED', 'Payment successful but an error occured while updating plan details, please contact support.');
+        } else {
+          notifyme.showNotification(response["status"], response["message"]);
+        }
+      }
+    }
+  });
+}
 
 function getUserAccountList() {
   var selected_account = $("#accounts").val();
