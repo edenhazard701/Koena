@@ -10,6 +10,8 @@ class Dashboard extends MY_Controller {
 	}
 
 	public function index(){
+		$this->checkPlanID();
+
 		if($_SESSION['usertype_id']  > 1)
 			redirect("/dashboard/general");
 		if (isset($_GET['ac'])){
@@ -69,6 +71,8 @@ class Dashboard extends MY_Controller {
 	}
 
 	public function general(){
+		$this->checkPlanID();
+
 		if (isset($_GET['ac'])){
 			$_SESSION['account_id'] = $_GET['ac'];
 		};
@@ -81,6 +85,8 @@ class Dashboard extends MY_Controller {
 	}
 
 	public function session(){
+		$this->checkPlanID();
+
 		$params = array(
 			'title' => "Session",
 			'selections' => json_encode(array("session", "session")),

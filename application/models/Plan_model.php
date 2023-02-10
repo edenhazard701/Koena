@@ -13,8 +13,8 @@ class Plan_model extends CI_Model {
     $user_subscription = $query->result();
 
     if(empty($user_subscription)) {
-      $start_date = 'CURDATE()';
-      $end_date = 'CURDATE()';
+      $start_date = date("Y-m-d");
+      $end_date = date("Y-m-d");
     } else {
       $user_subscription = $user_subscription[0];
       $start_date = $user_subscription->end_date;
@@ -33,9 +33,9 @@ class Plan_model extends CI_Model {
       $data = array(
         'user_id' => $user_id,
         'plan_id' => $plan_id,
-        'invoice_date' => "CURDATE()",
+        'invoice_date' => date("Y-m-d"),
         'start_date' => $start_date,
-        'end_date' => "DATE_ADD(".$end_date.", INTERVAL ".$days." DAY)",
+        'end_date' => date_add(date_create(".$end_date."), date_interval_create_from_date_string($days." days")),
         'payment_method' => $payment_method,
         'payment_reference_id' => $payment_reference_id,
         'amount' => $amount

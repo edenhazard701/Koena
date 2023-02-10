@@ -10,6 +10,7 @@ class Summary extends MY_Controller {
 	}
 
 	public function account(){
+		$this->checkPlanID();
 		if (isset($_GET['ac'])){
 			$_SESSION['account_id'] = $_GET['ac'];
 		};
@@ -23,6 +24,7 @@ class Summary extends MY_Controller {
 	}
 
 	public function journal(){
+		$this->checkPlanID();
 		if (isset($_GET['ac'])){
 			$_SESSION['account_id'] = $_GET['ac'];
 		};

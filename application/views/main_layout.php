@@ -124,7 +124,7 @@
                           alt="image"
                           width="100px"
                           height="auto"
-                          src="<?php echo $_SESSION['avatar']?>"
+                          src="<?php echo $_SESSION['avatar']?$_SESSION['avatar']:base_url('assets/img/avatar/avatar-1.png')?>"
                           class="rounded-circle author-box-picture"
                           />
                         <div class='ava-icon' onclick="$('#upload-ava').click();"><i class="material-icons"></i></div>
@@ -885,7 +885,7 @@
         </ul>
         <ul class="navbar-nav navbar-right">          
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="<?php echo $_SESSION['avatar']?>" class="rounded-circle mr-1">
+		<img alt="image" src="<?php echo $_SESSION['avatar']?$_SESSION['avatar']:base_url('assets/img/avatar/avatar-1.png')?>" class="rounded-circle mr-1">
             <div class="d-sm-none d-lg-inline-block"><?php echo $_SESSION['username']?></div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <a href="<?php echo base_url('profile')?>" class="dropdown-item has-icon">
@@ -951,5 +951,6 @@
     </div>
   </div> 
   <script src="<?php echo base_url('assets/js/page/layout.js')?>"></script>
+  <script src="<?php echo base_url('assets/js/switch.js')?>"></script>
 </body>
 </html>

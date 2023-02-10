@@ -54,6 +54,7 @@ function load_accounts(elem) {
 
 function get_client_status() {
   var cDate = new Date();
+  var default_image = BASE_URL + 'assets/img/avatar/avatar-1.png';
   $("#admin_dashboard_client_list").DataTable({
     language: {
       paginate: {
@@ -87,7 +88,7 @@ function get_client_status() {
         render: function (d) {
           return (d)
             ? `<div class='user-avatar'><img class="client-avatar" src='${d}'></div>`
-            : '';
+            : `<div class='user-avatar'><img class="client-avatar" src=`+ default_image +`></div>`;
           }
         },
       { data: "username" },

@@ -18,6 +18,7 @@
   <!-- Template CSS -->
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css')?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/components.css')?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css')?>">
   <!-- Start GA -->
   <script>var BASE_URL = '<?php echo base_url()?>'</script>
   <!-- /END GA -->
@@ -39,7 +40,16 @@
                                     <div class="col-md-5 ml-auto">
                                         <div class="info info-horizontal">
                                             <div class="description">
-                                                <img src="<?php echo base_url('assets/img/logo-yellow.svg')?>" class="" style="width: 90%;margin-bottom:0px;" />
+                                                <img 
+                                                  src="<?php echo base_url('assets/img/logo.png')?>" 
+                                                  style="width: 100%;margin-bottom:10px;margin-top:30px;" />
+                                            </div>
+                                        </div>
+                                        <div class="info info-horizontal">
+                                            <div class="description">
+                                                <p style="text-align:center;">
+                                                    <a href="<?php echo base_url('forgot_password')?>">Forgot Password?</a>
+                                                </p>
                                             </div>
                                         </div>
                                         <br />

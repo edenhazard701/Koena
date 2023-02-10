@@ -5,6 +5,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   public function __construct(){
      parent::__construct();
+
+     //$this->output->cache(1);
+
      $this->isLogined();
   }
 
@@ -26,5 +29,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }else{
       redirect('login');
     }
+  }
+
+  public function checkPlanID(){
+	if($this->session->userdata('plan_id') == 0)
+		redirect(base_url('profile'));
   }
  }

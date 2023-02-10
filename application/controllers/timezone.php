@@ -9,6 +9,7 @@ class Timezone extends MY_Controller {
 	}
 
 	public function index(){
+		$this->checkPlanID();
 		//$result = $this->Timezone_model->getTableData();
 		$params = array(
 			'title' => "Session",
