@@ -129,9 +129,9 @@ $("body").on("click", ".resend-email-verification", function (e) {
     success: function (response) {
       response = JSON.parse(JSON.stringify(response));
       if (response["status"] == "success") {
-        //notifyme.showNotification(response["status"], response["message"]);
+        notifyme.showNotification(response["status"], response["message"]);
       } else {
-        //notifyme.showNotification(response["status"], response["message"]);
+        notifyme.showNotification(response["status"], response["message"]);
       }
     },
   });
@@ -149,7 +149,7 @@ $("#completeRegistration").submit(function (e) {
     success: function (response) {
       response = JSON.parse(response);
       if (response["status"] == "success") {
-        //notifyme.showNotification(response["status"], response["message"]);
+        notifyme.showNotification(response["status"], response["message"]);
         setTimeout(function () {
           window.location.href = BASE_URL + "login";
         }, 3000);
@@ -158,7 +158,7 @@ $("#completeRegistration").submit(function (e) {
         // $('.verification-success-confirmation').show();
         // $('.verification-success-email').html($("#email").val());
       } else {
-        //notifyme.showNotification(response["status"], response["message"]);
+        notifyme.showNotification(response["status"], response["message"]);
       }
     },
   });
