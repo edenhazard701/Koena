@@ -35,9 +35,7 @@
                 <div class="row">
                     <div class="col-md-10 ml-auto mr-auto">
                         <div class="card card-signup">
-                            
-
-                            <?php if(isset($_GET['key']) && !empty($_GET['key'])){?>
+                           <?php if(isset($_GET['key']) && !empty($_GET['key'])){?>
                                 <div class="card-header card-header-warning text-center">
                                     <h3 class="card-title py-2">Complete Registration</h3>
                                 </div>
@@ -46,7 +44,9 @@
                                     <div class="col-md-5 ml-auto">
                                         <div class="info info-horizontal">
                                             <div class="description">
-                                                <img src="<?php echo base_url('assets/img/logo-yellow.svg')?>" class="" style="width: 90%;margin-bottom:0px;" />
+                                                <img 
+                                                    src="<?php echo base_url('assets/img/logo.png')?>" 
+                                                    style="width: 100%;margin-bottom:10px;margin-top:30px;" />
                                             </div>
                                         </div>
                                         <p style="text-align:center;">Already Register Please <a href="<?php echo base_url('login')?>">Login</a></p>
@@ -399,7 +399,7 @@
                                     <div class="col-md-5 ml-auto">
                                         <div class="info info-horizontal">
                                             <div class="description">
-                                                <img src="<?php echo base_url('assets/img/logo-yellow.svg')?>" class="" style="width: 90%;margin-bottom:0px;" />
+                                                <img src="<?php echo base_url('assets/img/logo.png')?>" class="" style="width: 90%;margin-bottom:0px;" />
                                             </div>
                                         </div>
                                         <br />
