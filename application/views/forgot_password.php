@@ -114,7 +114,7 @@
                 </form>
               <?php }else{?>
                 <div class="card-header card-header-warning text-center">
-                  <h3 class="card-title py-2">Invalid Link</h3>
+                  <h3 class="card-title py-2">Invalid Link! Check the Link in your email</h3>
                 </div>
               <?php } ?>
             </div>

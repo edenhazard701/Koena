@@ -83,8 +83,8 @@ $("#ForgotPasswordForm").submit(function (e) {
     success: function (response) {
       if (response["status"] == "success") {
         notifyme.showNotification(response["status"], response["message"]);
-        $(".ForgotPasswordForm").hide();
-        $(".reset-password").show();
+        $("#ForgotPasswordForm").hide();
+        $("#reset-password").show();
       } else {
         notifyme.showNotification(response["status"], response["message"]);
       }

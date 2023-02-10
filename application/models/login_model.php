@@ -85,8 +85,9 @@
 
     
     public function forgotPassword($email) {
+
         $active_code=md5(uniqid(rand(5, 15), true));
-        $link = 'http://154.44.150.137/koena-new/forgot_password?resetKey='.$active_code;
+        $link = 'http://154.44.150.137/koena-new/forgot_password?key='.$active_code;
 
         $query = $this->db->query("SELECT * FROM user WHERE email = '".$email."' AND status = 1");
 
