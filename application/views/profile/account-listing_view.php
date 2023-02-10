@@ -77,12 +77,16 @@
 </div>
 <div class="row">
     <div class="col-12 col-md-12 col-lg-12">
-        <div class="card" style="padding:30px">
-        <div class="row">
-          <div class="col-6">Shown as GMT<?php echo $_SESSION['GMT']?></div>
-        <div class="col-6" style="text-align:right">
-      <input type="number" class="form-control-sm" /><button onclick="AddAccount()" class="btn btn-primary"><i class="ion-plus-round"></i></button></div>
-      </div>
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between;" >
+            <h2><i class="ion-calculator">&nbsp;Plan</i></h2>
+            <div style="display: flex; flex-direction: column; ">
+              <p style="text-align: end">Shown as GMT<?php echo $_SESSION['GMT']?></p>
+              <div><input type="number" class="form-control-sm" id="txtAccountId" /><button onclick="AddAccount()" class="btn btn-primary"><i class="ion-plus-round"></i></button></div>
+            </div>
+          </div>
+        <div class="card-body">
+          
             <ul class="nav nav-pills" id="myTab3" role="tablist">
                 <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#serviecs" role="tab" aria-controls="strength" aria-selected="true">Services</a>
@@ -92,21 +96,22 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="serviecs" role="tabpanel" aria-labelledby="serviecs">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="plan_users_list">
-                            <thead>                
-                            <th>Email</th>
-                            <th>Account ID</th>
-                            <th>Broker</th>
-                            <th>Added Date</th>
-                            <th>Pricing</th>
-                            <th>Due Date</th>
-                            <th>Status</th>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
+                  <div class="table-responsive">
+                    <table class="table table-striped" id="plan_users_list">
+                      <thead>                                 
+                        <th class="sect1_td">Email</th>
+                        <th class="sect1_td">Account ID</th>
+                        <th class="sect1_td">Broker</th>
+                        <th class="sect1_td">Added Date</th>
+                        <th class="sect1_td">Pricing</th>
+                        <th class="sect1_td">Due Date</th>
+                        <th class="sect1_td">Status</th>
+                        <th class="sect1_td">Delete</th>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
                 <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings">
                     <div class="col-md-12">
@@ -260,67 +265,65 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
-    <div class="row">
-        <?php foreach ($params['data']['planlist'] as $plan) {?>
-            <div class="col-12 col-md-4 col-lg-4">
-                <?php if ($plan->id == $_SESSION['plan_id']) {?>
-                <div class="pricing pricing-highlight" style="border: 1px solid #798ad9;">
-                <?php } else {?>
-                <div class="pricing" style="border: 1px solid #dce0ef;">
-                <?php }?>
-                  <div class="pricing-title">
-                    Support
-                  </div>
-                  <div class="pricing-padding">
-                    <div class="pricing-price">
-                      <div><?php echo $plan->name?></div>
-                    </div>
-                    <div class="pricing-price">
-                      <div>$<?php echo $plan->price?></div>
-                    </div>
-                    <div class="pricing-price">
-                        <h3>Full Access</h3>
-                    </div>
-                  </div>
-                  <div class="pricing-cta">
-                    <button 
-                      class="btn btn-warning" 
-                      data-toggle="modal"
-                      data-target="#modalPaymentMethod" 
-                      onClick="ChoosePlan(<?php echo $plan->id?>, <?php echo $_SESSION['plan_id'] ?>, <?php echo $plan->price ?>)">
-                        <?php if ($plan->id == $_SESSION['plan_id']) {?>
-                            Current Plan
-                        <?php } else {?>
-                            GET
-                        <?php }?>
-                    </button>
-                  </div>
+</div>
+<div class="row">
+    <?php $cancel_price=["", "$89.94", "$179.88"]; foreach ($params['data']['planlist'] as $key => $plan) {?>
+        <div class="col-12 col-md-4 col-lg-4">
+            <?php if ($plan->id == $_SESSION['plan_id']) {?>
+            <div class="pricing pricing-highlight" style="border: 1px solid #798ad9;">
+            <?php } else {?>
+            <div class="pricing" style="border: 1px solid #dce0ef;">
+            <?php }?>
+              <div class="pricing-padding">
+                <div class="pricing-price">
+                  <div><?php echo $plan->name?></div>
+                </div>
+                <div class="pricing-price">
+                  <div><h3 style="text-decoration: line-through;"><?php echo $cancel_price[$key] ?></h3>$<?php echo $plan->price?></div>
+                </div>
+                <div class="pricing-price">
+                    <h3>Full Access</h3>
                 </div>
               </div>
-        <?php } ?>
-    </div>
-    <div class="row">
-        <div class="col-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h2><i class="ion-calculator">&nbsp;Invoice</i></h2>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="plan_invoice_list">
-                            <thead>                                 
-                                <th>Invoice</th>
-                                <th>Invoice Date</th>
-                                <th>Start Date</th>
-                                <th>Due Date</th>
-                                <th>Total</th>
-                                <th>Status</th>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
+              <div class="pricing-cta">
+                <button 
+                  class="btn btn-warning" 
+                  data-toggle="modal"
+                  data-target="#modalPaymentMethod" 
+                  onClick="ChoosePlan(<?php echo $plan->id?>, <?php echo $_SESSION['plan_id'] ?>, <?php echo $plan->price ?>)">
+                    <?php if ($plan->id == $_SESSION['plan_id']) {?>
+                        Current Plan
+                    <?php } else {?>
+                        GET
+                    <?php }?>
+                </button>
+              </div>
+            </div>
+          </div>
+    <?php } ?>
+</div>
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="ion-calculator">&nbsp;Invoice</i></h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="plan_invoice_list">
+                        <thead>                                 
+                            <th>Invoice</th>
+                            <th>Invoice Date</th>
+                            <th>Start Date</th>
+                            <th>Due Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

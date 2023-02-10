@@ -5,7 +5,9 @@
         <h3><i class="ion-social-chrome-outline">&nbsp;Strategy Strength</i></h3>
       </div>
       <div class="card-body">
-        <canvas id="general_strategy_strength_chart"></canvas>
+        <div class="table-responsive">
+          <canvas id="general_strategy_strength_chart" class="chart"></canvas>
+        </div>
       </div>
     </div>
   </div>

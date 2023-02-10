@@ -107,107 +107,154 @@ function UpdateStatus(id, refno, status, paymentMethod, amount) {
   });
 }
 
-function getUserAccountList() {
-  var selected_account = $("#accounts").val();
-  $.ajax({
-    url: BASE_URL + "/profile/getUserAccountList",
-    method: "POST",
-    async: false,
-    success: function (response) {
-      try {
-        response = JSON.parse(response);
-      } catch (event) {
-        // notifyme.showNotification('error', response);
-      }
-      if (response["status"] == "success") {
-        var data = response["data"];
+// function getUserAccountList() {
+//   var selected_account = $("#accounts").val();
+//   $.ajax({
+//     url: BASE_URL + "/profile/getUserAccountList",
+//     method: "POST",
+//     async: false,
+//     success: function (response) {
+//       try {
+//         response = JSON.parse(response);
+//       } catch (event) {
+//         // notifyme.showNotification('error', response);
+//       }
+//       if (response["status"] == "success") {
+//         var data = response["data"];
 
-        if ($("#plan_users_list").length > 0) {
-          $("#plan_users_list tbody").empty();
-          data.map((d) => {
-            d.broker = d.broker?d.broker:'';
-            d.created_date = d.created_date?d.created_date:'';
-            if (d.is_plan_update == "1") {
-              const status = `<div class="togglebutton"><label><input class="switchBox" type="checkbox" ${
-                d.is_active == "1" ? "checked" : ""
-              } onclick="UpdateAccount(this,${
-                d.account_id
-              })" /><span class="toggle"></span><span class="checkBoxValue"></span></label></div>`;
-              const remove = `<button type="button" class="btn btn-danger p-1 deleteAccount" onClick="delectAccount(${d.account_id})"><i class="ion-trash-a" style='font-size: 2.4em;
-    padding: 5px;'></i></a></button>`;
-              const gmt =
-                d.BaseGMT != undefined
-                  ? `<small style='color:gray;'>${d.BaseGMT}</small>`
-                  : "";
-              const account = `
-              <tr style='width:100%;'>
-                  <td style='border:0;width:14em; white-space:nowrap; font-size:.8em;'>${status}</td>
-                  <td style='border:0;width:2em;'>${remove}</td>
-              </tr>`;
-              if (document.getElementById(`tr-${d.user_id}`)) {
-                $(`#td-${d.user_id} table`).append(`${account}`);
-              } else {
-                $("#plan_users_list").append(`<tr id='tr-${d.user_id}'>
-                    <td>${d.email}</td>
-                    <td>${d.account_id}</td>
-                    <td>${d.broker}</td>
-                    <td>${d.created_date}</td>
-                    <td>${d.price}</td>
-                    <td>${d.end_date}</td>
-                    <td id='td-${d.user_id}'>
-                      <table style='width:100%;'>${account}</table>
-                    </td>
-                    </tr>`);
-                // <td><div id='user-${d.user_id}' rel='${d.user_id}'>loading ${d.user_id}<script>loadUser('user-${d.user_id}');</script></div></td>
-                $(".bootstrapSwitch .switchBox:checked")
-                  .parent()
-                  .addClass("checkWrap");
-                $(".bootstrapSwitch .switchBox:not(:checked)")
-                  .parent()
-                  .addClass("checkWrapNO");
-                $(".bootstrapSwitch .checkWrap .checkBoxValue").text("Active");
-                $(".bootstrapSwitch .checkWrapNO .checkBoxValue").text(
-                  "Not Active"
-                );
-                $("#selectAccountIds [value=0]:selected")
-                  .parent()
-                  .parent()
-                  .parent()
-                  .addClass("hideStatus");
-              }
-            } else {
-              $("#plan_users_list tbody").append(
-                `<tr><td>${d.account_id}</td><td>${
-                  d.is_active == "1"
-                    ? "<span class='badge badge-success as'>Active</span>"
-                    : "<span class='badge badge-danger as'>InActive</span>"
-                }</td><td><button type="button" class="btn btn-danger p-1 deleteAccount" id="${
-                  d.account_id
-                }" onClick="delectAccount(${
-                  d.account_id
-                })"><i class="ion-trash-a"></i></button></td></tr>`
-              );
-              $(".bootstrapSwitch .switchBox:checked")
-                .parent()
-                .addClass("checkWrap");
-              $(".bootstrapSwitch .switchBox:not(:checked)")
-                .parent()
-                .addClass("checkWrapNO");
-              $(".bootstrapSwitch .checkWrap .checkBoxValue").text("Active");
-              $(".bootstrapSwitch .checkWrapNO .checkBoxValue").text(
-                "Not Active"
-              );
-            }
-          });
-        }
-      } else {
-        //notifyme.showNotification(response["status"], response["message"]);
+//         if ($("#plan_users_list").length > 0) {
+//           $("#plan_users_list tbody").empty();
+//           data.map((d) => {
+//             d.broker = d.broker?d.broker:'';
+//             d.created_date = d.created_date?d.created_date:'';
+//             if (d.is_plan_update == "1") {
+//               const status = `<div class="togglebutton"><label><input class="switchBox" type="checkbox" ${
+//                 d.is_active == "1" ? "checked" : ""
+//               } onclick="UpdateAccount(this,${
+//                 d.account_id
+//               })" /><span class="toggle"></span><span class="checkBoxValue"></span></label></div>`;
+//               const remove = `<button type="button" class="btn btn-danger p-1 deleteAccount" onClick="delectAccount(${d.account_id})"><i class="ion-trash-a"></i></a></button>`;
+//               const gmt =
+//                 d.BaseGMT != undefined
+//                   ? `<small style='color:gray;'>${d.BaseGMT}</small>`
+//                   : "";
+//               const account = `
+//               <tr style='width:100%;'>
+//                   <td style='border:0;width:14em; white-space:nowrap; font-size:.8em;'>${status}</td>
+//                   <td style='border:0;width:2em;'>${remove}</td>
+//               </tr>`;
+//               if (document.getElementById(`tr-${d.user_id}`)) {
+//                 $(`#td-${d.user_id} table`).append(`${account}`);
+//               } else {
+//                 $("#plan_users_list").append(`<tr id='tr-${d.user_id}'>
+//                     <td>${d.email}</td>
+//                     <td>${d.account_id}</td>
+//                     <td>${d.broker}</td>
+//                     <td>${d.created_date}</td>
+//                     <td>${d.price}</td>
+//                     <td>${d.end_date}</td>
+//                     <td id='td-${d.user_id}'>
+//                       <table style='width:100%;'>${account}</table>
+//                     </td>
+//                     </tr>`);
+//                 // <td><div id='user-${d.user_id}' rel='${d.user_id}'>loading ${d.user_id}<script>loadUser('user-${d.user_id}');</script></div></td>
+//                 $(".bootstrapSwitch .switchBox:checked")
+//                   .parent()
+//                   .addClass("checkWrap");
+//                 $(".bootstrapSwitch .switchBox:not(:checked)")
+//                   .parent()
+//                   .addClass("checkWrapNO");
+//                 $(".bootstrapSwitch .checkWrap .checkBoxValue").text("Active");
+//                 $(".bootstrapSwitch .checkWrapNO .checkBoxValue").text(
+//                   "Not Active"
+//                 );
+//                 $("#selectAccountIds [value=0]:selected")
+//                   .parent()
+//                   .parent()
+//                   .parent()
+//                   .addClass("hideStatus");
+//               }
+//             } else {
+//               $("#plan_users_list tbody").append(
+//                 `<tr><td>${d.account_id}</td><td>${
+//                   d.is_active == "1"
+//                     ? "<span class='badge badge-success as'>Active</span>"
+//                     : "<span class='badge badge-danger as'>InActive</span>"
+//                 }</td><td><button type="button" class="btn btn-danger p-1 deleteAccount" id="${
+//                   d.account_id
+//                 }" onClick="delectAccount(${
+//                   d.account_id
+//                 })"><i class="ion-trash-a"></i></button></td></tr>`
+//               );
+//               $(".bootstrapSwitch .switchBox:checked")
+//                 .parent()
+//                 .addClass("checkWrap");
+//               $(".bootstrapSwitch .switchBox:not(:checked)")
+//                 .parent()
+//                 .addClass("checkWrapNO");
+//               $(".bootstrapSwitch .checkWrap .checkBoxValue").text("Active");
+//               $(".bootstrapSwitch .checkWrapNO .checkBoxValue").text(
+//                 "Not Active"
+//               );
+//             }
+//           });
+//         }
+//       } else {
+//         //notifyme.showNotification(response["status"], response["message"]);
+//       }
+//     },
+//   });
+// }
+
+function getUserAccountList() {
+
+  $("#plan_users_list").DataTable({
+    language: {
+      paginate: {
+        next: '&#62;', // or '→'
+        previous: '&#60;' // or '←' 
       }
     },
+    destroy: true,
+    ordering:false,
+    ajax: function (data, callback, settings) {
+      $.ajax({
+        url: BASE_URL + "/profile/getUserAccountList",
+        method: "POST",
+        async: false,
+        success: function (response) {
+          response = JSON.parse(response);
+          callback(response);
+        },
+      });
+    },
+    columns: [
+      { data: "email"},
+      { data: "account_id"},
+      { data: "broker"},
+      { data: "created_date"},
+      { data: "price"},
+      { data: "end_date"},
+      { data: "is_active",
+        render: function (d) {
+          return (`
+            <label>
+             <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" ${(d == "1" ? "checked" : "")} onchange="changeStatus(this)">
+             <span class="custom-switch-indicator"></span>
+            </label>`)
+        },
+      },
+      { data: "account_id",
+        render: function (d) {
+          return (`<button type="button" class="btn btn-danger p-1 deleteAccount" onClick="delectAccount(${d})"><a><i class="ion-trash-a"></i></a></button>`)
+        },
+      },
+    ],
   });
 }
 
 function AddAccount() {
+  console.log(this);
   if ($("#txtAccountId").val() == "") {
     notifyme.showNotification("error", "Please write account to add.");
     return false;
@@ -220,8 +267,7 @@ function AddAccount() {
       response = JSON.parse(response);
       if (response["status"] == "success") {
         // notifyme.showNotification(response["status"], response["message"]);
-
-        getUserAccountList();
+        $("#plan_users_list").DataTable().ajax.reload();
       } else {
         // notifyme.showNotification(response["status"], response["message"]);z
       }
@@ -230,24 +276,22 @@ function AddAccount() {
 }
 
 function UpdateAccount(Sender, AccountId) {
-  var Status = $(Sender).is(":checked") ? "Activate" : "DeActivate";
-  if (confirm("Are you sure you want to " + Status + " the account?")) {
+  if (confirm("Are you sure you want to " + Sender + " the account?")) {
     $.ajax({
       url: BASE_URL + "profile/updateAccountStatus",
       method: "POST",
       data: {
         account_id: AccountId,
-        status: $(Sender).is(":checked"),
+        status: Sender,
       },
       success: function (response) {
         response = JSON.parse(response);
         if (response["status"] == "success") {
+          $("#plan_users_list").DataTable().ajax.reload();
           // notifyme.showNotification(response["status"], response["message"]);
         } else {
           // notifyme.showNotification(response["status"], response["message"]);
         }
-
-        getUserAccountList();
       },
     });
   } else {
@@ -272,10 +316,11 @@ function delectAccount(account_id) {
         response = JSON.parse(response);
         if (response["status"] == "success") {
           // notifyme.showNotification(response["status"], response["message"]);
+          $("#plan_users_list").DataTable().ajax.reload();
         } else if (response["status"] == "error") {
           // notifyme.showNotification(response["status"], response["message"]);
         }
-        getUserAccountList();
+        
       },
     });
   }
@@ -341,7 +386,14 @@ function getUserInvoices(current_account_id) {
 
 $("#addaccount").click(function () {
   AddAccount();
+  $("#plan_users_list").ajax.reload();
 });
+
+function changeStatus(obj){
+  var status = $(obj).is(":checked") ? "Activate" : "DeActivate";
+  var account_id = $(obj).parent().parent().parent().children()[1].innerHTML;
+  UpdateAccount(status, account_id);
+}
 
 $(document).ready(function () {
   getUserAccountList();

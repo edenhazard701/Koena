@@ -34,6 +34,8 @@ class Profile extends MY_Controller {
 		$account_id = isset($_POST['account_id']) ? $_POST['account_id'] : NULL;
 		$status = isset($_POST['status']) ? $_POST['status'] : NULL;
 
+		$status = $status == "Activate" ? 1 : 0;
+
 		$account = $this->Profile_model->updateAccountStatus($account_id, $status);
 		echo json_encode(array('status' => "success", "data" => $account));
 	}

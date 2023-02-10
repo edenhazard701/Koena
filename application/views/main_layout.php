@@ -17,8 +17,10 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/css/photoswipe.default-skin.css')?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css')?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/components.css')?>">
-  <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css')?>">
 
+  <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap-dark.css')?>">
+
+  <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css')?>">
   <script src="<?php echo base_url('assets/modules/jquery.min.js')?>"></script>
   <script src="<?php echo base_url('assets/modules/jquery-ui/jquery-ui.min.js')?>"></script>
   <script src="<?php echo base_url('assets/modules/popper.js')?>"></script>
@@ -91,12 +93,6 @@
                 <div class="already-plan-message">
                 </div>
                   <table class="table">
-                    <!-- <thead>
-                    <tr>
-                        <th class="text-white font-weight-bold text-center" scope="col">Stripe</th>
-                    <th class="text-white font-weight-bold text-center" scope="col">Payment Options</th>
-                    </tr>
-                    </thead> -->
                     <tbody>
                         <tr>
                             <td class="text-white text-center" scope="row">
@@ -131,7 +127,7 @@
                           src="<?php echo $_SESSION['avatar']?>"
                           class="rounded-circle author-box-picture"
                           />
-                        <div class='ava-icon' onclick="$('#upload-ava').click();"><i class="material-icons">photo</i></div>
+                        <div class='ava-icon' onclick="$('#upload-ava').click();"><i class="material-icons"></i></div>
                         </div>
                         <div class="col-5" style="display:inline; margin:auto 10px auto 10px">
 
@@ -870,7 +866,7 @@
               <?php if($_SESSION["usertype_id"] < 2) { ?>
                 <select class="custom-select" id="accounts">
                   <?php foreach ($accounts as $key => $item): ?>
-                    <option id="sel_user" value="<?php echo $item->account_id ?>" 
+                    <option class="sel_user" value="<?php echo $item->account_id ?>" 
                       <?php if($item->account_id == $_SESSION['account_id']) {?>
                         selected=""<?php }?>><?php echo $item->account_id?></option>  
                   <?php endforeach ?>
@@ -886,12 +882,6 @@
         </ul>
         <ul class="navbar-nav navbar-right">
           <a id="reload" href="#" class="nav-link notification-toggle nav-link-lg"><i class="ion-ios-refresh-outline"></i></a>
-        </ul>
-        <ul class="navbar-nav navbar-right">
-            <label>
-              <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" id="lightSwitch">
-              <span class="custom-switch-indicator"></span>
-            </label>
         </ul>
         <ul class="navbar-nav navbar-right">          
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
@@ -920,14 +910,16 @@
           <ul class="sidebar-menu">
             <?php
               if($_SESSION["usertype_id"] < 2) { ?>
-                <li data-selection="admin" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('dashboard/index') ?>"><i class="ion-lock-combination"></i>Admin Dashboard</a></div></li>
-              <?php }
-            ?>
-            <li data-selection="general" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('dashboard/general') ?>"><i class="ion-ios-paper"></i>General Dashboard</a></div></li>
-            <li data-selection="journal" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('summary/journal') ?>"><i class="ion-social-buffer"></i>Journal Summary</a></div></li>
-            <li data-selection="account" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('summary/account') ?>"><i class="ion-social-chrome"></i>Account Summary</a></div></li>
-            <li data-selection="session" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('timezone') ?>"><i class="ion-transgender"></i>Session</a></div></li>
-            <li data-selection="profile" class="nav-side-bar"><div class="sel-li"><a class="nav-title" href="<?php echo base_url('profile') ?>"><i class="ion-transgender"></i>Profile</a></div></li>
+                <li class="nav-side-bar" data-selection="admin"><a class="nav-link" href="<?php echo base_url('dashboard/index') ?>"><i class="fas fa-th-large"></i> <span>Admin Dashboard
+                </span></a></li>
+            <?php } ?>
+              <li class="nav-side-bar" data-selection="general"><a class="nav-link" href="<?php echo base_url('dashboard/general') ?>"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
+              <li class="nav-side-bar" data-selection="journal"><a class="nav-link" href="<?php echo base_url('summary/journal') ?>"><i class="fas fa-bars"></i> <span>Account Summary
+              </span></a></li>
+              <li class="nav-side-bar" data-selection="account"><a class="nav-link" href="<?php echo base_url('summary/account') ?>"><i class="fas fa-th"></i> <span>Journal Summary
+              </span></a></li>
+              <li class="nav-side-bar" data-selection="session"><a class="nav-link" href="<?php echo base_url('timezone') ?>"><i class="fas fa-pencil-ruler"></i> <span>Sessions</span></a></li>
+              <li class="nav-side-bar" data-selection="profile"><a class="nav-link" href="<?php echo base_url('profile') ?>"><i class="far fa-user"></i> <span>Profile</span></a></li>
           </ul>
        </aside>
        <script>
@@ -943,7 +935,7 @@
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
-          <div class="section-header" style="min-height: 5rem;"></div>
+          <div class="section-header"></div>
           <div class="section-body">
             <?php include ($page)?>                
           </div>
@@ -959,6 +951,5 @@
     </div>
   </div> 
   <script src="<?php echo base_url('assets/js/page/layout.js')?>"></script>
-  <script src="<?php echo base_url('assets/js/switch.js')?>"></script>
 </body>
 </html>

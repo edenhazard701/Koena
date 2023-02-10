@@ -27,7 +27,7 @@ function reloadTimezoneSession(timezone) {
       if (value.OrderType=='Buy') {
         OrderType = '<span class="badge light badge-success">Buy</span>';
       } else if (value.OrderType=='Sell') {
-        OrderType = '<span class="badge light badge-info">Sell</span>';
+        OrderType = '<span class="badge light badge-danger">Sell</span>';
       }
       
       var ProfitType = '';

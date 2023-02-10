@@ -593,7 +593,7 @@ function getJournalTable() {
     columns: [
       { render: function (data, type, full, meta) {
         
-        return ('<div class="col-md-12 dChartCpT tooltipM"><span id="spanLargestProfitTrade" ><i class="far fa-clock"></i></span><div id="spanLargestProfitTradeTooltip"><ul><li><b>Open Time</b> : <span id="alptTicket">'+full.OpenTime+'</span></li><li><b>Close Time</b> : <span id="alptTicket">'+full.CloseTime+'</span></li></ul></div></div>');
+        return ('<div class="col-md-12 dChartCpT tooltipM"><span id="spanLargestProfitTrade" ><i class="far fa-clock"></i></span><div id="spanLargestProfitTradeTooltip1"><ul><li><b>Open Time</b> : <span id="alptTicket">'+full.OpenTime+'</span></li><li><b>Close Time</b> : <span id="alptTicket">'+full.CloseTime+'</span></li></ul></div></div>');
         }
       },
       { data: "Symbol"
