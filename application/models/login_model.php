@@ -86,7 +86,7 @@
     
     public function forgotPassword($email) {
         $active_code=md5(uniqid(rand(5, 15), true));
-        $link = 'http://154.44.150.137/reset-password.php?key='.$active_code;
+        $link = 'http://154.44.150.137/koena-new/forgot_password?resetKey='.$active_code;
 
         $query = $this->db->query("SELECT * FROM user WHERE email = '".$email."' AND status = 1");
 
@@ -110,19 +110,13 @@
             //send email
             $to = $email; //change to ur mail address
             $strSubject="Koena Tech | Password Recovery Link";
-            $message = '<p>Password Recovery Link : '.$link.'</p>' ;              
-            $headers = 'MIME-Version: 1.0'."\r\n";
-            $headers .= 'Content-type: text/html; charset=iso-8859-1'."\r\n";
-            $headers .= "From: test@gmail.com";     
-            
-            //echo $message;       
-            $mail_sent = mail($to, $strSubject, $message, $headers);
+            $message = 'Hi! '.$user->username.'' ;
+            $message .= '<p>Password Recovery Link : '.$link.'</p>' ; 
 
             $this->email->from('test@gmail.com', 'Identification');
             $this->email->to($to);
             $this->email->subject($strSubject);
             $this->email->message($message);
-            $this->email->headers($headers);
             
             if($this->email->send()) {
                 return array('status' => "success", "message" => "Email send successfully to reset the password. Please check your email.");
