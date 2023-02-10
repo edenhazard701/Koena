@@ -37,6 +37,18 @@
   border-radius: 10px;
   font-size:15px;
   width: 13rem;
+  right:  0;
+}
+
+#spanLargestProfitTradeTooltip1 {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  background: #000;
+  padding: 10px;
+  border-radius: 10px;
+  font-size:15px;
+  width: 13rem;
 }
 
 .tooltipM:hover #spanLargestProfitTradeTooltip{
@@ -44,7 +56,25 @@
   z-index:999;
 }
 
+.tooltipM:hover #spanLargestProfitTradeTooltip1{
+  display: block;
+  z-index:999;
+}
+
+
 #spanLargestProfitTradeTooltip:after {
+  margin: 0 auto;
+  position: absolute;
+  top: 100%;
+  content: "";
+  width: 1px;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #000;
+}
+
+#spanLargestProfitTradeTooltip1:after {
   margin: 0 auto;
   position: absolute;
   top: 100%;
@@ -63,7 +93,18 @@
   position: relative;
 }
 
+#spanLargestProfitTradeTooltip1 ul {
+  list-style: none;
+  padding: 0 !important;
+  margin: 0 !important;
+  position: relative;
+}
+
 #spanLargestProfitTradeTooltip ul li{ 
+  color:#fff;
+}
+
+#spanLargestProfitTradeTooltip1 ul li{ 
   color:#fff;
 }
 
@@ -312,6 +353,11 @@
     background-color: #212529 !important;
 }
 
+.chart {
+  min-height: 500px;
+  min-width: 1000px;
+}
+
 /* width */
 ::-webkit-scrollbar {
   height: 6px;
@@ -328,4 +374,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
-

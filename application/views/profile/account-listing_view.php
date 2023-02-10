@@ -7,7 +7,7 @@
           alt="image"
           width="100%"
           height="100%"
-          src="<?php echo $_SESSION['avatar']?>"
+          src="<?php echo $_SESSION['avatar']?$_SESSION['avatar']:base_url('assets/img/avatar/avatar-1.png')?>"
           class="rounded-circle author-box-picture"
         />
       </div>

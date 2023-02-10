@@ -63,12 +63,16 @@
       <div class="tab-content" id="myTabContent2">
         <div class="tab-pane fade show active" id="strength" role="tabpanel" aria-labelledby="strength1">
           <div class="card-body" >
-            <canvas id="strength_chart"></canvas>
+            <div class="table-responsive">
+              <canvas id="strength_chart" class="chart"></canvas>
+            </div>
           </div>
         </div>
         <div class="tab-pane fade" id="profit" role="tabpanel" aria-labelledby="profit1">
           <div class="card-body" >
-            <canvas id="profit_chart"></canvas>
+            <div class="table-responsive">
+              <canvas id="profit_chart" class="chart"></canvas>
+            </div>
           </div>
         </div>
       </div>
@@ -227,13 +231,17 @@
       </div>
       <div class="tab-content fade show active" id="myTabContent1">
         <div class="tab-pane fade show active" id="percentage" role="tabpanel">
-          <div class="card-body" >
-            <canvas id="general_percentage_chart"></canvas>
+          <div class="card-body">
+            <div class="table-responsive">
+              <canvas id="general_percentage_chart" class="chart"></canvas>
+            </div>
           </div>
         </div>
         <div class="tab-pane" id="amount" role="tabpanel">
           <div class="card-body" >
-            <canvas id="general_amount_chart"></canvas>
+            <div class="table-responsive">
+              <canvas id="general_amount_chart" class="chart"></canvas>
+            </div>
           </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
 /**
  *  Light Switch @version v0.1.4
  */
-
+$(document).ready(function(){
+	
 (function () {
   let lightSwitch = document.getElementById('lightSwitch');
   if (!lightSwitch) {
@@ -349,3 +350,5 @@
 
   setup();
 })();
+
+});
