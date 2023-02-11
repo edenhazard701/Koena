@@ -48,6 +48,7 @@ function getSymbolsChart() {
             }]
           },
           options: {
+            responsive: false,
             legend: {
               display: false
             },

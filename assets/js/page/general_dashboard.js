@@ -249,11 +249,7 @@ function getPerformanceGrowth() {
             }]
           },
           options: {
-            legend: {
-              labels: {
-                display: false
-              }
-            },
+            responsive: false,
             animation: {
               duration: 1,
               onComplete: function () {
@@ -287,38 +283,28 @@ function getPerformanceGrowth() {
             borderSkipped: false
           }]
         },
-        marker: {
-          visible: true,
-          shape:'Diamond',
-        },
         options: {
-            tooltips: {
-              enabled: true
-            },
-            hover: {
-              animationDuration: 1
-            },
-            animation: {
-              duration: 1,
-              onComplete: function () {
-                var chartInstance = this.chart,
-                ctx = chartInstance.ctx;
-                ctx.textAlign = 'center';
-                ctx.fillStyle = "rgba(0, 0, 0, 1)";
-                ctx.textBaseline = 'bottom';
+          responsive: false,
+          animation: {
+            duration: 1,
+            onComplete: function () {
+              var chartInstance = this.chart,
+              ctx1 = chartInstance.ctx;
+              ctx1.textAlign = 'center';
+              ctx1.fillStyle = "rgba(0, 0, 0, 1)";
+              ctx1.textBaseline = 'bottom';
 
-                this.data.datasets.forEach(function (dataset, i) {
-                  var meta = chartInstance.controller.getDatasetMeta(i);
-                  meta.data.forEach(function (bar, index) {
-                    var data = dataset.data[index];
-                    ctx.fillText(data, bar._model.x, bar._model.y - 5);
+              this.data.datasets.forEach(function (dataset, i) {
+                var meta = chartInstance.controller.getDatasetMeta(i);
+                meta.data.forEach(function (bar, index) {
+                  var data = dataset.data[index];
+                  ctx1.fillText(data, bar._model.x, bar._model.y - 5);
 
-                  });
                 });
-              }
+              });
             }
-
           }
+        }
       });       
         
       } else {
@@ -429,6 +415,7 @@ $(document).ready(function(){
       }]
     },
     options: {
+      responsive: false,
       legend: { display: false },
     }
   });
@@ -444,6 +431,7 @@ $(document).ready(function(){
       }]
     },
     options: {
+      responsive: false,
       legend: { display: false },
 
     }

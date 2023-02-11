@@ -52,23 +52,18 @@
     <div class="card card-chart">
       <div class="card-header" style="display: flex; flex-direction: column; align-items: flex-start;">
         <h3><i class="ion-social-chrome"></i>&nbsp;Symbols</h3>
-        <ul class="nav nav-pills" id="myTab3" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="strength1" data-toggle="tab" href="#strength" role="tab" aria-controls="strength" aria-selected="true">Strength</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="profit1" data-toggle="tab" href="#profit" role="tab" aria-controls="profit" aria-selected="false">Profit / Loss</a>
-        </ul>
       </div>
-      <div class="tab-content" id="myTabContent2">
-        <div class="tab-pane fade show active" id="strength" role="tabpanel" aria-labelledby="strength1">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <h4 style="margin-left: 2rem; margin-top: 1rem">Strength</h4>
           <div class="card-body" >
             <div class="table-responsive">
               <canvas id="strength_chart" class="chart"></canvas>
             </div>
           </div>
         </div>
-        <div class="tab-pane fade" id="profit" role="tabpanel" aria-labelledby="profit1">
+        <div class="col-12 col-md-6">
+          <h4 style="margin-left: 2rem; margin-top: 1rem">Profit / Loss</h4>
           <div class="card-body" >
             <div class="table-responsive">
               <canvas id="profit_chart" class="chart"></canvas>
@@ -221,23 +216,18 @@
 
       <div class="card-header" style="display: flex; flex-direction: column; align-items: flex-start">
         <h3><i class="ion-social-chrome"></i>&nbsp;Performance Growth</h3>
-        <ul class="nav nav-pills" id="myTab3" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="percentage1" data-toggle="tab" href="#percentage" role="tab" aria-controls="percentage" aria-selected="true">Percentage</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="amount1" data-toggle="tab" href="#amount" role="tab" aria-controls="amount" aria-selected="false">Amount In cash</a>
-        </ul>
       </div>
-      <div class="tab-content fade show active" id="myTabContent1">
-        <div class="tab-pane fade show active" id="percentage" role="tabpanel">
-          <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <h4 style="margin-left: 2rem; margin-top: 1rem">Percentage</h4>
+          <div class="card-body" >
             <div class="table-responsive">
               <canvas id="general_percentage_chart" class="chart"></canvas>
             </div>
           </div>
         </div>
-        <div class="tab-pane" id="amount" role="tabpanel">
+        <div class="col-12 col-md-6">
+          <h4 style="margin-left: 2rem; margin-top: 1rem">Amount in Cash</h4>
           <div class="card-body" >
             <div class="table-responsive">
               <canvas id="general_amount_chart" class="chart"></canvas>
