@@ -48,8 +48,8 @@
         $_SESSION['country'] = $user->country;
         $_SESSION['zipcode'] = $user->zipcode;
         $_SESSION['color'] = 'light';
-        $_SESSION['birth_date'] = $user->birth_date?$user->birth_date:date('Y-m-d');
-        
+        $_SESSION['birth_date'] = $user->birth_date == '0000-00-00'?date('Y-m-d'):$user->birth_date;
+
         $sql = "SELECT acct, is_active FROM trade_summary WHERE acct IN (SELECT account_id FROM user_accounts WHERE user_id=".$user->user_id.")";
         $query = $this->db->query($sql);
         $accountList = $query->result();
@@ -83,5 +83,75 @@
         // $_SESSION['BaseGMT'] = $this->baseGMT($_SESSION["account_id"]);
 
         return array('status' => "success", "message" => "Logged in successfully!", 'type' => $_SESSION["usertype_id"]);
+    }
+
+    
+    public function forgotPassword($email) {
+
+        $active_code=md5(uniqid(rand(5, 15), true));
+        $link = 'http://154.44.150.137/koena-new/forgot_password?key='.$active_code;
+
+        $query = $this->db->query("SELECT * FROM user WHERE email = '".$email."' AND status = 1");
+
+        $user = $query->result();
+        if (empty($user)){
+            return array('status' => "error", "message" => "No user found with this email address. Please enter another email address.");
+        }else{
+            $user = $user[0];
+
+            $data = array(
+                'changepwdtoken' => $active_code,
+                'ispwdchange' => 0
+            );
+
+            $this->db->where('user_id', $user->user_id);
+            $success = $this->db->update('user', $data);
+
+            if(!$success)
+                return array('status' => "error", "message" => "An error occured while reset password. Please Try again later!");
+
+            //send email
+            $to = $email; //change to ur mail address
+            $strSubject="Koena Tech | Password Recovery Link";
+            $message = 'Hi! '.$user->username.'
+';
+            $message .= 'Password Recovery Link : 
+'.$link.'' ; 
+
+            $this->email->from('test@gmail.com', 'Identification');
+            $this->email->to($to);
+            $this->email->subject($strSubject);
+            $this->email->message($message);
+            
+            if($this->email->send()) {
+                return array('status' => "success", "message" => "Email send successfully to reset the password. Please check your email.");
+            } else {
+                return array('status' => "error", "message" => "An error occured while sending email. Please Try again later!");
+            }
+            
+        }
+    }
+
+    public function resetPassword($password, $resetKey) {
+        $query = $this->db->query("SELECT * FROM user WHERE changepwdtoken = '".$resetKey."' AND status = 1 AND ispwdchange = 0");
+        $user = $query->result();
+
+        if (empty($user)) 
+            return array('status' => 'error', 'message' => 'Invalid token or password is already reset!');
+        $user = $user[0];
+
+        $data = array(
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'user_id' => $user->user_id,
+            'changepwdtoken' => ''
+        );
+
+        $this->db->where('user_id', $user->user_id);
+        $success = $this->db->update('user', $data);
+
+        if (!$success) 
+            return array('status' => 'error', 'message' => 'An error occured while updating this password. Please Try again later!');
+
+        return array('status' => 'success', 'message' => 'Password Changed successfully!');
     }
 }

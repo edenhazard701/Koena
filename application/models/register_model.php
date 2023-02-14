@@ -27,7 +27,8 @@
         $strSubject="Koena Tech | Email Verification";
         $message = 'Hi! '.$username.'' ; 
         $message .= 'Thanks for signing up to the Koena Journal.' ; 
-        $message .= 'Click on the link to activate your account '.$link.'Thanks' ;              
+        $message .= 'Click on the link to activate your account '.$link.'
+Thanks' ;              
 
         $this->email->from('email@example.com', 'Identification');
         $this->email->to($to);

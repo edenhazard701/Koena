@@ -29,32 +29,24 @@ class Plan_model extends CI_Model {
       $days = 30;
     }
 
-    if(empty($user_subscription)) {
-      $data = array(
-        'user_id' => $user_id,
-        'plan_id' => $plan_id,
-        'invoice_date' => date("Y-m-d"),
-        'start_date' => $start_date,
-        'end_date' => date_add(date_create(".$end_date."), date_interval_create_from_date_string($days." days")),
-        'payment_method' => $payment_method,
-        'payment_reference_id' => $payment_reference_id,
-        'amount' => $amount
-      );
-      $success = $this->db->insert('user_subscription', $data);
-    } else {
-      $data = array(
-        'user_id' => $user_id,
-        'plan_id' => $plan_id,
-        'invoice_date' => "CURDATE()",
-        'start_date' => $start_date,
-        'end_date' => "DATE_ADD(".$end_date.", INTERVAL ".$days." DAY)",
-        'payment_method' => $payment_method,
-        'payment_reference_id' => $payment_reference_id,
-        'amount' => $amount
-      );
-      $success = $this->db->insert('user_subscription', $data);
-    }
+    $end_date = date_add(date_create(".$end_date."), date_interval_create_from_date_string($days." days"));
+    $invoice_date = date("Y-m-d");
+    $start_date = date_create(".$start_date.")->format('Y-m-d');
+    $invoice_date = date_create(".$invoice_date.")->format('Y-m-d');
+    $end_date = $end_date->format('Y-m-d');
     
+    $data = array(
+      'user_id' => $user_id,
+      'plan_id' => $plan_id,
+      'invoice_date' => $invoice_date,
+      'start_date' => $start_date,
+      'end_date' => $end_date,
+      'payment_method' => $payment_method,
+      'payment_reference_id' => $payment_reference_id,
+      'amount' => $amount
+    );
+    $success = $this->db->insert('user_subscription', $data);
+
     if (!$success) 
       return array('status' => 'error', 'message' => 'An error occured while updating plan details. Please Try again later!');
 

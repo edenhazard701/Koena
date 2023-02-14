@@ -391,15 +391,15 @@
                                 </div>
                             </div>
                             <?php } else{?>
-                                <div class="card-header card-header-warning text-center">
-                                    <h3 class="card-title py-2">Register</h3>
-                                </div>
                             <div class="card-body register-form-wrap">
-                                <div class="row">
+                                <div class="row register-page">
+                                    <div class="text-center actionLabel">
+                                        <h3 class="card-title py-2">Register</h3>
+                                    </div>
                                     <div class="col-md-5 ml-auto">
                                         <div class="info info-horizontal">
                                             <div class="description">
-                                                <img src="<?php echo base_url('assets/img/logo.png')?>" class="" style="width: 90%;margin-bottom:0px;" />
+                                                <img src="<?php echo base_url('assets/img/logo.png')?>" class="" style="width: 100%;margin-bottom:0px;" />
                                             </div>
                                         </div>
                                         <br />
@@ -465,7 +465,7 @@
                                             </div>
                                             <div class="text-center">
                                                 <input type="hidden" name="action" value="register-user">
-                                                <input type="submit" class="btn btn-primary btn-round mt-4" value="Register Now" name="signup-btn" id="signup-btn">
+                                                <input type="submit" class="btn btn-primary btn-round mt-4 mb-4" value="Register Now" name="signup-btn" id="signup-btn">
                                             </div>
                                         </form>
                                     </div>

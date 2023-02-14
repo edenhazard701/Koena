@@ -26,7 +26,7 @@ class Forgot_Password extends CI_Controller {
     $params = $this->input->post();
 
     $password = isset($params['password']) ? $params['password'] : '';
-    $password = isset($params['resetKey']) ? $params['resetKey'] : '';
+    $resetKey = isset($params['resetKey']) ? $params['resetKey'] : '';
 
     $state = $this->Login_model->resetPassword($password, $resetKey);
 

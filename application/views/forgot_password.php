@@ -32,16 +32,16 @@
 <body class="dark-edition off-canvas-sidebar">
 
   <div class="wrapper wrapper-full-page">
-    <div class="page-header forgotPassword-page">
+    <div class="page-header page-container">
       <div class="container">
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
             <div class="imgLogo card-login card-hidden text-center">
               <img src="<?php echo base_url('assets/img/logo.png')?>" style="width: 100%;margin-bottom:50px;" />
             </div>
-            
+            <?php if(empty($_GET['key'])){?>
             <form method="POST" id="ForgotPasswordForm" class="needs-validation" novalidate="">
-              <div class="text-center forgotpassword">
+              <div class="text-center actionLabel">
                 <h3 class="card-title py-2">Forgot Password</h3>
               </div>
               <div class="form-group has-default md-form-group">
@@ -67,57 +67,58 @@
                 </p>
               </div>
             </form>
-            <div id="reset-password">
-              <?php if(isset($_GET['key']) && !empty($_GET['key'])){?>
-                <form id="resetPasswordForm" role="form">
-                  <div class="text-center forgotpassword">
-                    <h3 class="card-title py-2">Reset Password</h3>
+            <?php }?>
+            <?php if(isset($_GET['key']) && !empty($_GET['key'])){?>
+              <form method="POST" id="resetPasswordForm" role="form">
+                <div class="text-center actionLabel">
+                  <h3 class="card-title py-2">Reset Password</h3>
+                </div>
+                <div class="form-group has-default md-form-group">
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                      </div>
+                      <input class="form-control input-box-330" type="password" name="password" id="password" placeholder="Password">
+                      <a href="javascript:void(0);" id="see_password">
+                          <i class="far fa-eye"></i>
+                      </a>
+                      <a href="javascript:void(0);" id="hide_password" style="display:none;">
+                          <i class="far fa-eye"></i>
+                      </a>
                   </div>
-                  <div class="form-group has-default md-form-group">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
+                  <p class="required error" id="signup-password-info"></p>
+                </div>
+                <div class="form-group has-default md-form-group">
+                  <div class="input-group">
+                      <div class="input-group-prepend">
                           <span class="input-group-text">
                               <i class="fas fa-lock"></i>
                           </span>
-                        </div>
-                        <input class="form-control input-box-330" type="password" name="password" id="password" placeholder="Password">
-                        <a href="javascript:void(0);" id="see_password">
-                            <i class="far fa-eye"></i>
-                        </a>
-                        <a href="javascript:void(0);" id="hide_password" style="display:none;">
-                            <i class="far fa-eye"></i>
-                        </a>
-                    </div>
-                    <p class="required error" id="signup-password-info"></p>
+                      </div>
+                      <input class="form-control input-box-330" type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password">
+                      <input type="hidden" name="resetKey" value="<?php echo $_GET['key'];?>">
                   </div>
-                  <div class="form-group has-default md-form-group">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fas fa-lock"></i>
-                            </span>
-                        </div>
-                        <input class="form-control input-box-330" type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password">
-                        <input type="hidden" name="resetkey" value="<?php echo $_GET['key'];?>">
-                    </div>
-                    <p class="required error" id="confirm-password-info"></p>
-                  </div>
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                      submit
-                    </button>
-                    <p>
-                      Already Register Please 
-                      <a href="<?php echo base_url('login')?>">Login</a>
-                    </p>
-                  </div>
-                </form>
-              <?php }else{?>
-                <div class="card-header card-header-warning text-center">
-                  <h3 class="card-title py-2">Invalid Link! Check the Link in your email</h3>
+                  <p class="required error" id="confirm-password-info"></p>
                 </div>
-              <?php } ?>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                    submit
+                  </button>
+                  <p>
+                    Already Register Please 
+                    <a href="<?php echo base_url('login')?>">Login</a>
+                  </p>
+                </div>
+              </form>
+            <?php }else{?>
+            <div id="reset-password">
+              <div class="card-header card-header-warning text-center">
+                <h3 class="card-title py-2">Invalid Link! Check the Link in your email</h3>
+              </div>
             </div>
+            <?php } ?>
           </div>
       </div>
     </div>
