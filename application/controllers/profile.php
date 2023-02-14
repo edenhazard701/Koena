@@ -61,8 +61,9 @@ class Profile extends MY_Controller {
 
 	public function changeUsername() {
 		$uname =  isset($_POST['username'])?$_POST['username']:NULL;
+		$birth_date = isset($_POST['birth_date'])?$_POST['birth_date']:NULL;
 		$email = $_SESSION['email'];
-		$result =$this->Profile_model->changeUsername($uname, $email);
+		$result =$this->Profile_model->changeUsername($uname, $email, $birth_date);
 		if($result){
 			echo json_encode(array('status' => "success"));
 		}else{
@@ -137,6 +138,7 @@ class Profile extends MY_Controller {
 
 		$res = $this->Profile_model->changeAvatar($file, $post);
 
+		redirect('/profile');
   }
 
 
@@ -165,6 +167,13 @@ class Profile extends MY_Controller {
         }else{
         	echo json_encode(array('status' => "error", "message" => 'An error occured while sending email. Please Try again later!'));	
         }
+	}
+
+	public function changeGMT() {
+		$timezone =  isset($_POST['timezone'])?$_POST['timezone']:$_SESSION['GMT'];
+
+		$res = $this->Profile_model->changeGMT($timezone);
+		echo json_encode(array('status' => 'success', 'message' => 'GMT Changed successfully! Reloading'));
 	}
 
 }

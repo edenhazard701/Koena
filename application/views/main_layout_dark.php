@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title><?php echo $params['title']?></title>
-  <link rel="icon" href="<?php echo base_url('assets/img/logo.png');?>">
+  <link rel="icon" href="<?php echo base_url('assets/img/logo1.png');?>">
   <!-- General CSS Files -->
   <link rel="stylesheet" href="<?php echo base_url('assets/modules/bootstrap/css/bootstrap.min.css')?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/modules/fontawesome/css/all.min.css')?>">
@@ -18,6 +18,8 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/css/photoswipe.default-skin.css')?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css')?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/components.css')?>">
+
+  <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap-dark.css')?>">
 
   <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css')?>">
   <script src="<?php echo base_url('assets/modules/jquery.min.js')?>"></script>
@@ -126,7 +128,6 @@
                           src="<?php echo $_SESSION['avatar']?$_SESSION['avatar']:base_url('assets/img/avatar/avatar-1.png')?>"
                           class="rounded-circle author-box-picture"
                           />
-                        <div class='ava-icon'></div>
                         </div>
                         <div class="col-5" style="display:inline; margin:auto 10px auto 10px">
 
@@ -147,6 +148,7 @@
                           <input type="text" class="form-control datepicker" id="birth_date" value="<?= $_SESSION['birth_date']?>">
                         </div>
                       </div>
+
                 </div>  
               </div>
             </div>
@@ -785,9 +787,9 @@
         <ul class="navbar-nav navbar-right">
           <form method="POST" action="<?php echo base_url('dashboard/changeColorMode')?>" id="color_form">
             <label>
-              <input type="checkbox" class="custom-switch-input"  onclick="$('#color_form').submit();" />
+              <input type="checkbox" class="custom-switch-input" checked onclick="$('#color_form').submit();" />
               <span class="custom-switch-indicator"></span>
-              <input name="color_mode" value="dark" hidden>
+              <input name="color_mode" value="light" hidden />
               <input name="cur_url" id="cur_url" hidden>
             </label>
           </form>

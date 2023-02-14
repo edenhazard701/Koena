@@ -152,4 +152,12 @@ class Dashboard extends MY_Controller {
 		$result = $this->Dashboard_model->getAccountSummary($acct);
 		echo json_encode(array('status' => "success", "data" => $result));
 	}
+
+	public function changeColorMode(){
+		$color = isset($_POST['color_mode']) ? $_POST['color_mode'] : "dark";
+		$cur_url = isset($_POST['cur_url']) ? $_POST['cur_url'] : "/dashboard";
+		$_SESSION['color'] = $color;
+
+		redirect($cur_url);
+	}
 }

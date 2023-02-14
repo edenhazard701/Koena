@@ -65,11 +65,8 @@
     </div>
   </div>
   <form 
-    id="changeAvatarForm" 
-    callback="document.location.reload(true);" 
-    action="<?php echo base_url('/profile/changeAvatar')?>" 
-    method="post">
-    <input id='upload-ava' type="file" accept=".png, .jpg, .jpeg" name="image" enctype="multipart/form-data" style='display:none;' onchange="$('#changeAvatarForm').submit();">
+    id="changeAvatarForm" action="<?php echo base_url('/profile/changeAvatar')?>" method="post" enctype="multipart/form-data">
+    <input id='upload-ava' type="file" accept=".png, .jpg, .jpeg" name="image"  style='display:none;' onchange="$('#changeAvatarForm').submit();">
     <input type="hidden" name="user_id" value="<?=$_SESSION['user_id']?>">
     <!-- <input type="submit" name="submit" value="Upload">  -->
   </form>

@@ -68,7 +68,7 @@ class Summary_model extends CI_Model {
     
     public function getJournalTableGroup($account_id){
         $sql = "";
-        $sql = "SELECT td.*, tj.* FROM closedtrades td INNER JOIN tradejournal tj ON td.OrderNumber=tj.Ticket WHERE td.Acc_Id=".$account_id." GROUP BY td.journal_group_id ORDER BY td.CloseTime";
+        $sql = "SELECT td.*, tj.* FROM closedtrades td INNER JOIN tradejournal tj ON td.OrderNumber=tj.Ticket WHERE td.Acc_Id=".$account_id." GROUP BY td.journal_group_id ORDER BY td.CloseTime DESC";
         $query = $this->db->query($sql);
 
         $acct = $query->result(); 

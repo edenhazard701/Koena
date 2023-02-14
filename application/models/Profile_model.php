@@ -20,6 +20,7 @@ class Profile_model extends CI_Model {
         }
 
         $_SESSION['avatar'] =  $imgContent;
+        
         return array('status' => 'success', 'message' => 'Avatar Changed successfully!');
     }
 
@@ -170,9 +171,10 @@ class Profile_model extends CI_Model {
     }
 
 
-    public function changeUsername($uname, $email) {
-        $this->db->query("UPDATE user SET `username` = '".$uname."' WHERE `email` = '".$email."';");
+    public function changeUsername($uname, $email, $birth_date) {
+        $this->db->query("UPDATE user SET `username` = '".$uname."', `birth_date` = '".$birth_date."' WHERE `email` = '".$email."';");
         $_SESSION['username'] = $uname;
+        $_SESSION['birth_date'] = $birth_date?$birth_date : "";
         return 1;
 	}
 
@@ -198,4 +200,14 @@ class Profile_model extends CI_Model {
 		$_SESSION['zipcode'] = $data['zipcode'];
         return 1;
 	}
+
+    public function changeGMT($timezone) {
+
+        $query = $this->db->query("UPDATE user SET `gmt` = '".$timezone."' WHERE user_id = '".$_SESSION['user_id']."'");
+        $num = $this->db->affected_rows($query);
+        if ($num < 1) return array('status' => 'error', 'message' => 'An error occured while updating GMT. Please Try again later!');
+
+        $_SESSION['GMT'] = $timezone;
+        return 1;
+    }
 }

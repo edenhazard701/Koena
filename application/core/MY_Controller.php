@@ -21,7 +21,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          "accounts" => $user_accounts[0] 
       );
 
-      $this->load->view('main_layout', $this->data);
+      $color = isset($_SESSION['color'])?$_SESSION['color']:'light';
+
+      if($color == 'dark')
+        $this->load->view('main_layout_dark', $this->data);
+      else
+        $this->load->view('main_layout', $this->data);
   }
 
   public function isLogined(){

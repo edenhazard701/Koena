@@ -26,7 +26,7 @@ function getSymbolsChart() {
           xValues.push(d.StrategyUsed);
 
           if(d.Strength > 0) {
-            barColors.push("#6777ef")
+            barColors.push("#001be5")
           }
           else {
             barColors.push("#fe0000");
@@ -98,7 +98,7 @@ function getTakenSymbols() {
         var xValues = ["Taken", "Journaled"];
         var yValues = [Number(data.TotalJournalCount), Number(data.TotalTradesCount)];
         var barColors = [
-          "#6777ef",
+          "#001be5",
           "#fe0000"
         ];
 

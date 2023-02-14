@@ -249,6 +249,9 @@ function getPerformanceGrowth() {
             }]
           },
           options: {
+             legend: {
+                display: false
+            },
             responsive: false,
             animation: {
               duration: 1,
@@ -284,6 +287,9 @@ function getPerformanceGrowth() {
           }]
         },
         options: {
+          legend: {
+                display: false
+            },
           responsive: false,
           animation: {
             duration: 1,
@@ -370,10 +376,13 @@ function getAccountSummary() {
         $("#spanAverageLotStraded").text(Number(data[0][0].averagelotstraded).toFixed(2));
         $("#spanTotalCommissionAmount").text(Number(data[0][0].totalcommissionamount).toFixed(2));
         $("#spanTotalSwapAmount").text(Number(data[0][0].totalswapamount).toFixed(2));
-        
-        if(avaTradeTime == undefined){
-            var avaTradeTime = "00.00.00";
-        } else avaTradeTime = (data[0][0].AvgTradeTime).slice(0, 8);
+        console.log(data[0][0].AvgTradeTime)
+        if(avaTradeTime !== null){
+            var avaTradeTime = (data[0][0].AvgTradeTime).slice(0, 8);
+            
+        } else {
+          var avaTradeTime = "00.00.00";
+        } 
         $("#general_insight_list tbody").append(
           `<tr>
             <td class="sect_td2">${avaTradeTime}</td>

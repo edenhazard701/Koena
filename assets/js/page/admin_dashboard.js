@@ -117,6 +117,11 @@ function local_date_time(d) {
   return dateObject.toLocaleDateString('en-En', options);
 }
 
+function selectAccount(user_id) {
+  console.log($(user_id));
+  window.location = BASE_URL + '/dashboard?ac=' + user_id;
+}
+
 $('#accounts').change(function(){
   $('#reload').trigger("click");
 });

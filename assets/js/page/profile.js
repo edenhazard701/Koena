@@ -38,11 +38,14 @@ $("#modalUsernameForm").submit(function (event) {
   event.preventDefault();
 
   var username = $("#modalUsernameForm #username").val();
+  var birth_date = $("#birth_date").val();
+
   $.ajax({
     url: BASE_URL + "/profile/changeUsername",
     method: "POST",
     data: {
       username: username,
+      birth_date : birth_date
     },
     success: function (response) {
       response = JSON.parse(response);
@@ -58,13 +61,21 @@ $("#modalUsernameForm").submit(function (event) {
 
 $('#user_time_zone').change(function(){
   $.ajax({
-    url: BASE_URL + "/profile/changeTimezone",
+    url: BASE_URL + "/profile/changeGMT",
     method: "POST",
     data: {
       timezone: $('#user_time_zone').val(),
     },
     success: function (response) {
-      window.location.href = BASE_URL + "profile/profile";
+      response = JSON.parse(response);
+      console.log(response['status']);
+      if (response["status"] == "success") {
+          notifyme.showNotification(response["status"], response["message"]);
+        setTimeout(function () {
+          window.location.href = BASE_URL + "profile/profile";
+        }, 1000);
+      } else {
+      }
     },
   });
 })
