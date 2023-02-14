@@ -14,11 +14,9 @@ function reloadTimezoneSession(timezone) {
     success: function (response) {
       console.log(response);
       response = JSON.parse(response);
-      console.log(response);
       
       if (response["status"] == "success") {
         var data = response["data"]['data'];
-        console.log(data)
         $("#tableNumberTradeOpen tbody").empty();
         
 
