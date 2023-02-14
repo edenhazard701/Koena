@@ -13,7 +13,7 @@
     </li>
     <div style="width: 100%; display: inline-flex; justify-content: space-between; padding-top: 0.5rem;">
         <span class="material-icons colorGreen btn btn-primary" onclick="$('#upload-<?=$timeframeId?>').click();"><i class="ion-android-upload"></i></span>
-    	<button type="button" class="btn btn-danger deleteTimeframe" id="deleteTimeframe-<?=$timeframeId?>" data-timeframe="<?=$timeframeId?>" ><i class="ion-trash-a"></i></button>
+        <button type="button" class="btn btn-danger deleteTimeframe" id="deleteTimeframe-<?=$timeframeId?>" data-timeframe="<?=$timeframeId?>" ><i class="ion-trash-a"></i></button>
     </div>
     </div>
 </ul>

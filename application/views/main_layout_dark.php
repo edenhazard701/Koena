@@ -610,7 +610,7 @@
                 </button>
             </div>
             <div class="modal-body" id="openJournal_detail">
-                <form method="post" id="accountDetailsModalInsertUpdate">
+                <form method="post" id="accountDetailsModalInsertUpdate1">
                     <input type="hidden" id="jHas" name="jHas" class="form-control" value="" />
                     <input type="hidden" id="jTicket" name="jTicket" class="form-control" value="" />
                     <input type="hidden" id="jEmail" name="jEmail" class="form-control" value="<?php echo $_SESSION['email'] ?>" />
@@ -654,7 +654,7 @@
                         </div>
 
                         <br>
-                        <div class="row fancygall">
+                        <div class="row fancygall1">
                             <div class="col-md-3">
                                 <?php  $timeframeId = "TimeFrame11";
                                     include 'assets/templates/journal-modal/select-timeframe.php'; ?>
@@ -679,7 +679,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-purple mr-3" data-dismiss="modal">Close</button>
-                            <input type="submit" id="submitaccount" value="Save" class="btn btn-primary" name="submits">
+                            <input type="submit" id="submitaccount" value="Save" class="btn btn-primary" name="submits1">
                         </div>
                         <?php include 'assets/templates/journal-modal/timeframe-forms-all.php'; ?>
                     </div>
@@ -796,7 +796,7 @@
         </ul>
         <ul class="navbar-nav navbar-right">          
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-		<img alt="image" src="<?php echo $_SESSION['avatar']?$_SESSION['avatar']:base_url('assets/img/avatar/avatar-1.png')?>" class="rounded-circle mr-1">
+    <img alt="image" src="<?php echo $_SESSION['avatar']?$_SESSION['avatar']:base_url('assets/img/avatar/avatar-1.png')?>" class="rounded-circle mr-1">
             <div class="d-sm-none d-lg-inline-block"><?php echo $_SESSION['username']?></div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <a href="<?php echo base_url('profile')?>" class="dropdown-item has-icon">

@@ -380,6 +380,26 @@ class Summary_model extends CI_Model {
         return array('status' => 'success', 'message' => 'Changed successfully!');
     }
 
+    public function changeSSTimeframe1($data) {
+        $timeframe = $data['timeframe'];
+        $timeframe = substr($timeframe, 0, 10);
+
+        if (isset($_FILES["image"])) {
+            $thumb = resizer($_FILES['image']['tmp_name'], 1920, 1080, true);
+            ob_start();
+            imagejpeg($thumb);
+            $image = ob_get_clean();
+            $imgContent = addslashes($imageData = "data:image/jpg;charset=utf8;base64,".base64_encode($image)); 
+            
+            // Insert image content into database 
+            $this->db->query("UPDATE closedtrades SET `SS".$timeframe."`='$imgContent' WHERE `OrderNumber` IN ('".implode("','", str_getcsv($data['ticket_id']))."')");
+        } else {
+            return array('status' => 'error', 'message' => 'ERROR');
+        }
+        // $this->exitScript('success', "{$data['timeframe']} for ticket(s) <big>[{$data['ticket_id']}]</big> Changed successfully!");
+        return array('status' => 'success', 'message' => 'Changed successfully!');
+    }
+
     public function journalDetailsModalInsertUpdate($data) {
         if ($data['tickets']) {
             if($data['strategyUsed']){

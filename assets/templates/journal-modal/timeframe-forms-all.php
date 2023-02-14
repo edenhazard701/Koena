@@ -1,6 +1,6 @@
 <?php
 
-$timeframeId = 'TimeFrame0';
+$timeframeId = 'TimeFrame00';
 include 'assets/templates/journal-modal/form-timeframe.php';
 
 $timeframeId = 'TimeFrame11';

@@ -198,6 +198,12 @@ class Summary extends MY_Controller {
 		echo json_encode($result);
 	}
 
+	public function changeSSTimeframe1() {
+		$result = $this->Summary_model->changeSSTimeframe1($_POST);
+
+		echo json_encode($result);
+	}
+
 	public function journalDetailsModalInsertUpdate() {
 
 		$data = $_POST;

@@ -1,4 +1,7 @@
 <ul class="list-group list-group-flush <?php echo '$tmclass';?>" style="<?php echo '$style';?>">
+    <!-- <li>
+        <?php echo _timeframe_options()?>
+    </li> -->
     <div id='block-<?=$timeframeId?>' class="timeframeId-wrap">
     <li class="list-group list-group-flush">
         <div class='image-wrapper' >

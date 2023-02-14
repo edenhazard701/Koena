@@ -247,7 +247,7 @@ $('#accountDetailsModalInsertUpdate').on('submit', function (event) {
             
             $('#modalOpenJournal').modal('hide');
             // notifyme.showNotification(response["status"], response["message"]);
-            $('#accountDetailsModalInsertUpdate').trigger("reset");
+            // $('#accountDetailsModalInsertUpdate').trigger("reset");
             } else {
                 // notifyme.showNotification(response["status"], response["message"]);
             }

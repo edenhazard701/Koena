@@ -98,8 +98,8 @@ function getTakenSymbols() {
         var xValues = ["Taken", "Journaled"];
         var yValues = [Number(data.TotalJournalCount), Number(data.TotalTradesCount)];
         var barColors = [
+          "#fe0000",
           "#001be5",
-          "#fe0000"
         ];
 
         var ctxEl = document.getElementById("general_trades_chart");
@@ -157,10 +157,11 @@ $('body').on('click','.deleteTimeframe',function () {
         if (response["status"] == "success") {
           //$(this).parent('.timeframeId-wrap').first().find('.fancybox').attr("src",'data:image/jpg;charset=utf8;base64');
     $('#container-'+timeframe+' .fancybox').css("display",'none');
+    $('#deleteTimeframe-' + timeframe).hide();
     $(this).hide(); 
-          notifyme.showNotification(response["status"], response["message"]);
+          // notifyme.showNotification(response["status"], response["message"]);
         }else{
-          notifyme.showNotification(response["status"], response["message"]);
+          // notifyme.showNotification(response["status"], response["message"]);
         }
       }
     });
@@ -256,7 +257,10 @@ function SSTimeFrameReload(ticket_id, el) {
         var image = image_data['SS'+el];
         $('#ava-'+ el).attr('src', image);
         $('#container-'+ el).attr('href', image);
+        
         $('#ava-'+ el).show();
+        $('#deleteTimeframe-' + el).show();
+
         _rebiuld_photoswipe();
       }
     }

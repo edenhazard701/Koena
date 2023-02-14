@@ -114,6 +114,33 @@ function getGroupJournalModal() {
     }
 }
 
+$('.deleteTimeframe').click(function() {
+  var timeframe1 = $(this).attr('data-timeframe');
+  var ticket_id = $('#jTicket').val();
+
+  var timeframe = timeframe1.slice(0, 10);
+    $.ajax({
+      url: BASE_URL + "summary/deleteSSTimeframe",
+      method: "POST",
+      data: {
+        timeframe: timeframe,
+        ticket_id: ticket_id,
+      },
+      success: function (response) {
+        response = JSON.parse(response);
+        if (response["status"] == "success") {
+          //$(this).parent('.timeframeId-wrap').first().find('.fancybox').attr("src",'data:image/jpg;charset=utf8;base64');
+          console.log(timeframe);
+    $('#container-'+timeframe+ 1 +' .fancybox').css("display",'none');
+    $('#deleteTimeframe1-' + timeframe+1).hide();
+          // notifyme.showNotification(response["status"], response["message"]);
+        }else{
+          // notifyme.showNotification(response["status"], response["message"]);
+        }
+      }
+    });
+});
+
 function getFancyItems(pic) {
   var items = [];
     $(pic).find('a[class=fancybox]').each(function() {
@@ -189,19 +216,19 @@ function SSTimeFrameReload(ticket_id, el) {
     url: BASE_URL + "/summary/SSTimeFrameReload",
     method: "POST",
     data: {
-      ticket_id: ticket_id.slice(0, 11),
+      ticket_id: ticket_id,
       field: el
     },
     success: function (response) {
       response = JSON.parse(response);
-      console.log(response['data'][0]);
       if (response["status"] == "success") {
         var image_data = response['data'][0];
-        console.log(image_data);
-        var image = image_data['SS'+el];
+        var image = image_data['SS'+el.slice(0, 10)];
         $('#ava-'+ el).attr('src', image);
+
         $('#container-'+ el).attr('href', image);
         $('#ava-'+ el).show();
+        $('#deleteTimeframe1-' + el).show();
         _rebiuld_photoswipe();
       }
     }
@@ -377,52 +404,52 @@ function getAccountDetailsModal(ticket_id) {
 
         $('#ava-TimeFrame11').attr('src', img1);
         $('#container-TimeFrame11').attr('href', img1);
-        $('#container-TimeFrame11').data('caption', "TimeFrame 1 : <span class='colorYellow'>" + timeframe1 + "</span>");
+        $('#container-TimeFrame11').data('caption', "TimeFrame 11 : <span class='colorYellow'>" + timeframe1 + "</span>");
         if (data.SSTimeFrame1) {
             $('#ava-TimeFrame11').show();
           } else {
-            $('#ava-TimeFrame1').hide();
-        $('#deleteTimeframe1-TimeFrame11').hide();
+            $('#ava-TimeFrame11').hide();
+            $('#deleteTimeframe1-TimeFrame11').hide();
           }
 
         $('#ava-TimeFrame21').attr('src', img2);
         $('#container-TimeFrame21').attr('href', img2);
-        $('#container-TimeFrame21').data('caption', "TimeFrame 2 : <span class='colorYellow'>" + timeframe2 + "</span>");
+        $('#container-TimeFrame21').data('caption', "TimeFrame 21 : <span class='colorYellow'>" + timeframe2 + "</span>");
         if (data.SSTimeFrame2) {
           $('#ava-TimeFrame21').show();
         } else {
           $('#ava-TimeFrame21').hide();
-      $('#deleteTimeframe1-TimeFrame21').hide();
+          $('#deleteTimeframe1-TimeFrame21').hide();
         }
 
         $('#ava-TimeFrame31').attr('src', img3);
         $('#container-TimeFrame31').attr('href', img3);
-        $('#container-TimeFrame31').data('caption', "TimeFrame 3 : <span class='colorYellow'>" + timeframe3 + "</span>");
+        $('#container-TimeFrame31').data('caption', "TimeFrame 31 : <span class='colorYellow'>" + timeframe3 + "</span>");
         if (data.SSTimeFrame3) {
           $('#ava-TimeFrame31').show();
         } else {
           $('#ava-TimeFrame31').hide();
-      $('#deleteTimeframe1-TimeFrame31').hide();
+          $('#deleteTimeframe1-TimeFrame31').hide();
         }
       
-      $('#ava-TimeFrame14').attr('src', img4);
+      $('#ava-TimeFrame41').attr('src', img4);
         $('#container-TimeFrame41').attr('href', img4);
-        $('#container-TimeFrame41').data('caption', "TimeFrame 4 : <span class='colorYellow'>" + timeframe4 + "</span>");
+        $('#container-TimeFrame41').data('caption', "TimeFrame 41 : <span class='colorYellow'>" + timeframe4 + "</span>");
         if (data.SSTimeFrame4) {
           $('#ava-TimeFrame41').show();
         } else {
           $('#ava-TimeFrame41').hide();
-      $('#deleteTimeframe1-TimeFrame41').hide();
+          $('#deleteTimeframe1-TimeFrame41').hide();
         }
       
-      $('#ava-TimeFrame15').attr('src', img5);
+      $('#ava-TimeFrame51').attr('src', img5);
         $('#container-TimeFrame51').attr('href', img5);
-        $('#container-TimeFrame51').data('caption', "TimeFrame 5 : <span class='colorYellow'>" + timeframe5 + "</span>");
+        $('#container-TimeFrame51').data('caption', "TimeFrame 51 : <span class='colorYellow'>" + timeframe5 + "</span>");
         if (data.SSTimeFrame5) {
           $('#ava-TimeFrame51').show();
         } else {
           $('#ava-TimeFrame51').hide();
-      $('#deleteTimeframe1-TimeFrame51').hide();
+          $('#deleteTimeframe1-TimeFrame51').hide();
         }
 
 
@@ -453,7 +480,7 @@ function getAccountDetailsModal(ticket_id) {
           $('#listHowICanImprove2').val(data.HowICanImprove);
 
         $("#modalOpenJournal").modal("show");
-        $('.timeframe-wrap-hide').hide();
+        $('.timeframe-wrap1-hide').hide();
         _rebiuld_photoswipe();
       } else {
         notifyme.showNotification(response["status"], response["message"]);
@@ -555,31 +582,7 @@ $('#reasonAdd').on('submit', function (event) {
       })
     });
 
-$("body").on('click','.deleteTimeframe1',function () {
-  var timeframe1 = $(this).attr('data-timeframe');
-  var ticket_id = $('#jTicket').val();
 
-  var timeframe = timeframe1.slice(0, 10);
-    $.ajax({
-      url: BASE_URL + "summary/deleteSSTimeframe",
-      method: "POST",
-      data: {
-        timeframe: timeframe,
-        ticket_id: ticket_id,
-      },
-      success: function (response) {
-        response = JSON.parse(response);
-        if (response["status"] == "success") {
-          //$(this).parent('.timeframeId-wrap').first().find('.fancybox').attr("src",'data:image/jpg;charset=utf8;base64');
-    $('#container-'+timeframe+' .fancybox').css("display",'none');
-    
-          notifyme.showNotification(response["status"], response["message"]);
-        }else{
-          notifyme.showNotification(response["status"], response["message"]);
-        }
-      }
-    });
-});
 function _jpeg(img) {
   return img.includes('data:')
     ? img
@@ -591,16 +594,16 @@ $("body").on('change', '#listStrategyUsed2, #listReasonForEntry2, #listReasonFor
 });
 
 $("body").on('keyup','#listHowICanImprove2', function(){
-	isChanged = true;
+  isChanged = true;
 })
 
 $('body').on('click','.custom-modal-click-close', function () {
   if(isChanged){
-	  if(confirm("It seems some data has been modified. Do you want to close anyway?")){
-		 $('#modalOpenJournal').modal('toggle');
-	  }
+    if(confirm("It seems some data has been modified. Do you want to close anyway?")){
+     $('#modalOpenJournal').modal('toggle');
+    }
   }else{
-	  $('#modalOpenJournal').modal('toggle');
+    $('#modalOpenJournal').modal('toggle');
   }
 })
 
